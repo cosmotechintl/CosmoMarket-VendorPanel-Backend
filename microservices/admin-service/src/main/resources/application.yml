@@ -77,3 +77,12 @@ management.endpoints.web.exposure.include: "*"
 #  pathsToMatch: /**
 #  cache.disabled: true
 
+
+
+
+#debug: true
+#logging:
+#  level:
+#    org.springframework.context.annotation: DEBUG
+#    org.springframework.beans.factory.annotation: DEBUG
+
