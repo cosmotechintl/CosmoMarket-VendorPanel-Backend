@@ -1,6 +1,6 @@
 package com.cosmo.authentication.core.config;
 
-import com.cosmo.authentication.user.repo.AdminRepository;
+import com.cosmo.authentication.user.repo.VendorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,11 +17,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @AllArgsConstructor
 public class ApplicationConfig {
 
-    private final AdminRepository adminRepository;
+    private final VendorRepository vendorRepository;
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> adminRepository.findByUsername(username)
+        return username -> vendorRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
@@ -30,6 +30,7 @@ public class ApplicationConfig {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(userDetailsService());
         authenticationProvider.setPasswordEncoder(passwordEncoder());
+
         return authenticationProvider;
     }
 

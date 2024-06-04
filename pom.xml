@@ -9,15 +9,15 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.cosmo</groupId>
-    <artifactId>CosmoMarket-AdminPanel-Backend</artifactId>
+    <artifactId>CosmoMarket-VendorPanel-Backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>CosmoMarket-AdminPanel-Backend</name>
-    <description>CosmoMarket-AdminPanel-Backend</description>
+    <name>CosmoMarket-VendorPanel-Backend</name>
+    <description>CosmoMarket-VendorPanel-Backend</description>
     <modules>
         <module>microservices/authentication-service</module>
         <module>common</module>
-        <module>microservices/admin-service</module>
+        <module>microservices/vendor-service</module>
     </modules>
 
     <properties>
@@ -69,23 +69,9 @@
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct-processor</artifactId>
-            <version>1.5.5.Final</version>
-            <scope>provided</scope>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.5.0</version>
         </dependency>
     </dependencies>
 

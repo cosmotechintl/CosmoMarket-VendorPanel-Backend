@@ -13,7 +13,6 @@ import org.springframework.http.HttpStatus;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiResponse<T> extends ModelBase {
-
     private HttpStatus httpStatus;
     private String message;
     private String code;

@@ -2,10 +2,9 @@ package com.cosmo.authentication.role.entity;
 
 import com.cosmo.common.abstractEntity.AbstractEntity;
 import com.cosmo.common.entity.Status;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
@@ -15,8 +14,6 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "access_group")
-@AllArgsConstructor
-@NoArgsConstructor
 public class AccessGroup extends AbstractEntity {
 
     @Column(name = "name", nullable = false)
@@ -45,5 +42,5 @@ public class AccessGroup extends AbstractEntity {
 
     @OneToMany(mappedBy = "accessGroup",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<AccessGroupRoleMap> accessGroupRoleMaps;
-}
 
+}

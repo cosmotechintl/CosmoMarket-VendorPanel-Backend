@@ -8,4 +8,5 @@ import lombok.Setter;
 @Setter
 public class AuthenticationResponse extends ModelBase {
     private String token;
+
 }
