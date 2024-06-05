@@ -11,4 +11,7 @@ public interface VendorService {
 
     ApiResponse<?> getAllVendorUsers(SearchParam searchParam);
 
+    Object updateVendorUser(VendorUserRequestDto vendorUserRequestDto);
+
+
 }

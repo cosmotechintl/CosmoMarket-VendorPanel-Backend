@@ -52,5 +52,16 @@ public class VendorController {
         return ResponseEntity.ok().body(vendorService.getAllVendorUsers(searchParam));
     }
 
+    @PutMapping(ApiConstant.UPDATE_VENDOR_USER)
+    public ResponseEntity<ApiResponse<VendorUserResponseDto>> updateVendorUser(@Valid @RequestBody VendorUserRequestDto vendorUserRequestDto) {
+        VendorUserResponseDto response = (VendorUserResponseDto) vendorService.updateVendorUser(vendorUserRequestDto);
+        ApiResponse<VendorUserResponseDto> apiResponse = new ApiResponse<>();
+        apiResponse.setHttpStatus(HttpStatus.OK);
+        apiResponse.setMessage("Vendor user updated successfully");
+        apiResponse.setData(response);
+        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    }
+
+
 
 }

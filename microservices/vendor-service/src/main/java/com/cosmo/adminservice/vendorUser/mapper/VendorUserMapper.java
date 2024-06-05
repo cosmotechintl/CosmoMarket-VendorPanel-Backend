@@ -9,5 +9,7 @@ import org.mapstruct.Mapper;
 public interface VendorUserMapper {
     Vendor dtoToEntity(VendorUserRequestDto vendorUserRequestDto);
     VendorUserResponseDto entityToDto(Vendor vendor);
+    Vendor updateEntityFromDto(VendorUserRequestDto vendorUserRequestDto, Vendor existingVendor);
+
 
 }

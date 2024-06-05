@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class VendorUserRequestDto {
+    private Long id;
     @NotBlank(message = "Name is mandatory")
     private String name;
 

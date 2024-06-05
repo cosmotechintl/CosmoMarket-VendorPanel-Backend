@@ -80,5 +80,47 @@ public class VendorUserMapperImpl implements VendorUserMapper {
         return vendorUserResponseDto;
     }
 
+    @Override
+    public Vendor updateEntityFromDto(VendorUserRequestDto vendorUserRequestDto, Vendor existingVendor) {
+        if (vendorUserRequestDto == null) {
+            return null;
+        }
+        if (existingVendor == null) {
+            return dtoToEntity(vendorUserRequestDto);
+        }
+        existingVendor.setName(vendorUserRequestDto.getName());
+        existingVendor.setPassword(passwordEncoder.encode(vendorUserRequestDto.getPassword()));
+        if (Objects.nonNull(vendorUserRequestDto.getUsername())) {
+            if (vendorRepository.existsByUsername(vendorUserRequestDto.getUsername())) {
+                throw new BadRequestException("Username already exists");
+            }else {
+                existingVendor.setUsername(vendorUserRequestDto.getUsername());
+            }
+        }
+        existingVendor.setActive(vendorUserRequestDto.isActive());
+        existingVendor.setEmail(vendorUserRequestDto.getEmail());
+        if (vendorUserRequestDto.getStatusId() != null) {
+            Status status = statusRepository.findById(vendorUserRequestDto.getStatusId())
+                    .orElseThrow(() -> new IllegalArgumentException(vendorUserRequestDto.getStatusId() + "status does not exist"));
+            existingVendor.setStatus(status);
+        } else {
+            throw new IllegalArgumentException("StatusId cannot be null");
+        }
+        if(vendorUserRequestDto.getAccessGroupId() !=null){
+            AccessGroup accessGroup = accessGroupRepository.findById(vendorUserRequestDto.getAccessGroupId())
+                    .orElseThrow(() -> new IllegalArgumentException(vendorUserRequestDto.getAccessGroupId() + "access group does not exist"));
+            existingVendor.setAccessGroup(accessGroup);
+        }
+        else {
+            throw new IllegalArgumentException("AccessGroupId cannot be null");
+        }
+        existingVendor.setMobileNumber(vendorUserRequestDto.getMobileNumber());
+        existingVendor.setAddress(vendorUserRequestDto.getAddress());
+        existingVendor.setTwoFactorEnabled(vendorUserRequestDto.isTwoFactorEnabled());
+        existingVendor.setSuperAdmin(vendorUserRequestDto.isSuperAdmin());
+        return existingVendor;
+
+    }
+
 
 }

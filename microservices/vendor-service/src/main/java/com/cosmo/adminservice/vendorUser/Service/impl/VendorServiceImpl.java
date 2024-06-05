@@ -61,6 +61,15 @@ public class VendorServiceImpl implements VendorService {
         }
     }
 
+    @Override
+    public Object updateVendorUser(VendorUserRequestDto vendorUserRequestDto) {
+        Vendor existingVendor = vendorRepository.findById(vendorUserRequestDto.getId())
+                .orElseThrow(() -> new IllegalArgumentException(vendorUserRequestDto.getUsername() + " vendor does not exist"));
+        Vendor updatedVendor = vendorUserMapper.updateEntityFromDto(vendorUserRequestDto, existingVendor);
+        Vendor savedVendor = vendorRepository.save(updatedVendor);
+        return vendorUserMapper.entityToDto(savedVendor);
+    }
+
 
 
 }
