@@ -1,6 +1,8 @@
+server:
+  port: 8081
 spring:
   application:
-    name: admin-service
+    name: vendor-service
   #  profiles.active: develop
   servlet:
     multipart:
@@ -47,8 +49,7 @@ spring:
     change-log: classpath:db.changelog/changelog-master.yml
     # drop-first: false
 #      default-schema: public
-server:
-  port: 8081
+
 
 management.endpoint.health.show-details: "ALWAYS"
 management.endpoints.web.exposure.include: "*"

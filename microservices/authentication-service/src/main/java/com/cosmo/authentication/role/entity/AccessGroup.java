@@ -40,7 +40,7 @@ public class AccessGroup extends AbstractEntity {
     @Column(name = "remarks")
     private String remarks;
 
-    @OneToMany(mappedBy = "accessGroup",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "accessGroup",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<AccessGroupRoleMap> accessGroupRoleMaps;
 
 }

@@ -1,7 +1,6 @@
 package com.cosmo.common.exception.handler;
 
-import com.cosmo.common.exception.BadRequestException;
-import com.cosmo.common.exception.NotFoundException;
+import com.cosmo.common.exception.*;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.util.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +23,34 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ApiResponse<String>> handleIllegalArgumentException(BadRequestException ex) {
+    public ResponseEntity<ApiResponse<String>> handleBadRequestException(BadRequestException ex) {
+        log.error("------- BAD REQUEST EXCEPTION -------");
+        ApiResponse<String> apiResponse = new ApiResponse<>();
+        apiResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
+        apiResponse.setMessage(ex.getMessage());
+        return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<ApiResponse<String>> handleConflictException(ConflictException ex) {
+        log.error("------- CONFLICT EXCEPTION -------");
+        ApiResponse<String> apiResponse = new ApiResponse<>();
+        apiResponse.setHttpStatus(HttpStatus.CONFLICT);
+        apiResponse.setMessage(ex.getMessage());
+        return new ResponseEntity<>(apiResponse, HttpStatus.CONFLICT);
+    }
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ApiResponse<String>> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        log.error("------- RESOURCE NOT FOUND EXCEPTION -------");
+        ApiResponse<String> apiResponse = new ApiResponse<>();
+        apiResponse.setHttpStatus(HttpStatus.NOT_FOUND);
+        apiResponse.setMessage(ex.getMessage());
+        return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(InvalidInputException.class)
+    public ResponseEntity<ApiResponse<String>> handleInvalidInputException(InvalidInputException ex) {
+        log.error("------- INVALID INPUT EXCEPTION -------");
         ApiResponse<String> apiResponse = new ApiResponse<>();
         apiResponse.setHttpStatus(HttpStatus.BAD_REQUEST);
         apiResponse.setMessage(ex.getMessage());

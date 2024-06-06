@@ -24,4 +24,5 @@ public class ApiConstant {
     public static final String DELETE_VENDOR_USER = "deleteVendorUser";
     public static final String GET_ALL_VENDOR_USERS = "getAllVendorUsers";
     public static final String UPDATE_VENDOR_USER = "updateVendorUser";
+    public static final String DELETE_PRODUCT = "deleteProduct";
 }

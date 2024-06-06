@@ -18,6 +18,7 @@
         <module>microservices/authentication-service</module>
         <module>common</module>
         <module>microservices/vendor-service</module>
+        <module>microservices/product-service</module>
     </modules>
 
     <properties>
