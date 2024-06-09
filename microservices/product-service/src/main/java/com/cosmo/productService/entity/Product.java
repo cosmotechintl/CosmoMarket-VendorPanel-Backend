@@ -14,6 +14,15 @@ public class Product extends AbstractEntity {
     private double price;
     @Column(name = "description")
     private String description;
+    @Column(name = "brand")
+    private String brand;
+    @Column(name = "color")
+    private String color;
+    @Column(name = "size")
+    private String size;
+
+    @Column(name = "in_stock")
+    private boolean inStock;
 
     @Column(name = "quantity")
     private int quantity;

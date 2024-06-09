@@ -8,7 +8,6 @@ import com.cosmo.productService.model.ProductResponseDto;
 import com.cosmo.productService.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,15 +25,15 @@ public class ProductController {
         return ResponseEntity.ok(productService.createProduct(productRequestDto, token));
     }
 
-    @DeleteMapping(ApiConstant.DELETE_PRODUCT)
+    @DeleteMapping(ApiConstant.DELETE)
     public ResponseEntity<ApiResponse<String>> deleteProduct(@RequestBody ProductRequestDto productRequestDto) {
         Long pid = productRequestDto.getId();
         return ResponseEntity.ok(productService.deleteProduct(pid));
     }
 
     @GetMapping(ApiConstant.GET)
-    public ResponseEntity<ApiResponse<?>> getAllVendorUsers(@RequestBody SearchParam searchParam) {
-        return ResponseEntity.ok().body(productService.getallProducts(searchParam));
+    public ResponseEntity<ApiResponse<ProductResponseDto>> getAllProducts(@RequestBody SearchParam searchParam) {
+        return ResponseEntity.ok(productService.getallProducts(searchParam));
     }
 }
 

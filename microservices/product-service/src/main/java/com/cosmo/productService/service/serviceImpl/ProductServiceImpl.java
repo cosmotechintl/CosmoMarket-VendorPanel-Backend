@@ -15,7 +15,6 @@ import com.cosmo.productService.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,7 +37,6 @@ public class ProductServiceImpl implements ProductService {
         Product savedProduct = productRepository.save(product);
         ProductResponseDto productResponseDto = productMapper.entityToDto(savedProduct);
         return ResponseUtil.getSuccessfulApiResponseWithData(productResponseDto, "Product created successfully");
-
     }
 
     @Override
@@ -48,21 +46,20 @@ public class ProductServiceImpl implements ProductService {
         String productName = product.getName();
         productRepository.deleteById(id);
         return ResponseUtil.getSuccessfulApiResponse("Product " + productName + " deleted successfully.");
-
     }
 
     @Override
-    public ApiResponse<?> getallProducts(SearchParam searchParam) {
+    public ApiResponse getallProducts(SearchParam searchParam) {
         Pageable pageable = PaginationUtil.getPageable(searchParam);
         Page<Product> pageList = productRepository.findAll(pageable);
         List<Product> allProducts = pageList.getContent();
         if (allProducts.isEmpty()) {
-            return ApiResponse.builder().httpStatus(HttpStatus.NOT_FOUND).message("No Products found").build();
+            return ResponseUtil.getFailureResponse("No Products found");
         } else {
-            List<ProductResponseDto> vendorUserResponseDtos = allProducts.stream()
+            List<ProductResponseDto> productResponseDtos = allProducts.stream()
                     .map(productMapper::entityToDto)
                     .collect(Collectors.toList());
-            return ApiResponse.builder().httpStatus(HttpStatus.OK).message("Vendors fetched successfully").data(vendorUserResponseDtos).build();
+            return ResponseUtil.getSuccessfulApiResponse(productResponseDtos, "Products fetched successfully");
         }
     }
 

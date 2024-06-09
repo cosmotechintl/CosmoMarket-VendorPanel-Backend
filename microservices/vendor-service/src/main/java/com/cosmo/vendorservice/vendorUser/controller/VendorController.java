@@ -19,41 +19,28 @@ import org.springframework.web.bind.annotation.*;
 public class VendorController {
     private final VendorService vendorService;
 
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping(ApiConstant.ADD_VENDOR_USER)
+    @PostMapping(ApiConstant.CREATE)
     public ResponseEntity<ApiResponse<VendorUserResponseDto>> addVendorUser(@Valid @RequestBody VendorUserRequestDto vendorUserRequestDto) {
-        VendorUserResponseDto response = (VendorUserResponseDto) vendorService.addVendorUser(vendorUserRequestDto);
-        ApiResponse<VendorUserResponseDto> apiResponse = new ApiResponse<>();
-        apiResponse.setHttpStatus(HttpStatus.OK);
-        apiResponse.setMessage("Vendor user added successfully");
-        apiResponse.setData(response);
-        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+        return ResponseEntity.ok(vendorService.addVendorUser(vendorUserRequestDto));
     }
 
-    @DeleteMapping(ApiConstant.DELETE_VENDOR_USER)
-    public ResponseEntity<ApiResponse<String>> deleteVendorUser(@RequestBody VendorUserRequestDto vendorUserRequestDto) {
-        String username = vendorUserRequestDto.getUsername();
-        vendorService.deleteVendorUser(username);
-        ApiResponse<String> apiResponse = new ApiResponse<>();
-        apiResponse.setHttpStatus(HttpStatus.OK);
-        apiResponse.setMessage("Vendor user deleted successfully");
-        apiResponse.setData(username);
-        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+    @PostMapping(ApiConstant.DELETE)
+    public ResponseEntity<ApiResponse<VendorUserResponseDto>> deleteVendorUser(@RequestBody VendorUserRequestDto vendorUserRequestDto) {
+        return ResponseEntity.ok(vendorService.deleteVendorUser(vendorUserRequestDto));
     }
 
-    @GetMapping(ApiConstant.GET_ALL_VENDOR_USERS)
-    @PostMapping(ApiConstant.GET_ALL_VENDOR_USERS)
+    @GetMapping(ApiConstant.GET)
     public ResponseEntity<ApiResponse<?>> getAllVendorUsers(@RequestBody SearchParam searchParam) {
         return ResponseEntity.ok().body(vendorService.getAllVendorUsers(searchParam));
     }
 
-    @PutMapping(ApiConstant.UPDATE_VENDOR_USER)
+    @PostMapping(ApiConstant.MODIFY)
     public ResponseEntity<ApiResponse<VendorUserResponseDto>> updateVendorUser(@Valid @RequestBody VendorUserRequestDto vendorUserRequestDto) {
-        VendorUserResponseDto response = (VendorUserResponseDto) vendorService.updateVendorUser(vendorUserRequestDto);
-        ApiResponse<VendorUserResponseDto> apiResponse = new ApiResponse<>();
-        apiResponse.setHttpStatus(HttpStatus.OK);
-        apiResponse.setMessage("Vendor user updated successfully");
-        apiResponse.setData(response);
-        return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+        return ResponseEntity.ok(vendorService.updateVendorUser(vendorUserRequestDto));
+    }
+
+    @GetMapping(ApiConstant.VENDOR_DETAILS)
+    public ResponseEntity<ApiResponse<?>> getVendorByUsername(@RequestBody VendorUserRequestDto vendorUserRequestDto){
+        return ResponseEntity.ok(vendorService.getVendorByUsername(vendorUserRequestDto));
     }
 }

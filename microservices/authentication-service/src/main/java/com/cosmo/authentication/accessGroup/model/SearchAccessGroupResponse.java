@@ -1,22 +1,25 @@
-package com.cosmo.vendorservice.accessGroup.model;
+package com.cosmo.authentication.accessGroup.model;
 
+import com.cosmo.common.model.ModelBase;
+import com.cosmo.common.model.StatusDto;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccessGroupResponse {
+public class SearchAccessGroupResponse extends ModelBase {
     private String name;
     private String description;
     private Date createdAt;
     private Date updatedAt;
-    private String statusName;
+    private StatusDto status;
     private Boolean isSuperAdminGroup;
     private String remarks;
-    private List<String> roleNames;
+
 }

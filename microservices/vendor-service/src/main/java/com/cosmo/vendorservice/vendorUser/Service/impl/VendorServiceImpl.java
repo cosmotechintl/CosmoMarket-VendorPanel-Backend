@@ -1,7 +1,7 @@
 package com.cosmo.vendorservice.vendorUser.Service.impl;
 
-import com.cosmo.common.exception.NotFoundException;
 import com.cosmo.common.exception.ResourceNotFoundException;
+import com.cosmo.common.util.ResponseUtil;
 import com.cosmo.vendorservice.vendorUser.Service.VendorService;
 import com.cosmo.vendorservice.vendorUser.mapper.VendorUserMapper;
 import com.cosmo.vendorservice.vendorUser.model.VendorUserRequestDto;
@@ -17,7 +17,6 @@ import com.cosmo.common.util.PaginationUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,20 +29,23 @@ public class VendorServiceImpl implements VendorService {
     private final VendorRepository vendorRepository;
     private final StatusRepository statusRepository;
     @Override
-    public Object addVendorUser(VendorUserRequestDto vendorUserRequestDto) {
+    public ApiResponse<VendorUserResponseDto> addVendorUser(VendorUserRequestDto vendorUserRequestDto) {
         Vendor vendor = vendorUserMapper.dtoToEntity(vendorUserRequestDto);
         Vendor savedVendor = vendorRepository.save(vendor);
-        return vendorUserMapper.entityToDto(savedVendor);
+        VendorUserResponseDto vendorUserResponseDto = vendorUserMapper.entityToDto(savedVendor);
+        return ResponseUtil.getSuccessfulApiResponseWithData(vendorUserResponseDto, "Vendor created successfully");
     }
 
     @Override
-    public void deleteVendorUser(String username) {
+    public ApiResponse deleteVendorUser(VendorUserRequestDto vendorUserRequestDto) {
+        String username = vendorUserRequestDto.getUsername();
         Vendor vendor = vendorRepository.findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException(username + " vendor does not exist"));
         Status deletedStatus = statusRepository.findByName("DELETED")
                 .orElseThrow(() -> new IllegalArgumentException("Status DELETED does not exist"));
         vendor.setStatus(deletedStatus);
         vendorRepository.save(vendor);
+        return ResponseUtil.getSuccessfulApiResponse("Vendor " + username + " deleted successfully");
     }
 
     @Override
@@ -52,24 +54,31 @@ public class VendorServiceImpl implements VendorService {
         Page<Vendor> pageList = vendorRepository.findAll(pageable);
         List<Vendor> allVendors = pageList.getContent();
         if (allVendors.isEmpty()) {
-            return ApiResponse.builder().httpStatus(HttpStatus.NOT_FOUND).message("No vendor found").build();
+            return ResponseUtil.getFailureResponse("No Vendors found");
         } else {
             List<VendorUserResponseDto> vendorUserResponseDtos = allVendors.stream()
                     .map(vendorUserMapper::entityToDto)
                     .collect(Collectors.toList());
-            return ApiResponse.builder().httpStatus(HttpStatus.OK).message("Vendors fetched successfully").data(vendorUserResponseDtos).build();
+            return ResponseUtil.getSuccessfulApiResponseWithData(vendorUserResponseDtos, "Vendors fetched successfully");
         }
     }
 
     @Override
-    public Object updateVendorUser(VendorUserRequestDto vendorUserRequestDto) {
+    public ApiResponse<?> getVendorByUsername(VendorUserRequestDto vendorUserRequestDto) {
+        String username = vendorUserRequestDto.getUsername();
+        Vendor vendor = vendorRepository.findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException(username + " vendor does not exist"));
+        VendorUserResponseDto vendorUserResponseDto = vendorUserMapper.entityToDto(vendor);
+        return ResponseUtil.getSuccessfulApiResponseWithData(vendorUserResponseDto, "Vendor fetched successfully");
+    }
+
+    @Override
+    public ApiResponse<VendorUserResponseDto> updateVendorUser(VendorUserRequestDto vendorUserRequestDto) {
         Vendor existingVendor = vendorRepository.findById(vendorUserRequestDto.getId())
                 .orElseThrow(() -> new BadRequestException("vendorUser with id:"+vendorUserRequestDto.getId() + " does not exist"));
         Vendor updatedVendor = vendorUserMapper.updateEntityFromDto(vendorUserRequestDto, existingVendor);
         Vendor savedVendor = vendorRepository.save(updatedVendor);
-        return vendorUserMapper.entityToDto(savedVendor);
+        VendorUserResponseDto vendorUserResponseDto =  vendorUserMapper.entityToDto(savedVendor);
+        return ResponseUtil.getSuccessfulApiResponseWithData(vendorUserResponseDto, "Vendor updated successfully");
     }
-
-
-
 }

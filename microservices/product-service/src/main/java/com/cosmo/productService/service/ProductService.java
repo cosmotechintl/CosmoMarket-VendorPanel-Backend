@@ -10,7 +10,7 @@ public interface ProductService {
 
     ApiResponse<String> deleteProduct(Long id);
 
-    ApiResponse<?> getallProducts(SearchParam searchParam);
+    ApiResponse<ProductResponseDto> getallProducts(SearchParam searchParam);
 
     ApiResponse<ProductResponseDto> updateProduct(ProductRequestDto productRequestDto, String token);
 
