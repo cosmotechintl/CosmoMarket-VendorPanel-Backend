@@ -1,37 +1,46 @@
-package com.cosmo.authentication.accessGroup.controller;
+package com.cosmo.authentication.accessgroup.controller;
 
+import com.cosmo.authentication.accessgroup.model.CreateAccessGroupModel;
+import com.cosmo.authentication.accessgroup.model.UpdateAccessGroupModel;
+import com.cosmo.authentication.accessgroup.model.request.FetchAccessGroupDetail;
+import com.cosmo.authentication.accessgroup.service.AccessGroupService;
+import com.cosmo.common.constant.ApiConstant;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.model.SearchParam;
-import com.cosmo.authentication.accessGroup.model.my.AccessGroupListResponseDto;
-import com.cosmo.authentication.accessGroup.service.AccessGroupService;
-import com.cosmo.common.constant.ApiConstant;
-import com.cosmo.authentication.accessGroup.model.my.AccessGroupRequestDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Mono;
 
-@Controller
-@RequestMapping(path = ApiConstant.ACCESS_GROUP)
+@RestController
+@RequestMapping(ApiConstant.ACCESS_GROUP)
 @RequiredArgsConstructor
 public class AccessGroupController {
     private final AccessGroupService accessGroupService;
 
-    @PostMapping(path = ApiConstant.CREATE)
-    public ResponseEntity<ApiResponse<AccessGroupListResponseDto>> createAccessGroup(@RequestBody AccessGroupRequestDto accessGroupRequestDto) {
-        return ResponseEntity.ok(accessGroupService.createAccessGroup(accessGroupRequestDto));
+    @PostMapping(ApiConstant.CREATE)
+    public Mono<ApiResponse> addAccessGroup(@RequestBody @Valid CreateAccessGroupModel createAccessGroupModel) {
+        return accessGroupService.createAccessGroup(createAccessGroupModel);
     }
 
-    @PostMapping(path = ApiConstant.MODIFY)
-    public ResponseEntity<ApiResponse<AccessGroupListResponseDto>> updateAccessGroup(@RequestBody AccessGroupRequestDto accessGroupRequestDto) {
-        return ResponseEntity.ok(accessGroupService.updateAccessGroup(accessGroupRequestDto));
+    @GetMapping()
+    public Mono<ApiResponse<?>> getAllAccessGroups(@RequestBody @Valid SearchParam searchParam) {
+        return accessGroupService.getAllAccessGroup(searchParam);
     }
 
-    @GetMapping(ApiConstant.GET)
-    public ResponseEntity<ApiResponse<?>> getAllAccessGroups(@RequestBody SearchParam searchParam) {
-        return ResponseEntity.ok().body(accessGroupService.getallProducts(searchParam));
+    @GetMapping(ApiConstant.GET + ApiConstant.SLASH + ApiConstant.DETAIL)
+    public Mono<ApiResponse<?>> getAccessGroupDetail(@RequestBody @Valid FetchAccessGroupDetail fetchAccessGroupDetail) {
+        return accessGroupService.getAccessGroupDetail(fetchAccessGroupDetail);
+    }
+
+    @PostMapping(ApiConstant.EDIT)
+    public Mono<ApiResponse> editAccessGroup(@RequestBody @Valid UpdateAccessGroupModel updateAccessGroupModel) {
+        Long id = updateAccessGroupModel.getId();
+        return accessGroupService.updateAccessGroup(id, updateAccessGroupModel);
+    }
+
+    @PostMapping(ApiConstant.DELETE + "/{id}")
+    public void deleteAccessGroup(@PathVariable Long id) {
+        accessGroupService.deleteAccessGroup(id);
     }
 }

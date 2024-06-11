@@ -1,5 +1,8 @@
 package com.cosmo.authentication.core.service;
 
+import com.cosmo.authentication.core.constant.JwtTokenConstants;
+import com.cosmo.authentication.user.entity.VendorUser;
+import com.nimbusds.jwt.JWTClaimsSet;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -11,8 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 
 @Service
@@ -38,13 +39,13 @@ public class JwtService {
 
 
     public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+        return generateToken(getClaims(userDetails), userDetails);
     }
 
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+    public String generateToken(JWTClaimsSet extraClaims, UserDetails userDetails) {
         return Jwts
                 .builder()
-                .setClaims(extraClaims)
+                .setClaims(extraClaims.getClaims())
                 .setSubject(userDetails.getUsername())
                 .claim("authorities", userDetails.getAuthorities())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
@@ -66,7 +67,7 @@ public class JwtService {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    private Claims extractAllClaims(String token) {
+    public Claims extractAllClaims(String token) {
         return Jwts
                 .parserBuilder()
                 .setSigningKey(getSigningKey())
@@ -79,4 +80,39 @@ public class JwtService {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
+    private JWTClaimsSet getClaims(UserDetails userDetails) {
+        JWTClaimsSet.Builder jwtClaimsSet = getCommonClaims(userDetails);
+//        if (isTwoFactorEnabled(user)) {
+//            jwtClaimsSet.claim(JwtTokenConstants.IS_TWO_FACTOR_ENABLED.getName(), true);
+//            jwtClaimsSet.claim(JwtTokenConstants.TWO_FACTOR_AUTHENTICATED.getName(), false);
+//        }
+        return jwtClaimsSet.build();
+    }
+
+    private JWTClaimsSet.Builder getCommonClaims(UserDetails userDetails) {
+
+        VendorUser vendorUser = (VendorUser) userDetails;
+        JWTClaimsSet.Builder jwtClaimsSet = new JWTClaimsSet.Builder()
+                .audience(JwtTokenConstants.ADMIN)
+                .subject(JwtTokenConstants.AUTH)
+                .issuer(JwtTokenConstants.COSMO)
+                .claim(JwtTokenConstants.USER_ID, vendorUser.getId())
+                .claim(JwtTokenConstants.USERNAME, vendorUser.getUsername())
+                .claim(JwtTokenConstants.GROUP, vendorUser.getAccessGroup().getName());
+
+//        if (isTemp(user)) {
+//            jwtClaimsSet.claim(JwtTokenConstants.IS_TEMP.getName(), true);
+//            jwtClaimsSet.claim(JwtTokenConstants.ROLES.getName(), getRoles(userAuth));
+//        } else {
+//            jwtClaimsSet.claim(JwtTokenConstants.ROLES.getName(), getRoles(userAuth));
+//        }
+        return jwtClaimsSet;
+    }
+
+    //
+    private boolean isTemp(UserDetails user) {
+        return false;
+    }
+
 }

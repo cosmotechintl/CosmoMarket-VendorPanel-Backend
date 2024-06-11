@@ -1,4 +1,4 @@
-package com.cosmo.authentication.accessGroup.model;
+package com.cosmo.authentication.accessgroup.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

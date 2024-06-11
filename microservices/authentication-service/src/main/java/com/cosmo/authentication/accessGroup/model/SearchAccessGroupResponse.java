@@ -1,4 +1,4 @@
-package com.cosmo.authentication.accessGroup.model;
+package com.cosmo.authentication.accessgroup.model;
 
 import com.cosmo.common.model.ModelBase;
 import com.cosmo.common.model.StatusDto;

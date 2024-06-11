@@ -1,1 +1,1 @@
-# CosmoMarket-AdminPanel-Backend
+# CosmoMarket-VendorPanel-Backend

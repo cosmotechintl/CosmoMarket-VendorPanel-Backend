@@ -1,8 +1,6 @@
-server:
-  port: 8081
 spring:
   application:
-    name: vendor-service
+    name: admin-service
   #  profiles.active: develop
   servlet:
     multipart:
@@ -49,7 +47,8 @@ spring:
     change-log: classpath:db.changelog/changelog-master.yml
     # drop-first: false
 #      default-schema: public
-
+server:
+  port: 8081
 
 management.endpoint.health.show-details: "ALWAYS"
 management.endpoints.web.exposure.include: "*"
@@ -77,4 +76,14 @@ management.endpoints.web.exposure.include: "*"
 #  packagesToScan: com.foneloan
 #  pathsToMatch: /**
 #  cache.disabled: true
+
+logging:
+  level:
+    org:
+      springframework:
+        transaction: DEBUG
+        orm:
+          jpa:
+            JpaTransactionManager: DEBUG
+
 

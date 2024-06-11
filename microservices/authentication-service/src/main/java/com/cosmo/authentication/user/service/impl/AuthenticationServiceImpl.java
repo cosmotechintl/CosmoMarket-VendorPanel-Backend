@@ -1,10 +1,10 @@
 package com.cosmo.authentication.user.service.impl;
 
 import com.cosmo.authentication.core.service.JwtService;
-import com.cosmo.authentication.user.entity.Vendor;
+import com.cosmo.authentication.user.entity.VendorUser;
 import com.cosmo.authentication.user.model.AuthenticationRequest;
 import com.cosmo.authentication.user.model.AuthenticationResponse;
-import com.cosmo.authentication.user.repo.VendorRepository;
+import com.cosmo.authentication.user.repo.VendorUserRepository;
 import com.cosmo.authentication.user.service.AuthenticationService;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.util.ResponseUtil;
@@ -22,14 +22,14 @@ import java.util.Optional;
 @AllArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
 
-    private final VendorRepository vendorRepository;
+    private final VendorUserRepository vendorUserRepository;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
 
     @Override
     public ApiResponse authenticate(AuthenticationRequest request) {
-        Optional<Vendor> user = vendorRepository.findByUsername(request.getUsername());
+        Optional<VendorUser> user = vendorUserRepository.findByUsername(request.getUsername());
 
         if (user.isPresent()) {
             Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));

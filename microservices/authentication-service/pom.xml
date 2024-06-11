@@ -6,6 +6,7 @@
 		<groupId>com.cosmo</groupId>
 		<artifactId>CosmoMarket-VendorPanel-Backend</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../../pom.xml</relativePath>
 	</parent>
 	<groupId>com.cosmo</groupId>
 	<artifactId>authentication-service</artifactId>
@@ -68,23 +69,28 @@
 			<artifactId>jjwt-jackson</artifactId>
 			<version>0.11.5</version>
 		</dependency>
+		<dependency>
+			<groupId>com.nimbusds</groupId>
+			<artifactId>nimbus-jose-jwt</artifactId>
+			<version>8.2</version>
+		</dependency>
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+<!--	<build>-->
+<!--		<plugins>-->
+<!--			<plugin>-->
+<!--				<groupId>org.springframework.boot</groupId>-->
+<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--				<configuration>-->
+<!--					<excludes>-->
+<!--						<exclude>-->
+<!--							<groupId>org.projectlombok</groupId>-->
+<!--							<artifactId>lombok</artifactId>-->
+<!--						</exclude>-->
+<!--					</excludes>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
+<!--		</plugins>-->
+<!--	</build>-->
 
 </project>

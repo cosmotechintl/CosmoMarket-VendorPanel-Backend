@@ -1,15 +1,16 @@
-package com.cosmo.authentication.accessGroup.service;
+package com.cosmo.authentication.accessgroup.service;
 
+import com.cosmo.authentication.accessgroup.model.CreateAccessGroupModel;
+import com.cosmo.authentication.accessgroup.model.UpdateAccessGroupModel;
+import com.cosmo.authentication.accessgroup.model.request.FetchAccessGroupDetail;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.model.SearchParam;
-import com.cosmo.authentication.accessGroup.model.my.AccessGroupRequestDto;
-import com.cosmo.authentication.accessGroup.model.my.AccessGroupListResponseDto;
+import reactor.core.publisher.Mono;
 
 public interface AccessGroupService {
-    ApiResponse<AccessGroupListResponseDto> createAccessGroup(AccessGroupRequestDto accessGroupRequestDto);
-
-    ApiResponse<AccessGroupListResponseDto> updateAccessGroup(AccessGroupRequestDto accessGroupRequestDto);
-
-    ApiResponse<?> getallProducts(SearchParam searchParam);
-
+        Mono<ApiResponse> createAccessGroup(CreateAccessGroupModel createAccessGroupModel);
+        Mono<ApiResponse> updateAccessGroup(Long id, UpdateAccessGroupModel updateAccessGroupModel);
+        void deleteAccessGroup(Long id);
+        Mono<ApiResponse<?>> getAllAccessGroup(SearchParam searchParam);
+        Mono<ApiResponse<?>> getAccessGroupDetail(FetchAccessGroupDetail fetchAccessGroupDetail);
 }

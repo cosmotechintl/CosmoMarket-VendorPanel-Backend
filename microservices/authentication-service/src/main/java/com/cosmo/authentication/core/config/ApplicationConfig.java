@@ -1,6 +1,6 @@
 package com.cosmo.authentication.core.config;
 
-import com.cosmo.authentication.user.repo.VendorRepository;
+import com.cosmo.authentication.user.repo.VendorUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,11 +17,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @AllArgsConstructor
 public class ApplicationConfig {
 
-    private final VendorRepository vendorRepository;
+    private final VendorUserRepository vendorUserRepository;
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> vendorRepository.findByUsername(username)
+        return username -> vendorUserRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 

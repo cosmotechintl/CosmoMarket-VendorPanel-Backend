@@ -1,5 +1,6 @@
-package com.cosmo.authentication.accessGroup.model;
+package com.cosmo.authentication.accessgroup.model;
 
+import com.cosmo.authentication.accessgroup.entity.Type;
 import com.cosmo.common.model.ModelBase;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -20,6 +21,8 @@ public class CreateAccessGroupModel extends ModelBase {
     private String name;
     @NotBlank(message = "Descriptions is required.")
     private String description;
+    @NotBlank(message = "Type is required")
+    private Type type;
     @Valid
     @NotNull
     private List<AssignRoleModel> roles;
