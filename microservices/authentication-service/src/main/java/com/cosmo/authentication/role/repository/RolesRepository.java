@@ -14,5 +14,4 @@ public interface RolesRepository extends JpaRepository<Roles, Long> {
 
     @Query("Select r from Roles r where r.name not in ('ROOT')")
     List<Roles> getAllRoles();
-
 }

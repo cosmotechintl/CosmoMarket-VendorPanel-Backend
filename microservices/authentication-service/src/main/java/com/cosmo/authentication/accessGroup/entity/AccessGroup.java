@@ -3,6 +3,7 @@ package com.cosmo.authentication.accessgroup.entity;
 import com.cosmo.common.abstractEntity.AbstractEntity;
 import com.cosmo.common.entity.Status;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.Date;
@@ -41,6 +42,7 @@ public class AccessGroup extends AbstractEntity {
     @Column(name = "remarks")
     private String remarks;
 
+    @NotNull
     @ManyToOne(optional = false)
     @JoinColumn(name = "type", referencedColumnName = "id")
     private Type type;

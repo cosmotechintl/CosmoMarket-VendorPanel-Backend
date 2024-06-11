@@ -23,5 +23,5 @@ public class UpdateAccessGroupModel extends ModelBase {
     private String description;
     @Valid
     @NotNull
-    private List<AccessGroupRoleMapDto> accessGroupRoleMapDtos;
+    private List<AssignRoleModel> roles;
 }

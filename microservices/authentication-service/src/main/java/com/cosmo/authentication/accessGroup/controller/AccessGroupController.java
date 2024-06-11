@@ -35,8 +35,7 @@ public class AccessGroupController {
 
     @PostMapping(ApiConstant.EDIT)
     public Mono<ApiResponse> editAccessGroup(@RequestBody @Valid UpdateAccessGroupModel updateAccessGroupModel) {
-        Long id = updateAccessGroupModel.getId();
-        return accessGroupService.updateAccessGroup(id, updateAccessGroupModel);
+        return accessGroupService.updateAccessGroup(updateAccessGroupModel);
     }
 
     @PostMapping(ApiConstant.DELETE + "/{id}")

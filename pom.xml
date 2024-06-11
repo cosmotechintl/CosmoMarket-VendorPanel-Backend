@@ -18,6 +18,7 @@
         <module>common</module>
         <module>microservices/authentication-service</module>
         <module>microservices/vendor-service</module>
+        <module>microservices/futsalBooking-service</module>
     </modules>
 
     <properties>
@@ -84,6 +85,12 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.5.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>8.0.0.Final</version>
         </dependency>
     </dependencies>
 

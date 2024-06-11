@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import com.cosmo.authentication.accessgroup.model.TypeDto;
 
 import java.util.List;
 
@@ -21,10 +22,10 @@ public class CreateAccessGroupModel extends ModelBase {
     private String name;
     @NotBlank(message = "Descriptions is required.")
     private String description;
-    @NotBlank(message = "Type is required")
-    private Type type;
+    @Valid
+    @NotNull(message = "Type is required")
+    private TypeDto type;
     @Valid
     @NotNull
     private List<AssignRoleModel> roles;
-
 }
