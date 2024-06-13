@@ -75,8 +75,12 @@ public class VendorUser extends AbstractEntity implements UserDetails {
     @Column(name = "wrong_oto_auth_attempt_count")
     private Integer wrongOtpAuthAttemptCount;
 
-    @Column(name = "is_super_admin")
-    private boolean isSuperAdmin;
+    @Column(name = "is_admin")
+    private boolean isAdmin;
+
+    @ManyToOne
+    @JoinColumn(name = "vendor")
+    private Vendor vendor;
 
     @Transactional
     @Override

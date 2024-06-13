@@ -1,4 +1,4 @@
-package com.cosmo.vendorservice.vendorUser.model;
+package com.cosmo.authentication.user.model;
 
 import com.cosmo.authentication.accessgroup.model.AccessGroupDto;
 import com.cosmo.authentication.user.entity.VendorUser;
@@ -22,5 +22,5 @@ public class VendorUserDetailsDto extends ModelBase {
     private AccessGroupDto accessGroup;
     private String profilePictureName;
     private boolean twoFactorEnabled;
-    private boolean isSuperAdmin;
+    private boolean isAdmin;
 }

@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - includeAll:
+        path: db.changelog/changesets/
+  - includeAll:
+        path: vendor-db.changelog/changesets/
+  - includeAll:
+      path: booking-db.changelog/changesets/

@@ -1,9 +1,11 @@
-package com.cosmo.vendorservice.vendorUser.Service;
+package com.cosmo.authentication.user.service;
 
 import com.cosmo.common.model.ApiResponse;
-import com.cosmo.vendorservice.vendorUser.model.CreateVendorUserModel;
-import com.cosmo.vendorservice.vendorUser.model.requestDto.FetchVendorUserDetails;
+import com.cosmo.authentication.user.model.CreateVendorUserModel;
+
 import reactor.core.publisher.Mono;
+
+import java.security.Principal;
 
 public interface VendorService {
 //    ApiResponse<VendorUserResponseDto> addVendorUser(VendorUserRequestDto vendorUserRequestDto);
@@ -11,6 +13,6 @@ public interface VendorService {
 //    ApiResponse<VendorUserResponseDto> updateVendorUser(VendorUserRequestDto vendorUserRequestDto);
 //    ApiResponse<?> getAllVendorUsers(SearchParam searchParam);
 
-    Mono<ApiResponse> createVendorUser(CreateVendorUserModel createVendorUserModel);
+    Mono<ApiResponse> createVendorUser(CreateVendorUserModel createVendorUserModel, Principal connectedUser);
     Mono<ApiResponse<?>> getVendorUserDetail(String token);
 }

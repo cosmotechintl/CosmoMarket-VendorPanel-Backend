@@ -1,20 +1,22 @@
-package com.cosmo.vendorservice.vendorUser.Service.impl;
+package com.cosmo.authentication.user.service.impl;
 
 import com.cosmo.authentication.core.service.JwtService;
 import com.cosmo.authentication.user.entity.VendorUser;
 import com.cosmo.authentication.user.repo.VendorUserRepository;
+import com.cosmo.common.exception.NotFoundException;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.repository.StatusRepository;
 import com.cosmo.common.util.ResponseUtil;
-import com.cosmo.vendorservice.vendorUser.Service.VendorService;
-import com.cosmo.vendorservice.vendorUser.mapper.VendorUserMapper;
-import com.cosmo.vendorservice.vendorUser.model.CreateVendorUserModel;
-import com.cosmo.vendorservice.vendorUser.model.VendorUserDetailsDto;
+import com.cosmo.authentication.user.service.VendorService;
+import com.cosmo.authentication.user.mapper.VendorUserMapper;
+import com.cosmo.authentication.user.model.CreateVendorUserModel;
+import com.cosmo.authentication.user.model.VendorUserDetailsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Service
@@ -62,10 +64,17 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     @Transactional
-    public Mono<ApiResponse> createVendorUser(CreateVendorUserModel createVendorUserModel) {
-        VendorUser vendorUser = vendorUserMapper.toEntity(createVendorUserModel);
-        vendorUserRepository.save(vendorUser);
-        return Mono.just(ResponseUtil.getSuccessfulApiResponse("Vendor user created"));
+    public Mono<ApiResponse> createVendorUser(CreateVendorUserModel createVendorUserModel, Principal connectedUser) {
+        VendorUser vendorUser = vendorUserRepository.findByUsername(connectedUser.getName())
+                .orElseThrow(() -> new NotFoundException("Invalid User"));
+        Long vendorId = vendorUser.getVendor().getId();
+        vendorUser = vendorUserMapper.toEntity(createVendorUserModel, vendorId);
+        if (vendorUser != null) {
+            vendorUserRepository.save(vendorUser);
+            return Mono.just(ResponseUtil.getSuccessfulApiResponse("Vendor user created"));
+        } else {
+            return Mono.just(ResponseUtil.getFailureResponse("Vendor user creation failed"));
+        }
     }
 
     @Override
@@ -80,13 +89,4 @@ public class VendorServiceImpl implements VendorService {
         }
     }
 
-//    @Override
-//    public ApiResponse<VendorUserResponseDto> updateVendorUser(VendorUserRequestDto vendorUserRequestDto) {
-//        Vendor existingVendor = vendorRepository.findById(vendorUserRequestDto.getId())
-//                .orElseThrow(() -> new BadRequestException("vendorUser with id:"+vendorUserRequestDto.getId() + " does not exist"));
-//        Vendor updatedVendor = vendorUserMapper.updateEntityFromDto(vendorUserRequestDto, existingVendor);
-//        Vendor savedVendor = vendorRepository.save(updatedVendor);
-//        VendorUserResponseDto vendorUserResponseDto =  vendorUserMapper.entityToDto(savedVendor);
-//        return ResponseUtil.getSuccessfulApiResponseWithData(vendorUserResponseDto, "Vendor updated successfully");
-//    }
 }

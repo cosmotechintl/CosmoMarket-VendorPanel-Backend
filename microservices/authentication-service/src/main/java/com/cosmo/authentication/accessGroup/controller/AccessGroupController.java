@@ -39,7 +39,7 @@ public class AccessGroupController {
     }
 
     @PostMapping(ApiConstant.DELETE + "/{id}")
-    public void deleteAccessGroup(@PathVariable Long id) {
-        accessGroupService.deleteAccessGroup(id);
+    public Mono<ApiResponse> deleteAccessGroup(@PathVariable Long id) {
+        return accessGroupService.deleteAccessGroup(id);
     }
 }

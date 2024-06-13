@@ -1,6 +1,6 @@
 spring:
   application:
-    name: admin-service
+    name: vendor-service
   #  profiles.active: develop
   servlet:
     multipart:
@@ -44,11 +44,11 @@ spring:
     minIdle: 0
   liquibase:
     enabled: true
-    change-log: classpath:db.changelog/changelog-master.yml
+    change-log: classpath:vendor-db.changelog/changelog-master.yml
     # drop-first: false
 #      default-schema: public
 server:
-  port: 8081
+  port: 8091
 
 management.endpoint.health.show-details: "ALWAYS"
 management.endpoints.web.exposure.include: "*"

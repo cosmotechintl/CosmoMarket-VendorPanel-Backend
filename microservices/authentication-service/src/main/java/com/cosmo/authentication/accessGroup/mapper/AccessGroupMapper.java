@@ -39,7 +39,7 @@ public abstract class AccessGroupMapper {
         accessGroup.setName(createAccessGroupModel.getName());
         accessGroup.setDescription(createAccessGroupModel.getDescription());
         accessGroup.setCreatedAt(new Date());
-        accessGroup.setSuperAdminGroup(false);
+        accessGroup.setAdminGroup(false);
         accessGroup.setType(typeRepository.findByName(createAccessGroupModel.getType().getName()));
         accessGroup.setStatus(statusRepository.findByName(StatusConstant.ACTIVE.getName()));
         return accessGroupRepository.save(accessGroup);
@@ -53,7 +53,7 @@ public abstract class AccessGroupMapper {
 //        response.setCreatedAt(accessGroup.getCreatedAt());
 //        response.setUpdatedAt(accessGroup.getUpdatedAt());
 //        response.setStatus(statusMapper.entityToStatusDto(accessGroup.getStatus()));
-//        response.setIsSuperAdminGroup(accessGroup.isSuperAdminGroup());
+//        response.setisAdminGroup(accessGroup.isAdminGroup());
 //        response.setRemarks(accessGroup.getRemarks());
 //        return response;
 //    }

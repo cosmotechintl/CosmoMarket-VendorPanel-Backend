@@ -36,8 +36,8 @@ public class AccessGroup extends AbstractEntity {
     @JoinColumn(name = "status", referencedColumnName = "id")
     private Status status;
 
-    @Column(name = "is_super_admin_group", nullable = false)
-    private boolean isSuperAdminGroup;
+    @Column(name = "is_admin_group", nullable = false)
+    private boolean isAdminGroup;
 
     @Column(name = "remarks")
     private String remarks;

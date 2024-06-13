@@ -21,8 +21,10 @@ CREATE TABLE IF NOT EXISTS `vendor_user`
     otp_auth_secret              VARCHAR(255)          NULL,
     two_factor_enabled           BIT(1)                NOT NULL,
     wrong_oto_auth_attempt_count INT                   NULL,
-    is_super_admin               BIT(1)                NULL,
-    CONSTRAINT pk_vendor_user PRIMARY KEY (id)
+    is_admin               BIT(1)                NULL,
+    vendor                       BIGINT                NOT NULL,
+    CONSTRAINT pk_vendor_user PRIMARY KEY (id),
+    CONSTRAINT fk_vendor FOREIGN KEY (vendor) REFERENCES vendor(id)
     );
 
 

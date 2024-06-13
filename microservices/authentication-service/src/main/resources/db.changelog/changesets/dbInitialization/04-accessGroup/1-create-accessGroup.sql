@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS access_group
     created_at           datetime              NULL,
     updated_at           datetime              NULL,
     status               BIGINT                NOT NULL,
-    is_super_admin_group BIT(1)                NOT NULL,
+    is_admin_group BIT(1)                NOT NULL,
     remarks              VARCHAR(255)          NULL,
     type                 BIGINT          NOT NULL,
     CONSTRAINT pk_access_group PRIMARY KEY (id)

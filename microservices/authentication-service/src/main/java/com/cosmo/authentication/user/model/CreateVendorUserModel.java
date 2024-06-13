@@ -1,8 +1,9 @@
-package com.cosmo.vendorservice.vendorUser.model;
+package com.cosmo.authentication.user.model;
 
+import com.cosmo.authentication.accessgroup.model.AccessGroupDto;
 import com.cosmo.common.model.ModelBase;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,11 +15,7 @@ public class CreateVendorUserModel extends ModelBase {
     private String name;
 
     @NotBlank(message = "Password is mandatory")
-    @Size(min = 8, message = "Password must be at least 8 characters")
-    private String password;
-    @NotBlank(message = "Password is mandatory")
     private String username;
-    private boolean isActive;
 
     @NotBlank(message = "Email is mandatory")
     private String email;
@@ -28,7 +25,8 @@ public class CreateVendorUserModel extends ModelBase {
 
     @NotBlank(message = "Address is mandatory")
     private String address;
-    private Long accessGroupId;
-    private String profilePictureName;
+
+    @NotNull(message = "Access Group Cannot Be Null")
+    private AccessGroupDto accessGroup;
 
 }

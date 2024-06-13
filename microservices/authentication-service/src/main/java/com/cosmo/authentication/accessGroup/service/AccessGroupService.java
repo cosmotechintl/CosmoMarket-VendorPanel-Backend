@@ -10,7 +10,7 @@ import reactor.core.publisher.Mono;
 public interface AccessGroupService {
         Mono<ApiResponse> createAccessGroup(CreateAccessGroupModel createAccessGroupModel);
         Mono<ApiResponse> updateAccessGroup(UpdateAccessGroupModel updateAccessGroupModel);
-        void deleteAccessGroup(Long id);
+        Mono<ApiResponse >deleteAccessGroup(Long id);
         Mono<ApiResponse<?>> getAllAccessGroup(SearchParam searchParam);
         Mono<ApiResponse<?>> getAccessGroupDetail(FetchAccessGroupDetail fetchAccessGroupDetail);
 }

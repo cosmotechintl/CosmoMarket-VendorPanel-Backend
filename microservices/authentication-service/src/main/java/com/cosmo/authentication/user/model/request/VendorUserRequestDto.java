@@ -1,4 +1,4 @@
-package com.cosmo.vendorservice.vendorUser.model.requestDto;
+package com.cosmo.authentication.user.model.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

@@ -41,7 +41,6 @@ public abstract class AccessGroupRoleMapMapper {
             accessGroupRoleMap.setRoles(role);
             return accessGroupRoleMap;
         }).collect(Collectors.toList());
-
         return accessGroupRoleMapRepository.saveAll(accessGroupRoleMaps);
     }
 
@@ -62,7 +61,6 @@ public abstract class AccessGroupRoleMapMapper {
             accessGroupRoleMap.setIsActive(assignedRoleId.contains(role.getId()));
             return accessGroupRoleMap;
         }).collect(Collectors.toList());
-
         return accessGroupRoleMapRepository.saveAll(accessGroupRoleMaps);
     }
 

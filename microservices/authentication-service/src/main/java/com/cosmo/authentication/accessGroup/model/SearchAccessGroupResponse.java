@@ -19,7 +19,7 @@ public class SearchAccessGroupResponse extends ModelBase {
     private Date createdAt;
     private Date updatedAt;
     private StatusDto status;
-    private Boolean isSuperAdminGroup;
+    private Boolean isAdminGroup;
     private String remarks;
 
 }

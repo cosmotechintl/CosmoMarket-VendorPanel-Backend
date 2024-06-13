@@ -58,13 +58,19 @@ public class AccessGroupServiceImpl implements AccessGroupService {
     }
 
     @Override
-    public void deleteAccessGroup(Long id) {
+    public Mono<ApiResponse> deleteAccessGroup(Long id) {
         Optional<AccessGroup> accessGroup = accessGroupRepository.findById(id);
+
         if (accessGroup.isPresent()) {
             AccessGroup existingAccessGroup = accessGroup.get();
+            if (existingAccessGroup.getStatus().getName().equals(StatusConstant.DELETED.getName())) {
+                return Mono.just(ResponseUtil.getSuccessfulApiResponse("Access group not found"));
+            }
             existingAccessGroup.setStatus(statusRepository.findByName(StatusConstant.DELETED.getName()));
             accessGroupRepository.save(existingAccessGroup);
-
+            return Mono.just(ResponseUtil.getSuccessfulApiResponse("Access group deleted"));
+        }else {
+            return Mono.just(ResponseUtil.getNotFoundResponse("Access group not found"));
         }
 
     }

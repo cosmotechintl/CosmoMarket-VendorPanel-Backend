@@ -8,17 +8,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "booking")
-public class Booking extends AbstractEntity {
+@Table(name = "availability")
+public class Availability extends AbstractEntity {
     private Long vendorId;
-    private String customerName;
-    private String mobileNumber;
     private String startTime;
     private String endTime;
-    private String amount;
+    private boolean available;
 }
