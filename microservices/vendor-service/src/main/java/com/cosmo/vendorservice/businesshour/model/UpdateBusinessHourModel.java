@@ -1,4 +1,4 @@
-package com.cosmo.vendorservice.vendorBusinesshour.model;
+package com.cosmo.vendorservice.businesshour.model;
 
 import com.cosmo.common.model.ModelBase;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class SetBusinessHour extends ModelBase {
+public class UpdateBusinessHourModel extends ModelBase {
+    private String id;
     private String day;
     private String startTime;
     private String endTime;

@@ -15,5 +15,4 @@ public interface VendorUserRepository extends JpaRepository<VendorUser, Long> {
 
     Optional<Object> findByEmail(String email);
 
-//    VendorUser findVendorUserByusername(String username);
 }
