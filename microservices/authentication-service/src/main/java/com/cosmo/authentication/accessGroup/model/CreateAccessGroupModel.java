@@ -20,11 +20,14 @@ import java.util.List;
 public class CreateAccessGroupModel extends ModelBase {
     @NotBlank(message = "Name is required.")
     private String name;
+
     @NotBlank(message = "Descriptions is required.")
     private String description;
+
     @Valid
     @NotNull(message = "Type is required")
     private TypeDto type;
+
     @Valid
     @NotNull
     private List<AssignRoleModel> roles;

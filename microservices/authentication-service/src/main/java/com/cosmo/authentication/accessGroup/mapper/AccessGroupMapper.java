@@ -9,6 +9,7 @@ import com.cosmo.authentication.accessgroup.model.UpdateAccessGroupModel;
 import com.cosmo.authentication.accessgroup.repo.AccessGroupRepository;
 import com.cosmo.authentication.accessgroup.repo.TypeRepository;
 import com.cosmo.common.constant.StatusConstant;
+import com.cosmo.common.exception.ConflictException;
 import com.cosmo.common.mapper.StatusMapper;
 import com.cosmo.common.repository.StatusRepository;
 import org.mapstruct.Mapper;
@@ -35,6 +36,9 @@ public abstract class AccessGroupMapper {
     protected TypeRepository typeRepository;
 
     public AccessGroup toEntity(CreateAccessGroupModel createAccessGroupModel) {
+        if (accessGroupRepository.findByName(createAccessGroupModel.getName()).isPresent()) {
+            throw new ConflictException("An AccessGroup with this name already exists");
+        }
         AccessGroup accessGroup = new AccessGroup();
         accessGroup.setName(createAccessGroupModel.getName());
         accessGroup.setDescription(createAccessGroupModel.getDescription());
@@ -46,17 +50,6 @@ public abstract class AccessGroupMapper {
     }
 
     public abstract SearchAccessGroupResponse entityToDto(AccessGroup accessGroup);
-//    {
-//        SearchAccessGroupResponse response = new SearchAccessGroupResponse();
-//        response.setName(accessGroup.getName());
-//        response.setDescription(accessGroup.getDescription());
-//        response.setCreatedAt(accessGroup.getCreatedAt());
-//        response.setUpdatedAt(accessGroup.getUpdatedAt());
-//        response.setStatus(statusMapper.entityToStatusDto(accessGroup.getStatus()));
-//        response.setisAdminGroup(accessGroup.isAdminGroup());
-//        response.setRemarks(accessGroup.getRemarks());
-//        return response;
-//    }
 
     public List<SearchAccessGroupResponse> getAccessGroupResponses(List<AccessGroup> accessGroups) {
         return accessGroups.stream().map(this::entityToDto).collect(Collectors.toList());

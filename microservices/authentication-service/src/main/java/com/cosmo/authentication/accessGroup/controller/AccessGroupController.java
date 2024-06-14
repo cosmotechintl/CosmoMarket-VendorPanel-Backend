@@ -2,6 +2,7 @@ package com.cosmo.authentication.accessgroup.controller;
 
 import com.cosmo.authentication.accessgroup.model.CreateAccessGroupModel;
 import com.cosmo.authentication.accessgroup.model.UpdateAccessGroupModel;
+import com.cosmo.authentication.accessgroup.model.request.DeleteAccessGroupRequest;
 import com.cosmo.authentication.accessgroup.model.request.FetchAccessGroupDetail;
 import com.cosmo.authentication.accessgroup.service.AccessGroupService;
 import com.cosmo.common.constant.ApiConstant;
@@ -38,8 +39,8 @@ public class AccessGroupController {
         return accessGroupService.updateAccessGroup(updateAccessGroupModel);
     }
 
-    @PostMapping(ApiConstant.DELETE + "/{id}")
-    public Mono<ApiResponse> deleteAccessGroup(@PathVariable Long id) {
-        return accessGroupService.deleteAccessGroup(id);
+    @PostMapping(ApiConstant.DELETE)
+    public Mono<ApiResponse> deleteAccessGroup(@RequestBody @Valid DeleteAccessGroupRequest deleteAccessGroupRequest) {
+        return accessGroupService.deleteAccessGroup(deleteAccessGroupRequest);
     }
 }

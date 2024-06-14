@@ -22,7 +22,6 @@ public class VendorController {
         return vendorService.createVendorUser(createVendorUseerModel, connectedUser);
     }
 
-
     @GetMapping(ApiConstant.GET + ApiConstant.SLASH + ApiConstant.DETAIL)
     public Mono<ApiResponse<?>> getVendorUserDetails(
             @RequestHeader("Authorization") String token){

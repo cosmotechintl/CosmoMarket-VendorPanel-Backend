@@ -102,4 +102,11 @@ public class ResponseUtil {
                 .httpStatus(HttpStatus.NOT_FOUND)
                 .build();
     }
+    public static ApiResponse<Object> getBeanValidationFailureResponse(String message) {
+        return ApiResponse.builder()
+                .code(ServerResponseCodeConstant.VALIDATION_EXCEPTION)
+                .message(message)
+                .httpStatus(HttpStatus.OK)
+                .build();
+    }
 }

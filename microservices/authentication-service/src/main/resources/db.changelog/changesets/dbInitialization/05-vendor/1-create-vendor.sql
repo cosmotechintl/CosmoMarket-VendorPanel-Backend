@@ -1,5 +1,5 @@
 --liquibase formatted sql
---changeset amritkthapa:2
+--changeset amritkthapa:1
 --preconditions onFail:CONTINUE onError:HALT
 CREATE TABLE IF NOT EXISTS `vendor`
 (

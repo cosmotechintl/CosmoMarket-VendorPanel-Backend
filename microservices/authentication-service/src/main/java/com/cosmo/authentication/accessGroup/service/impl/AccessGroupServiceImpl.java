@@ -5,6 +5,7 @@ import com.cosmo.authentication.accessgroup.entity.AccessGroupRoleMap;
 import com.cosmo.authentication.accessgroup.mapper.AccessGroupMapper;
 import com.cosmo.authentication.accessgroup.mapper.AccessGroupRoleMapMapper;
 import com.cosmo.authentication.accessgroup.model.*;
+import com.cosmo.authentication.accessgroup.model.request.DeleteAccessGroupRequest;
 import com.cosmo.authentication.accessgroup.model.request.FetchAccessGroupDetail;
 import com.cosmo.authentication.accessgroup.service.AccessGroupService;
 import com.cosmo.authentication.accessgroup.repo.AccessGroupRepository;
@@ -58,8 +59,8 @@ public class AccessGroupServiceImpl implements AccessGroupService {
     }
 
     @Override
-    public Mono<ApiResponse> deleteAccessGroup(Long id) {
-        Optional<AccessGroup> accessGroup = accessGroupRepository.findById(id);
+    public Mono<ApiResponse> deleteAccessGroup(DeleteAccessGroupRequest deleteAccessGroupRequest) {
+        Optional<AccessGroup> accessGroup = accessGroupRepository.findById(deleteAccessGroupRequest.getId());
 
         if (accessGroup.isPresent()) {
             AccessGroup existingAccessGroup = accessGroup.get();

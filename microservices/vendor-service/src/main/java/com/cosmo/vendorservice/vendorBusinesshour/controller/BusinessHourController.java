@@ -2,15 +2,13 @@ package com.cosmo.vendorservice.vendorBusinesshour.controller;
 
 import com.cosmo.common.constant.ApiConstant;
 import com.cosmo.common.model.ApiResponse;
+import com.cosmo.vendorservice.vendorBusinesshour.model.BusinessHourDetailModel;
 import com.cosmo.vendorservice.vendorBusinesshour.model.SetBusinessHour;
 import com.cosmo.vendorservice.vendorBusinesshour.model.UpdateBusinessHourModel;
 import com.cosmo.vendorservice.vendorBusinesshour.service.BusinessHourService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import java.security.Principal;
@@ -33,4 +31,10 @@ public class BusinessHourController {
             , Principal connectedUser) {
         return businessHourService.updateBusinessHour(updateBusinessHourModels, connectedUser);
     }
+
+    @GetMapping(ApiConstant.DETAIL)
+    public Mono<ApiResponse<?>> getBusinessHours(Principal connectedUser) {
+        return businessHourService.getBusinessHours(connectedUser);
+    }
+
 }
