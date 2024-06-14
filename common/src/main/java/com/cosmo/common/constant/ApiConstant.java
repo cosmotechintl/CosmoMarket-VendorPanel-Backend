@@ -22,6 +22,8 @@ public class ApiConstant {
     public static final String SLASH = "/";
     public static final String DETAIL = "detail";
     public static final String NAVIGATION = "navigation";
+    public static final String CHANGE_PASSWORD = "changePassword";
+    public static final String ALL_VENDOR_USERS = "allVendorUsers";
 
     public static final String VENDOR_USER = "vendorUser";
     public static final String VENDOR_DETAILS = "vendorDetails";

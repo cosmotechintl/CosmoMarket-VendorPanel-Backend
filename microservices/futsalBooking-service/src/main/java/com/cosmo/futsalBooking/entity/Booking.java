@@ -1,4 +1,4 @@
-package com.cosmo.futsalBooking_service.entity;
+package com.cosmo.futsalBooking.entity;
 
 import com.cosmo.common.abstractEntity.AbstractEntity;
 import jakarta.persistence.Entity;
