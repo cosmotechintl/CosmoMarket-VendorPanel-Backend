@@ -1,16 +1,16 @@
-package com.cosmo.vendorservice.vendorBusinesshour.service.Impl;
+package com.cosmo.vendorservice.businesshour.service.Impl;
 
 import com.cosmo.authentication.user.entity.VendorUser;
 import com.cosmo.authentication.user.repo.VendorUserRepository;
 import com.cosmo.common.exception.NotFoundException;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.util.ResponseUtil;
-import com.cosmo.vendorservice.vendorBusinesshour.entity.BusinessHours;
-import com.cosmo.vendorservice.vendorBusinesshour.mapper.BusinessHoursMapper;
-import com.cosmo.vendorservice.vendorBusinesshour.model.SetBusinessHour;
-import com.cosmo.vendorservice.vendorBusinesshour.model.UpdateBusinessHourModel;
-import com.cosmo.vendorservice.vendorBusinesshour.repo.BusinessHoursRepository;
-import com.cosmo.vendorservice.vendorBusinesshour.service.BusinessHourService;
+import com.cosmo.vendorservice.businesshour.entity.BusinessHours;
+import com.cosmo.vendorservice.businesshour.mapper.BusinessHoursMapper;
+import com.cosmo.vendorservice.businesshour.model.CreateBusinessHourRequestModel;
+import com.cosmo.vendorservice.businesshour.model.UpdateBusinessHourModel;
+import com.cosmo.vendorservice.businesshour.repo.BusinessHoursRepository;
+import com.cosmo.vendorservice.businesshour.service.BusinessHourService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -30,14 +30,14 @@ public class BusinessHourServiceImpl implements BusinessHourService {
 
     @Override
     @Transactional
-    public Mono<ApiResponse<?>> addBusinessHour(List<SetBusinessHour> setBusinessHours, Principal connectedUser) {
+    public Mono<ApiResponse<?>> addBusinessHour(CreateBusinessHourRequestModel businessHourRequests, Principal connectedUser) {
 
         VendorUser vendorUser = vendorUserRepository.findByUsername(connectedUser.getName())
                 .orElseThrow(() -> new NotFoundException("Invalid User"));
         Long vendorId = vendorUser.getVendor().getId();
         log.info("Vendor Id: {}", vendorId);
 
-        setBusinessHours.forEach(setBusinessHour -> {
+        businessHourRequests.getBusinessHours().forEach(setBusinessHour -> {
             BusinessHours businessHours = businessHoursMapper.toEntity(setBusinessHour, vendorId);
             log.info("Business Hour: {}", businessHours);
 

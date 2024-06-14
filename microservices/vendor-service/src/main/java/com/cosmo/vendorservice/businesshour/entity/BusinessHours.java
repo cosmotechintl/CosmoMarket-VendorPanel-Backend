@@ -1,4 +1,4 @@
-package com.cosmo.vendorservice.vendorBusinesshour.entity;
+package com.cosmo.vendorservice.businesshour.entity;
 
 import com.cosmo.authentication.user.entity.Vendor;
 import com.cosmo.common.abstractEntity.AbstractEntity;
@@ -25,10 +25,10 @@ public class BusinessHours extends AbstractEntity {
     @Enumerated(EnumType.ORDINAL)
     private DayOfWeek day;
 
-    @Column(name = "start_time",columnDefinition = "TIME")
+    @Column(name = "start_time", columnDefinition = "TIME")
     private LocalTime startTime;
 
-    @Column(name = "end_time",columnDefinition = "TIME")
+    @Column(name = "end_time", columnDefinition = "TIME")
     private LocalTime endTime;
 
     @Column(name = "closed")

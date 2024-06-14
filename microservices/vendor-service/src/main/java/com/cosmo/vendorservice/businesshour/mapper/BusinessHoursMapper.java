@@ -1,15 +1,14 @@
-package com.cosmo.vendorservice.vendorBusinesshour.mapper;
+package com.cosmo.vendorservice.businesshour.mapper;
 
 import com.cosmo.authentication.user.entity.Vendor;
 import com.cosmo.authentication.user.repo.VendorRepository;
 import com.cosmo.common.exception.BadRequestException;
 import com.cosmo.common.exception.NotFoundException;
-import com.cosmo.vendorservice.vendorBusinesshour.entity.BusinessHours;
-import com.cosmo.vendorservice.vendorBusinesshour.model.SetBusinessHour;
-import com.cosmo.vendorservice.vendorBusinesshour.model.UpdateBusinessHourModel;
-import com.cosmo.vendorservice.vendorBusinesshour.repo.BusinessHoursRepository;
+import com.cosmo.vendorservice.businesshour.entity.BusinessHours;
+import com.cosmo.vendorservice.businesshour.model.BusinessHourRequest;
+import com.cosmo.vendorservice.businesshour.model.UpdateBusinessHourModel;
+import com.cosmo.vendorservice.businesshour.repo.BusinessHoursRepository;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,34 +22,34 @@ public abstract class BusinessHoursMapper {
     private VendorRepository vendorRepository;
     @Autowired
     private BusinessHoursRepository businessHoursRepository;
-    public BusinessHours toEntity(SetBusinessHour setBusinessHour, Long vendorId){
-        if ( setBusinessHour == null && vendorId == null ) {
+    public BusinessHours toEntity(BusinessHourRequest businessHourRequest, Long vendorId){
+        if ( businessHourRequest == null && vendorId == null ) {
             return null;
         }
 
         BusinessHours businessHours = new BusinessHours();
-        if ( setBusinessHour != null ) {
+        if ( businessHourRequest != null ) {
             Vendor vendor = vendorRepository.findById(vendorId).orElseThrow(() -> new NotFoundException("Vendor not found"));
             businessHours.setVendor(vendor);
-            if ( setBusinessHour.getDay() != null ) {
-                businessHours.setDay( Enum.valueOf( DayOfWeek.class, setBusinessHour.getDay() ) );
+            if ( businessHourRequest.getDay() != null ) {
+                businessHours.setDay( Enum.valueOf( DayOfWeek.class, businessHourRequest.getDay() ) );
             }
-            if ( setBusinessHour.isClosed() ) {
-                if ( setBusinessHour.getStartTime() != null || setBusinessHour.getEndTime() != null ) {
+            if ( businessHourRequest.isClosed() ) {
+                if ( businessHourRequest.getStartTime() != null || businessHourRequest.getEndTime() != null ) {
                     throw new BadRequestException("Start time and end time should not be provided when also marked as closed");
                 }
             } else {
-                if ( setBusinessHour.getStartTime() != null ) {
-                    if ( setBusinessHour.getEndTime() == null ) {
+                if ( businessHourRequest.getStartTime() != null ) {
+                    if ( businessHourRequest.getEndTime() == null ) {
                         throw new BadRequestException("End time must be provided when start time is provided");
                     }
-                    businessHours.setStartTime( LocalTime.parse( setBusinessHour.getStartTime() ) );
-                    businessHours.setEndTime( LocalTime.parse( setBusinessHour.getEndTime() ) );
-                }else if (setBusinessHour.getEndTime() != null) {
+                    businessHours.setStartTime( LocalTime.parse( businessHourRequest.getStartTime() ) );
+                    businessHours.setEndTime( LocalTime.parse( businessHourRequest.getEndTime() ) );
+                }else if (businessHourRequest.getEndTime() != null) {
                     throw new BadRequestException("End time must be provided when start time is provided");
                 }
             }
-            businessHours.setClosed( setBusinessHour.isClosed() );
+            businessHours.setClosed( businessHourRequest.isClosed() );
         }
 
 

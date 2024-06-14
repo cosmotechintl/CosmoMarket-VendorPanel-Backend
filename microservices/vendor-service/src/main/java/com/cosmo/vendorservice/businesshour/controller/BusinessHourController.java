@@ -1,10 +1,11 @@
-package com.cosmo.vendorservice.vendorBusinesshour.controller;
+package com.cosmo.vendorservice.businesshour.controller;
 
 import com.cosmo.common.constant.ApiConstant;
 import com.cosmo.common.model.ApiResponse;
-import com.cosmo.vendorservice.vendorBusinesshour.model.SetBusinessHour;
-import com.cosmo.vendorservice.vendorBusinesshour.model.UpdateBusinessHourModel;
-import com.cosmo.vendorservice.vendorBusinesshour.service.BusinessHourService;
+import com.cosmo.vendorservice.businesshour.model.BusinessHourRequest;
+import com.cosmo.vendorservice.businesshour.model.CreateBusinessHourRequestModel;
+import com.cosmo.vendorservice.businesshour.model.UpdateBusinessHourModel;
+import com.cosmo.vendorservice.businesshour.service.BusinessHourService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,9 +24,9 @@ public class BusinessHourController {
     private final BusinessHourService businessHourService;
 
     @PostMapping(ApiConstant.CREATE)
-    public Mono<ApiResponse<?>> addBusinessHour(@RequestBody @Valid List<SetBusinessHour> setBusinessHours
+    public Mono<ApiResponse<?>> addBusinessHour(@RequestBody CreateBusinessHourRequestModel createBusinessHourRequestModel
             , Principal connectedUser) {
-        return businessHourService.addBusinessHour(setBusinessHours, connectedUser);
+        return businessHourService.addBusinessHour(createBusinessHourRequestModel, connectedUser);
     }
 
     @PostMapping(ApiConstant.EDIT)
