@@ -13,13 +13,8 @@ import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
-/**
- * Author: Sapana Rimal
- * Date: 5/15/2024
- */
 
 @Slf4j
-@Component
 @RequestScope
 public class GroupRoleBuilder {
 
