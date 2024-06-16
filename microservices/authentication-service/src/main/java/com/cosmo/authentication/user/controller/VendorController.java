@@ -1,12 +1,12 @@
 package com.cosmo.authentication.user.controller;
 
+import com.cosmo.authentication.user.model.CreateVendorUserModel;
 import com.cosmo.authentication.user.model.PasswordChangeRequest;
-import com.cosmo.authentication.user.model.requestDto.DeleteVendorRequest;
-import com.cosmo.authentication.user.model.requestDto.UpdateVendorRequest;
+import com.cosmo.authentication.user.model.requestDto.DeleteVenderRequest;
+import com.cosmo.authentication.user.model.requestDto.UpdateVenderRequest;
+import com.cosmo.authentication.user.service.VendorService;
 import com.cosmo.common.constant.ApiConstant;
 import com.cosmo.common.model.ApiResponse;
-import com.cosmo.authentication.user.service.VendorUserService;
-import com.cosmo.authentication.user.model.CreateVendorUserModel;
 import com.cosmo.common.model.SearchParam;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,44 +18,44 @@ import java.security.Principal;
 @RestController
 @RequestMapping(ApiConstant.VENDOR_USER)
 @RequiredArgsConstructor
-public class VendorUserController {
-    private final VendorUserService vendorUserService;
+public class VendorController {
+    private final VendorService vendorService;
 
     @PostMapping(ApiConstant.EDIT)
-    public Mono<ApiResponse<?>> edit(@RequestBody @Valid UpdateVendorRequest updateVendorRequest, Principal connectedUser) {
-        return vendorUserService.updateVendorUser(updateVendorRequest, connectedUser);
+    public Mono<ApiResponse<?>> edit(@RequestBody @Valid UpdateVenderRequest updateVenderRequest, Principal connectedUser) {
+        return vendorService.updateVenderUser(updateVenderRequest, connectedUser);
     }
 
 
     @PostMapping(ApiConstant.DELETE)
-    public Mono<ApiResponse<?>> deleteVendorUser(@RequestBody @Valid DeleteVendorRequest deleteVendorRequest,
+    public Mono<ApiResponse<?>> deleteVenderUser(@RequestBody @Valid DeleteVenderRequest deleteVenderRequest,
                                                  Principal connectedUser) {
-        return vendorUserService.deleteVendorUser(deleteVendorRequest, connectedUser);
+        return vendorService.deleteVenderUser(deleteVenderRequest, connectedUser);
     }
 
 
     @PostMapping(ApiConstant.CREATE)
-    public Mono<ApiResponse> addVendorUser(@RequestBody @Valid CreateVendorUserModel createVendorUserModel
+    public Mono<ApiResponse> addVendorUser(@RequestBody @Valid CreateVendorUserModel createVendorUseerModel
             , Principal connectedUser) {
-        return vendorUserService.createVendorUser(createVendorUserModel, connectedUser);
+        return vendorService.createVendorUser(createVendorUseerModel, connectedUser);
     }
 
     @GetMapping(ApiConstant.GET + ApiConstant.SLASH + ApiConstant.DETAIL)
     public Mono<ApiResponse<?>> getVendorUserDetails(
             @RequestHeader("Authorization") String token) {
-        return vendorUserService.getVendorUserDetail(token);
+        return vendorService.getVendorUserDetail(token);
     }
 
     @GetMapping(ApiConstant.ALL_VENDOR_USERS)
     public Mono<ApiResponse<?>> getAllVendorUserDetail(@RequestBody @Valid SearchParam searchParam) {
-        return vendorUserService.getallVendorUserDetail(searchParam);
+        return vendorService.getallVendorUserDetail(searchParam);
     }
 
     @PostMapping(ApiConstant.CHANGE_PASSWORD)
     public Mono<ApiResponse<?>> changePassword(
             @RequestBody @Valid PasswordChangeRequest passwordChangeRequest,
             Principal connectedUser) {
-        return vendorUserService.changePassword(passwordChangeRequest, connectedUser);
+        return vendorService.changePassword(passwordChangeRequest, connectedUser);
     }
 
 }

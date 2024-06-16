@@ -4,18 +4,15 @@ import com.cosmo.authentication.accessgroup.repo.AccessGroupRepository;
 import com.cosmo.authentication.user.entity.Vendor;
 import com.cosmo.authentication.user.entity.VendorUser;
 import com.cosmo.authentication.user.model.CreateVendorUserModel;
-import com.cosmo.authentication.user.model.SearchVendorUsersResponse;
+import com.cosmo.authentication.user.model.SearchVenderUsersResponse;
 import com.cosmo.authentication.user.model.VendorUserDetailsDto;
 import com.cosmo.authentication.user.repo.VendorRepository;
 import com.cosmo.authentication.user.repo.VendorUserRepository;
 import com.cosmo.common.constant.StatusConstant;
 import com.cosmo.common.exception.ConflictException;
 import com.cosmo.common.exception.InvalidInputException;
-import com.cosmo.common.exception.NotFoundException;
 import com.cosmo.common.exception.ResourceNotFoundException;
 import com.cosmo.common.repository.StatusRepository;
-import com.cosmo.authentication.user.model.CreateVendorUserModel;
-import com.cosmo.authentication.user.model.VendorUserDetailsDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
@@ -38,6 +35,7 @@ public abstract class VendorUserMapper {
     protected PasswordEncoder passwordEncoder;
     @Autowired
     protected VendorUserRepository vendorUserRepository;
+
 
     public abstract VendorUserDetailsDto getVendorUserDetailDto(VendorUser vendorUser);
 
@@ -71,9 +69,9 @@ public abstract class VendorUserMapper {
     vendorUser.setVendor(vendor);
     return vendorUser;
 }
-    public abstract SearchVendorUsersResponse entityToDto(VendorUser vendorUser);
+    public abstract SearchVenderUsersResponse entityToDto(VendorUser vendorUser);
 
-    public List<SearchVendorUsersResponse> getVendorUsersResponses(List<VendorUser> vendorUsers) {
+    public List<SearchVenderUsersResponse> getVenderUsersResponses(List<VendorUser> vendorUsers) {
         return vendorUsers.stream().map(this::entityToDto).collect(Collectors.toList());
     }
 }

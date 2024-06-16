@@ -2,7 +2,6 @@ package com.cosmo.vendorservice.businesshour.controller;
 
 import com.cosmo.common.constant.ApiConstant;
 import com.cosmo.common.model.ApiResponse;
-import com.cosmo.vendorservice.businesshour.model.BusinessHourRequest;
 import com.cosmo.vendorservice.businesshour.model.CreateBusinessHourRequestModel;
 import com.cosmo.vendorservice.businesshour.model.UpdateBusinessHourModel;
 import com.cosmo.vendorservice.businesshour.service.BusinessHourService;

@@ -1,6 +1,7 @@
 package com.cosmo.vendorservice.businesshour.service.Impl;
 
 import com.cosmo.authentication.user.entity.VendorUser;
+import com.cosmo.authentication.user.repo.VendorRepository;
 import com.cosmo.authentication.user.repo.VendorUserRepository;
 import com.cosmo.common.exception.BadRequestException;
 import com.cosmo.common.exception.NotFoundException;
@@ -30,6 +31,7 @@ public class BusinessHourServiceImpl implements BusinessHourService {
     private final BusinessHoursRepository businessHoursRepository;
     private final BusinessHoursMapper businessHoursMapper;
     private final VendorUserRepository vendorUserRepository;
+    private final VendorRepository vendorRepository;
 
     @Override
     @Transactional
@@ -43,6 +45,7 @@ public class BusinessHourServiceImpl implements BusinessHourService {
         businessHourRequests.getBusinessHours().forEach(setBusinessHour -> {
             BusinessHours businessHours = businessHoursMapper.toEntity(setBusinessHour, vendorId);
             log.info("Business Hour: {}", businessHours);
+            businessHoursRepository.save(businessHours);
 
         });
         return Mono.just(ResponseUtil.getSuccessfulApiResponse("Business hour added"));
@@ -57,7 +60,7 @@ public class BusinessHourServiceImpl implements BusinessHourService {
         updateBusinessHourModels.forEach(updateBusinessHourModel -> {
             BusinessHours existingBusinessHours = businessHoursRepository.findById(Long.valueOf(updateBusinessHourModel.getId()))
                     .orElseThrow(() -> new NotFoundException("Business hour not found"));
-            existingBusinessHours = businessHoursMapper.updatetoEntity(updateBusinessHourModel, existingBusinessHours, vendorId);
+            existingBusinessHours = businessHoursMapper.updateToEntity(updateBusinessHourModel, existingBusinessHours, vendorId);
             businessHoursRepository.save(existingBusinessHours);
 
         });

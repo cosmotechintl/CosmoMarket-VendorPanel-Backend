@@ -24,34 +24,35 @@ public abstract class BusinessHoursMapper {
     @Autowired
     private BusinessHoursRepository businessHoursRepository;
 
-    public BusinessHours toEntity(BusinessHourRequest businessHourRequest, Long vendorId){
-        if ( businessHourRequest == null && vendorId == null ) {
+    public BusinessHours toEntity(BusinessHourRequest businessHourRequest, Long vendorId) {
+        if (businessHourRequest == null && vendorId == null) {
             return null;
         }
 
+
         BusinessHours businessHours = new BusinessHours();
-        if ( businessHourRequest != null ) {
+        if (businessHourRequest != null) {
             Vendor vendor = vendorRepository.findById(vendorId).orElseThrow(() -> new NotFoundException("Vendor not found"));
             businessHours.setVendor(vendor);
-            if ( businessHourRequest.getDay() != null ) {
-                businessHours.setDay( Enum.valueOf( DayOfWeek.class, businessHourRequest.getDay() ) );
+            if (businessHourRequest.getDay() != null) {
+                businessHours.setDay(Enum.valueOf(DayOfWeek.class, businessHourRequest.getDay()));
             }
-            if ( businessHourRequest.isClosed() ) {
-                if ( businessHourRequest.getStartTime() != null || businessHourRequest.getEndTime() != null ) {
+            if (businessHourRequest.isClosed()) {
+                if (businessHourRequest.getStartTime() != null || businessHourRequest.getEndTime() != null) {
                     throw new BadRequestException("Start time and end time should not be provided when also marked as closed");
                 }
             } else {
-                if ( businessHourRequest.getStartTime() != null ) {
-                    if ( businessHourRequest.getEndTime() == null ) {
+                if (businessHourRequest.getStartTime() != null) {
+                    if (businessHourRequest.getEndTime() == null) {
                         throw new BadRequestException("End time must be provided when start time is provided");
                     }
-                    businessHours.setStartTime( LocalTime.parse( businessHourRequest.getStartTime() ) );
-                    businessHours.setEndTime( LocalTime.parse( businessHourRequest.getEndTime() ) );
-                }else if (businessHourRequest.getEndTime() != null) {
+                    businessHours.setStartTime(LocalTime.parse(businessHourRequest.getStartTime()));
+                    businessHours.setEndTime(LocalTime.parse(businessHourRequest.getEndTime()));
+                } else if (businessHourRequest.getEndTime() != null) {
                     throw new BadRequestException("End time must be provided when start time is provided");
                 }
             }
-            businessHours.setClosed( businessHourRequest.isClosed() );
+            businessHours.setClosed(businessHourRequest.isClosed());
         }
 
 
@@ -59,19 +60,19 @@ public abstract class BusinessHoursMapper {
     }
 
 
-    public BusinessHours updatetoEntity(UpdateBusinessHourModel updateBusinessHourModel, BusinessHours businessHours, Long vendorId){
+    public BusinessHours updateToEntity(UpdateBusinessHourModel updateBusinessHourModel, BusinessHours businessHours, Long vendorId) {
 
-        if ( updateBusinessHourModel != null ) {
-            if ( updateBusinessHourModel.getDay() != null ) {
-                businessHours.setDay( Enum.valueOf( DayOfWeek.class, updateBusinessHourModel.getDay() ) );
+        if (updateBusinessHourModel != null) {
+            if (updateBusinessHourModel.getDay() != null) {
+                businessHours.setDay(Enum.valueOf(DayOfWeek.class, updateBusinessHourModel.getDay()));
             }
-            if ( updateBusinessHourModel.getStartTime() != null ) {
-                businessHours.setStartTime( LocalTime.parse( updateBusinessHourModel.getStartTime() ) );
+            if (updateBusinessHourModel.getStartTime() != null) {
+                businessHours.setStartTime(LocalTime.parse(updateBusinessHourModel.getStartTime()));
             }
-            if ( updateBusinessHourModel.getEndTime() != null ) {
-                businessHours.setEndTime( LocalTime.parse( updateBusinessHourModel.getEndTime() ) );
+            if (updateBusinessHourModel.getEndTime() != null) {
+                businessHours.setEndTime(LocalTime.parse(updateBusinessHourModel.getEndTime()));
             }
-            businessHours.setClosed( updateBusinessHourModel.isClosed() );
+            businessHours.setClosed(updateBusinessHourModel.isClosed());
         }
         businessHours.setVendor(vendorRepository.findById(vendorId).orElseThrow(() -> new NotFoundException("Vendor not found")));
         return businessHours;

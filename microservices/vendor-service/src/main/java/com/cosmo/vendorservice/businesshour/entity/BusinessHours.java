@@ -8,8 +8,6 @@ import lombok.Setter;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-import java.util.Arrays;
-import java.util.List;
 
 @Entity
 @Getter
@@ -39,10 +37,6 @@ public class BusinessHours extends AbstractEntity {
             return false;
         }
         return !time.isBefore(startTime) && !time.isAfter(endTime);
-    }
-
-    public List<String> getFieldPropertyList() {
-        return Arrays.asList("vendor", "day", "startTime", "endTime", "closed");
     }
 
 }
