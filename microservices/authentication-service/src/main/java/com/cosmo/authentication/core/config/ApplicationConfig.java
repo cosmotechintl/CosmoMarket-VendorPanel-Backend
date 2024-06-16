@@ -1,5 +1,6 @@
 package com.cosmo.authentication.core.config;
 
+import com.cosmo.authentication.role.mapper.GroupRoleBuilder;
 import com.cosmo.authentication.user.repo.VendorUserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.context.annotation.RequestScope;
 
 @Configuration
 @AllArgsConstructor
@@ -42,5 +44,11 @@ public class ApplicationConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    @RequestScope
+    public GroupRoleBuilder groupRoleBuilder() {
+        return new GroupRoleBuilder();
     }
 }

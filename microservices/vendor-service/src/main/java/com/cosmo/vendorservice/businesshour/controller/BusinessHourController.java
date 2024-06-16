@@ -8,10 +8,7 @@ import com.cosmo.vendorservice.businesshour.model.UpdateBusinessHourModel;
 import com.cosmo.vendorservice.businesshour.service.BusinessHourService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 import java.security.Principal;
@@ -33,5 +30,10 @@ public class BusinessHourController {
     public Mono<ApiResponse<?>> editAccessGroup(@RequestBody @Valid List<UpdateBusinessHourModel> updateBusinessHourModels
             , Principal connectedUser) {
         return businessHourService.updateBusinessHour(updateBusinessHourModels, connectedUser);
+    }
+
+    @GetMapping(ApiConstant.DETAIL)
+    public Mono<ApiResponse<?>> getBusinessHours(Principal connectedUser) {
+        return businessHourService.getBusinessHours(connectedUser);
     }
 }

@@ -5,6 +5,7 @@ import com.cosmo.authentication.user.repo.VendorRepository;
 import com.cosmo.common.exception.BadRequestException;
 import com.cosmo.common.exception.NotFoundException;
 import com.cosmo.vendorservice.businesshour.entity.BusinessHours;
+import com.cosmo.vendorservice.businesshour.model.BusinessHourDetailModel;
 import com.cosmo.vendorservice.businesshour.model.BusinessHourRequest;
 import com.cosmo.vendorservice.businesshour.model.UpdateBusinessHourModel;
 import com.cosmo.vendorservice.businesshour.repo.BusinessHoursRepository;
@@ -75,5 +76,7 @@ public abstract class BusinessHoursMapper {
         businessHours.setVendor(vendorRepository.findById(vendorId).orElseThrow(() -> new NotFoundException("Vendor not found")));
         return businessHours;
     }
+
+    public abstract BusinessHourDetailModel toDetailModel(BusinessHours businessHours);
 }
 

@@ -11,4 +11,5 @@ import java.util.List;
 public interface BusinessHourService {
     Mono<ApiResponse<?>> addBusinessHour(CreateBusinessHourRequestModel businessHourRequests, Principal connectedUser);
     Mono<ApiResponse<?>> updateBusinessHour(List<UpdateBusinessHourModel> updateBusinessHourModels, Principal connectedUser);
+    Mono<ApiResponse<?>> getBusinessHours(Principal connectedUser);
 }

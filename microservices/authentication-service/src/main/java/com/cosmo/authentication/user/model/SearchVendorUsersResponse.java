@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SearchVenderUsersResponse extends ModelBase {
+public class SearchVendorUsersResponse extends ModelBase {
 
     private String name;
     private String username;

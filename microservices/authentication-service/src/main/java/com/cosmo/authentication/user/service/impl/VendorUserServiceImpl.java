@@ -5,13 +5,13 @@ import com.cosmo.authentication.user.entity.VendorUser;
 import com.cosmo.authentication.user.mapper.VendorUserMapper;
 import com.cosmo.authentication.user.model.CreateVendorUserModel;
 import com.cosmo.authentication.user.model.PasswordChangeRequest;
-import com.cosmo.authentication.user.model.SearchVenderUsersResponse;
+import com.cosmo.authentication.user.model.SearchVendorUsersResponse;
 import com.cosmo.authentication.user.model.VendorUserDetailsDto;
-import com.cosmo.authentication.user.model.requestDto.DeleteVenderRequest;
-import com.cosmo.authentication.user.model.requestDto.UpdateVenderRequest;
+import com.cosmo.authentication.user.model.requestDto.DeleteVendorRequest;
+import com.cosmo.authentication.user.model.requestDto.UpdateVendorRequest;
 import com.cosmo.authentication.user.repo.VendorUserRepository;
 import com.cosmo.authentication.user.repo.VendorUsersSearchRepository;
-import com.cosmo.authentication.user.service.VendorService;
+import com.cosmo.authentication.user.service.VendorUserService;
 import com.cosmo.common.exception.NotFoundException;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.model.PageableResponse;
@@ -34,7 +34,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class VendorServiceImpl implements VendorService {
+public class VendorUserServiceImpl implements VendorUserService {
     private final VendorUserMapper vendorUserMapper;
     private final VendorUserRepository vendorUserRepository;
     private final StatusRepository statusRepository;
@@ -45,15 +45,15 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public Mono<ApiResponse<?>> getallVendorUserDetail(SearchParam searchParam) {
-        SearchResponseWithMapperBuilder<VendorUser, SearchVenderUsersResponse> responseBuilder =
-                SearchResponseWithMapperBuilder.<VendorUser, SearchVenderUsersResponse>builder()
+        SearchResponseWithMapperBuilder<VendorUser, SearchVendorUsersResponse> responseBuilder =
+                SearchResponseWithMapperBuilder.<VendorUser, SearchVendorUsersResponse>builder()
                         .count(vendorUsersSearchRepository::count)
 //                        .searchData(vendorUsersSearchRepository::getAll)
                         .searchData(param -> (List<VendorUser>) vendorUsersSearchRepository.getAll(param))
-                        .mapperFunction(this.vendorUserMapper::getVenderUsersResponses)
+                        .mapperFunction(this.vendorUserMapper::getVendorUsersResponses)
                         .searchParam(searchParam)
                         .build();
-        PageableResponse<SearchVenderUsersResponse> response = searchResponse.getSearchResponse(responseBuilder);
+        PageableResponse<SearchVendorUsersResponse> response = searchResponse.getSearchResponse(responseBuilder);
         return Mono.just(ResponseUtil.getSuccessfulApiResponse(response, "Vendor users fetched successfully."));
     }
     @Override
@@ -74,12 +74,12 @@ public class VendorServiceImpl implements VendorService {
     }
 
     @Override
-    public Mono<ApiResponse<?>> updateVenderUser(UpdateVenderRequest updateVenderRequest, Principal connectedUser) {
+    public Mono<ApiResponse<?>> updateVendorUser(UpdateVendorRequest updateVendorRequest, Principal connectedUser) {
         return null;
     }
 
     @Override
-    public Mono<ApiResponse<?>> deleteVenderUser(DeleteVenderRequest deleteVenderRequest, Principal connectedUser) {
+    public Mono<ApiResponse<?>> deleteVendorUser(DeleteVendorRequest deleteVendorRequest, Principal connectedUser) {
         return null;
     }
 
