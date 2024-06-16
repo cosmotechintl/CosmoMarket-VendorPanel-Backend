@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 @Getter
 @Setter
-public class UpdateVenderRequest extends ModelBase {
+public class UpdateVendorRequest extends ModelBase {
 
     private Long id;
     @NotBlank(message = "Name cannot be blank")

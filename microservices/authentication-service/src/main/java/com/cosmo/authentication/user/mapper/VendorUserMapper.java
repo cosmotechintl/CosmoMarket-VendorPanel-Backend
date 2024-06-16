@@ -4,7 +4,7 @@ import com.cosmo.authentication.accessgroup.repo.AccessGroupRepository;
 import com.cosmo.authentication.user.entity.Vendor;
 import com.cosmo.authentication.user.entity.VendorUser;
 import com.cosmo.authentication.user.model.CreateVendorUserModel;
-import com.cosmo.authentication.user.model.SearchVenderUsersResponse;
+import com.cosmo.authentication.user.model.SearchVendorUsersResponse;
 import com.cosmo.authentication.user.model.VendorUserDetailsDto;
 import com.cosmo.authentication.user.repo.VendorRepository;
 import com.cosmo.common.constant.StatusConstant;
@@ -56,9 +56,9 @@ public abstract class VendorUserMapper {
     vendorUser.setVendor(vendor);
     return vendorUser;
 }
-    public abstract SearchVenderUsersResponse entityToDto(VendorUser vendorUser);
+    public abstract SearchVendorUsersResponse entityToDto(VendorUser vendorUser);
 
-    public List<SearchVenderUsersResponse> getVenderUsersResponses(List<VendorUser> vendorUsers) {
+    public List<SearchVendorUsersResponse> getVendorUsersResponses(List<VendorUser> vendorUsers) {
         return vendorUsers.stream().map(this::entityToDto).collect(Collectors.toList());
     }
 }

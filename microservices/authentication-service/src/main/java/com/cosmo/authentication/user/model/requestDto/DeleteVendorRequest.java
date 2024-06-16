@@ -5,6 +5,6 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class DeleteVenderRequest {
+public class DeleteVendorRequest {
 private Long Id;
 }
