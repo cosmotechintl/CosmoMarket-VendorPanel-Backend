@@ -5,7 +5,7 @@ import com.cosmo.authentication.user.entity.VendorUser;
 import com.cosmo.authentication.user.mapper.VendorUserMapper;
 import com.cosmo.authentication.user.model.CreateVendorUserModel;
 import com.cosmo.authentication.user.model.PasswordChangeRequest;
-import com.cosmo.authentication.user.model.SearchVenderUsersResponse;
+import com.cosmo.authentication.user.model.SearchVendorUsersResponse;
 import com.cosmo.authentication.user.model.VendorUserDetailsDto;
 import com.cosmo.authentication.user.model.requestDto.DeleteVenderRequest;
 import com.cosmo.authentication.user.model.requestDto.UpdateVenderRequest;
@@ -29,7 +29,6 @@ import reactor.core.publisher.Mono;
 
 import java.security.Principal;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -45,28 +44,26 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public Mono<ApiResponse<?>> getallVendorUserDetail(SearchParam searchParam) {
-        SearchResponseWithMapperBuilder<VendorUser, SearchVenderUsersResponse> responseBuilder =
-                SearchResponseWithMapperBuilder.<VendorUser, SearchVenderUsersResponse>builder()
+        SearchResponseWithMapperBuilder<VendorUser, SearchVendorUsersResponse> responseBuilder =
+                SearchResponseWithMapperBuilder.<VendorUser, SearchVendorUsersResponse>builder()
                         .count(vendorUsersSearchRepository::count)
-//                        .searchData(vendorUsersSearchRepository::getAll)
-                        .searchData(param -> (List<VendorUser>) vendorUsersSearchRepository.getAll(param))
-                        .mapperFunction(this.vendorUserMapper::getVenderUsersResponses)
+                        .searchData(vendorUsersSearchRepository::getAll)
+                        .mapperFunction(this.vendorUserMapper::getVendorUsersResponses)
                         .searchParam(searchParam)
                         .build();
-        PageableResponse<SearchVenderUsersResponse> response = searchResponse.getSearchResponse(responseBuilder);
+        PageableResponse<SearchVendorUsersResponse> response = searchResponse.getSearchResponse(responseBuilder);
         return Mono.just(ResponseUtil.getSuccessfulApiResponse(response, "Vendor users fetched successfully."));
     }
 
     @Override
     public Mono<ApiResponse<?>> changePassword(PasswordChangeRequest passwordChangeRequest, Principal connectedUser) {
-        var vendor= ((VendorUser) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal());
-        if (!passwordEncoder.matches(passwordChangeRequest.getOldPassword(),vendor.getPassword())){
+        var vendor = ((VendorUser) ((UsernamePasswordAuthenticationToken) connectedUser).getPrincipal());
+        if (!passwordEncoder.matches(passwordChangeRequest.getOldPassword(), vendor.getPassword())) {
             return Mono.just(ResponseUtil.getFailureResponse("old password is incorrect"));
         }
-        if(!passwordChangeRequest.getNewPassword().equals((passwordChangeRequest.getRetypeNewPassword()))){
+        if (!passwordChangeRequest.getNewPassword().equals((passwordChangeRequest.getRetypeNewPassword()))) {
             return Mono.just(ResponseUtil.getFailureResponse("new passwords do not match"));
-        }
-        else {
+        } else {
             vendor.setPassword(passwordEncoder.encode(passwordChangeRequest.getNewPassword()));
             vendor.setPasswordChangeDate(new Date());
             vendorUserRepository.save(vendor);
@@ -88,17 +85,17 @@ public class VendorServiceImpl implements VendorService {
     @Override
     @Transactional
     public Mono<ApiResponse> createVendorUser(CreateVendorUserModel createVendorUserModel, Principal connectedUser) {
-    VendorUser vendorUser = vendorUserRepository.findByUsername(connectedUser.getName())
-            .orElseThrow(() -> new NotFoundException("Invalid User"));
-    Long vendorId = vendorUser.getVendor().getId();
-    vendorUser = vendorUserMapper.toEntity(createVendorUserModel, vendorId);
-    if (vendorUser != null) {
-        vendorUserRepository.save(vendorUser);
-        return Mono.just(ResponseUtil.getSuccessfulApiResponse("Vendor user created"));
-    } else {
-        return Mono.just(ResponseUtil.getFailureResponse("Vendor user creation failed"));
+        VendorUser vendorUser = vendorUserRepository.findByUsername(connectedUser.getName())
+                .orElseThrow(() -> new NotFoundException("Invalid User"));
+        Long vendorId = vendorUser.getVendor().getId();
+        vendorUser = vendorUserMapper.toEntity(createVendorUserModel, vendorId);
+        if (vendorUser != null) {
+            vendorUserRepository.save(vendorUser);
+            return Mono.just(ResponseUtil.getSuccessfulApiResponse("Vendor user created"));
+        } else {
+            return Mono.just(ResponseUtil.getFailureResponse("Vendor user creation failed"));
+        }
     }
-}
 
     @Override
     public Mono<ApiResponse<?>> getVendorUserDetail(
