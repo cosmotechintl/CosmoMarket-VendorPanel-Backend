@@ -1,10 +1,10 @@
-package com.cosmo.authentication.accessgroup.controller;
+package com.cosmo.authentication.accessGroup.controller;
 
-import com.cosmo.authentication.accessgroup.model.CreateAccessGroupModel;
-import com.cosmo.authentication.accessgroup.model.UpdateAccessGroupModel;
-import com.cosmo.authentication.accessgroup.model.request.DeleteAccessGroupRequest;
-import com.cosmo.authentication.accessgroup.model.request.FetchAccessGroupDetail;
-import com.cosmo.authentication.accessgroup.service.AccessGroupService;
+import com.cosmo.authentication.accessGroup.model.CreateAccessGroupModel;
+import com.cosmo.authentication.accessGroup.model.UpdateAccessGroupModel;
+import com.cosmo.authentication.accessGroup.model.request.DeleteAccessGroupRequest;
+import com.cosmo.authentication.accessGroup.model.request.FetchAccessGroupDetail;
+import com.cosmo.authentication.accessGroup.service.AccessGroupService;
 import com.cosmo.common.constant.ApiConstant;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.model.SearchParam;

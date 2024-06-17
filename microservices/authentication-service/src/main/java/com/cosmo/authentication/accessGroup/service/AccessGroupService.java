@@ -1,9 +1,9 @@
-package com.cosmo.authentication.accessgroup.service;
+package com.cosmo.authentication.accessGroup.service;
 
-import com.cosmo.authentication.accessgroup.model.CreateAccessGroupModel;
-import com.cosmo.authentication.accessgroup.model.UpdateAccessGroupModel;
-import com.cosmo.authentication.accessgroup.model.request.DeleteAccessGroupRequest;
-import com.cosmo.authentication.accessgroup.model.request.FetchAccessGroupDetail;
+import com.cosmo.authentication.accessGroup.model.CreateAccessGroupModel;
+import com.cosmo.authentication.accessGroup.model.UpdateAccessGroupModel;
+import com.cosmo.authentication.accessGroup.model.request.DeleteAccessGroupRequest;
+import com.cosmo.authentication.accessGroup.model.request.FetchAccessGroupDetail;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.model.SearchParam;
 import reactor.core.publisher.Mono;

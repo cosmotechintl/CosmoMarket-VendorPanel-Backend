@@ -1,10 +1,10 @@
-package com.cosmo.authentication.accessgroup.mapper;
+package com.cosmo.authentication.accessGroup.mapper;
 
-import com.cosmo.authentication.accessgroup.entity.AccessGroup;
-import com.cosmo.authentication.accessgroup.entity.AccessGroupRoleMap;
-import com.cosmo.authentication.accessgroup.model.AccessGroupRoleMapDto;
-import com.cosmo.authentication.accessgroup.model.AssignRoleModel;
-import com.cosmo.authentication.accessgroup.repo.AccessGroupRoleMapRepository;
+import com.cosmo.authentication.accessGroup.entity.AccessGroup;
+import com.cosmo.authentication.accessGroup.entity.AccessGroupRoleMap;
+import com.cosmo.authentication.accessGroup.model.AccessGroupRoleMapDto;
+import com.cosmo.authentication.accessGroup.model.AssignRoleModel;
+import com.cosmo.authentication.accessGroup.repo.AccessGroupRoleMapRepository;
 import com.cosmo.authentication.role.entity.Roles;
 import com.cosmo.authentication.role.service.RolesService;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import org.slf4j.Logger;
 
 @Slf4j
 @RequiredArgsConstructor

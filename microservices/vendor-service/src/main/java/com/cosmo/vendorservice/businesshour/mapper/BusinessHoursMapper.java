@@ -1,7 +1,7 @@
 package com.cosmo.vendorservice.businesshour.mapper;
 
-import com.cosmo.authentication.user.entity.Vendor;
-import com.cosmo.authentication.user.repo.VendorRepository;
+import com.cosmo.authentication.vendor.entity.Vendor;
+import com.cosmo.authentication.vendor.repository.VendorRepository;
 import com.cosmo.common.exception.BadRequestException;
 import com.cosmo.common.exception.NotFoundException;
 import com.cosmo.vendorservice.businesshour.entity.BusinessHours;

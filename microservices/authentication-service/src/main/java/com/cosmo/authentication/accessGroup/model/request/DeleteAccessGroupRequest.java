@@ -1,4 +1,4 @@
-package com.cosmo.authentication.accessgroup.model.request;
+package com.cosmo.authentication.accessGroup.model.request;
 
 import com.cosmo.common.model.ModelBase;
 import lombok.Getter;

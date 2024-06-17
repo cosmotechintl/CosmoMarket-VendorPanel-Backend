@@ -1,6 +1,6 @@
-package com.cosmo.authentication.accessgroup.model;
+package com.cosmo.authentication.accessGroup.model;
 
-import com.cosmo.authentication.accessgroup.entity.AccessGroupRoleMap;
+import com.cosmo.authentication.accessGroup.entity.AccessGroupRoleMap;
 import com.cosmo.authentication.role.model.RolesDto;
 import com.cosmo.common.model.ModelBase;
 import lombok.Getter;

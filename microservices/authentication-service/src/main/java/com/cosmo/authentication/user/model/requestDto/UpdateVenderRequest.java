@@ -1,6 +1,6 @@
 package com.cosmo.authentication.user.model.requestDto;
 
-import com.cosmo.authentication.accessgroup.model.AccessGroupDto;
+import com.cosmo.authentication.accessGroup.model.AccessGroupDto;
 import com.cosmo.common.model.ModelBase;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,7 +1,6 @@
-package com.cosmo.authentication.accessgroup.entity;
+package com.cosmo.authentication.accessGroup.entity;
 
 import com.cosmo.common.abstractEntity.AbstractEntity;
-import com.fasterxml.jackson.annotation.JsonValue;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

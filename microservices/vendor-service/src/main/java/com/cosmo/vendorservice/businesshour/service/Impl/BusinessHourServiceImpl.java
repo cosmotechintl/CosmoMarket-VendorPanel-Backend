@@ -1,7 +1,7 @@
 package com.cosmo.vendorservice.businesshour.service.Impl;
 
 import com.cosmo.authentication.user.entity.VendorUser;
-import com.cosmo.authentication.user.repo.VendorRepository;
+import com.cosmo.authentication.vendor.repository.VendorRepository;
 import com.cosmo.authentication.user.repo.VendorUserRepository;
 import com.cosmo.common.exception.BadRequestException;
 import com.cosmo.common.exception.NotFoundException;

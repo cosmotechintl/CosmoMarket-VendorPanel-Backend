@@ -1,7 +1,8 @@
 package com.cosmo.authentication.user.entity;
 
-import com.cosmo.authentication.accessgroup.entity.AccessGroup;
-import com.cosmo.authentication.accessgroup.entity.AccessGroupRoleMap;
+import com.cosmo.authentication.accessGroup.entity.AccessGroup;
+import com.cosmo.authentication.accessGroup.entity.AccessGroupRoleMap;
+import com.cosmo.authentication.vendor.entity.Vendor;
 import com.cosmo.common.abstractEntity.AbstractEntity;
 import com.cosmo.common.entity.Status;
 import jakarta.persistence.*;

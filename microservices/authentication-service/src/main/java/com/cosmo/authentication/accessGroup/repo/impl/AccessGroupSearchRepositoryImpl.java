@@ -1,7 +1,7 @@
-package com.cosmo.authentication.accessgroup.repo.impl;
+package com.cosmo.authentication.accessGroup.repo.impl;
 
-import com.cosmo.authentication.accessgroup.entity.AccessGroup;
-import com.cosmo.authentication.accessgroup.repo.AccessGroupSearchRepository;
+import com.cosmo.authentication.accessGroup.entity.AccessGroup;
+import com.cosmo.authentication.accessGroup.repo.AccessGroupSearchRepository;
 import com.cosmo.common.model.SearchParam;
 import com.cosmo.common.util.SearchParamUtil;
 import jakarta.persistence.EntityManager;

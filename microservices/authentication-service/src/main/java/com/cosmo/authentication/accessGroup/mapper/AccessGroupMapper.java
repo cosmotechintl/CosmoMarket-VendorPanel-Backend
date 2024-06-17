@@ -1,13 +1,12 @@
-package com.cosmo.authentication.accessgroup.mapper;
+package com.cosmo.authentication.accessGroup.mapper;
 
-import com.cosmo.authentication.accessgroup.entity.AccessGroup;
-import com.cosmo.authentication.accessgroup.entity.Type;
-import com.cosmo.authentication.accessgroup.model.AccessGroupDetailDto;
-import com.cosmo.authentication.accessgroup.model.CreateAccessGroupModel;
-import com.cosmo.authentication.accessgroup.model.SearchAccessGroupResponse;
-import com.cosmo.authentication.accessgroup.model.UpdateAccessGroupModel;
-import com.cosmo.authentication.accessgroup.repo.AccessGroupRepository;
-import com.cosmo.authentication.accessgroup.repo.TypeRepository;
+import com.cosmo.authentication.accessGroup.entity.AccessGroup;
+import com.cosmo.authentication.accessGroup.model.AccessGroupDetailDto;
+import com.cosmo.authentication.accessGroup.model.CreateAccessGroupModel;
+import com.cosmo.authentication.accessGroup.model.SearchAccessGroupResponse;
+import com.cosmo.authentication.accessGroup.model.UpdateAccessGroupModel;
+import com.cosmo.authentication.accessGroup.repo.AccessGroupRepository;
+import com.cosmo.authentication.accessGroup.repo.TypeRepository;
 import com.cosmo.common.constant.StatusConstant;
 import com.cosmo.common.exception.ConflictException;
 import com.cosmo.common.mapper.StatusMapper;

@@ -1,6 +1,6 @@
 package com.cosmo.vendorservice.businesshour.entity;
 
-import com.cosmo.authentication.user.entity.Vendor;
+import com.cosmo.authentication.vendor.entity.Vendor;
 import com.cosmo.common.abstractEntity.AbstractEntity;
 import jakarta.persistence.*;
 import lombok.Getter;

@@ -1,12 +1,12 @@
 package com.cosmo.authentication.user.mapper;
 
-import com.cosmo.authentication.accessgroup.repo.AccessGroupRepository;
-import com.cosmo.authentication.user.entity.Vendor;
+import com.cosmo.authentication.accessGroup.repo.AccessGroupRepository;
+import com.cosmo.authentication.vendor.entity.Vendor;
 import com.cosmo.authentication.user.entity.VendorUser;
 import com.cosmo.authentication.user.model.CreateVendorUserModel;
 import com.cosmo.authentication.user.model.SearchVendorUsersResponse;
 import com.cosmo.authentication.user.model.VendorUserDetailsDto;
-import com.cosmo.authentication.user.repo.VendorRepository;
+import com.cosmo.authentication.vendor.repository.VendorRepository;
 import com.cosmo.authentication.user.repo.VendorUserRepository;
 import com.cosmo.common.constant.StatusConstant;
 import com.cosmo.common.exception.ConflictException;

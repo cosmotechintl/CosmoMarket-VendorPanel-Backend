@@ -1,4 +1,4 @@
-package com.cosmo.authentication.accessgroup.entity;
+package com.cosmo.authentication.accessGroup.entity;
 
 import com.cosmo.authentication.role.entity.Roles;
 import com.cosmo.common.abstractEntity.AbstractEntity;

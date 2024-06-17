@@ -1,8 +1,8 @@
 package com.cosmo.authentication.navigation.service.impl;
 
-import com.cosmo.authentication.accessgroup.entity.AccessGroup;
-import com.cosmo.authentication.accessgroup.repo.AccessGroupRepository;
-import com.cosmo.authentication.accessgroup.repo.AccessGroupRoleMapRepository;
+import com.cosmo.authentication.accessGroup.entity.AccessGroup;
+import com.cosmo.authentication.accessGroup.repo.AccessGroupRepository;
+import com.cosmo.authentication.accessGroup.repo.AccessGroupRoleMapRepository;
 import com.cosmo.authentication.navigation.mapper.NavigationBuilder;
 import com.cosmo.authentication.navigation.model.NavigationRoleResponseDto;
 import com.cosmo.authentication.navigation.service.NavigationService;

@@ -1,6 +1,6 @@
-package com.cosmo.authentication.accessgroup.repo;
+package com.cosmo.authentication.accessGroup.repo;
 
-import com.cosmo.authentication.accessgroup.entity.AccessGroup;
+import com.cosmo.authentication.accessGroup.entity.AccessGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

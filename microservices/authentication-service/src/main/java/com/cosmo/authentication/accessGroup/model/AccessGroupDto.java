@@ -1,6 +1,6 @@
-package com.cosmo.authentication.accessgroup.model;
+package com.cosmo.authentication.accessGroup.model;
 
-import com.cosmo.authentication.accessgroup.entity.AccessGroup;
+import com.cosmo.authentication.accessGroup.entity.AccessGroup;
 import com.cosmo.common.model.ModelBase;
 import com.cosmo.common.model.StatusDto;
 import lombok.Getter;

@@ -1,6 +1,5 @@
-package com.cosmo.authentication.accessgroup.model;
+package com.cosmo.authentication.accessGroup.model;
 
-import com.cosmo.authentication.accessgroup.entity.Type;
 import com.cosmo.common.model.ModelBase;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -9,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.cosmo.authentication.accessgroup.model.TypeDto;
 
 import java.util.List;
 

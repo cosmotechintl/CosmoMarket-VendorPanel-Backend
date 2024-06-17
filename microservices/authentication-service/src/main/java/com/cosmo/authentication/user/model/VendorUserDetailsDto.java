@@ -1,6 +1,6 @@
 package com.cosmo.authentication.user.model;
 
-import com.cosmo.authentication.accessgroup.model.AccessGroupDto;
+import com.cosmo.authentication.accessGroup.model.AccessGroupDto;
 import com.cosmo.authentication.user.entity.VendorUser;
 import com.cosmo.common.model.ModelBase;
 import com.cosmo.common.model.StatusDto;
