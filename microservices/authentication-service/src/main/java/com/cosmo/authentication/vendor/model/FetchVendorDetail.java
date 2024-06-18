@@ -10,6 +10,5 @@ import lombok.Setter;
 @Setter
 public class FetchVendorDetail extends ModelBase {
 
-    @NotBlank(message = "email is required.")
     private String email;
 }

@@ -30,11 +30,11 @@ public class VendorController {
         return vendorService.createVendor(create);
     }
     @PostMapping()
-    public Mono<ApiResponse<?>> getAllVendors(@RequestBody @Valid SearchParam searchParam){
+    public Mono<ApiResponse<?>> getAllVendors(@RequestBody SearchParam searchParam){
         return vendorService.getAllVendors(searchParam);
     }
     @PostMapping(ApiConstant.GET)
-    public Mono<ApiResponse<?>> getVendorDetails(@RequestBody @Valid FetchVendorDetail fetchVendorDetail){
+    public Mono<ApiResponse<?>> getVendorDetails(@RequestBody FetchVendorDetail fetchVendorDetail){
         return vendorService.getVendorDetails(fetchVendorDetail);
     }
     @PostMapping(ApiConstant.DELETE)
