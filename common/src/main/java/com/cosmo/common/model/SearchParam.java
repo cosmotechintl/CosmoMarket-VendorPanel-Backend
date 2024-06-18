@@ -14,9 +14,11 @@ public class SearchParam extends ModelBase {
     private Integer firstRow;
     private Integer pageSize;
     private List<SearchFieldParam> searchFieldParams;
+    private Long vendorId;
+
 
     private Map<String, Object> param = new HashMap<>();
-
+//    private Long accessGroupId;
 
     public Integer getFirstRow() {
         if (firstRow == null) {

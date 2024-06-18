@@ -42,14 +42,16 @@ public class VendorUserServiceImpl implements VendorUserService {
     private final VendorUsersSearchRepository vendorUsersSearchRepository;
     private final SearchResponse searchResponse;
     private final PasswordEncoder passwordEncoder;
+    private final VendorUserHelper vendorUserHelper;
 
     @Override
     public Mono<ApiResponse<?>> getallVendorUserDetail(SearchParam searchParam) {
+        Long vendorId = vendorUserHelper.getCurrentUserVendorId();
+        searchParam.getParam().put("vendorId", vendorId);
         SearchResponseWithMapperBuilder<VendorUser, SearchVendorUsersResponse> responseBuilder =
                 SearchResponseWithMapperBuilder.<VendorUser, SearchVendorUsersResponse>builder()
                         .count(vendorUsersSearchRepository::count)
-//                        .searchData(vendorUsersSearchRepository::getAll)
-                        .searchData(param -> (List<VendorUser>) vendorUsersSearchRepository.getAll(param))
+                        .searchData(vendorUsersSearchRepository::getAll)
                         .mapperFunction(this.vendorUserMapper::getVendorUsersResponses)
                         .searchParam(searchParam)
                         .build();
@@ -74,13 +76,51 @@ public class VendorUserServiceImpl implements VendorUserService {
     }
 
     @Override
+    @Transactional
     public Mono<ApiResponse<?>> updateVendorUser(UpdateVendorRequest updateVendorRequest, Principal connectedUser) {
-        return null;
+        VendorUser adminUser = vendorUserRepository.findByUsername(connectedUser.getName())
+                .orElseThrow(() -> new NotFoundException("Invalid User"));
+        VendorUser vendorUserToUpdate = vendorUserRepository.findByEmail(updateVendorRequest.getEmail())
+                .orElseThrow(() -> new NotFoundException("Vendor user not found"));
+        if (!adminUser.getVendor().getId().equals(vendorUserToUpdate.getVendor().getId())) {
+            return Mono.just(ResponseUtil.getFailureResponse("Admin user does not have permission to update this vendor user"));
+        }
+        if (!vendorUserToUpdate.getMobileNumber().equals(updateVendorRequest.getMobileNumber())) {
+            Optional<VendorUser> existedNumber = vendorUserRepository.findByMobileNumber(updateVendorRequest.getMobileNumber());
+            if (existedNumber.isPresent()) {
+                return Mono.just(ResponseUtil.getFailureResponse("The mobile number is linked to another account."));
+            }
+        }
+        if ("BLOCKED".equals(vendorUserToUpdate.getStatus().getName()) || "DELETED".equals(vendorUserToUpdate.getStatus().getName())) {
+            return Mono.just(ResponseUtil.getNotFoundResponse("Vendor user not found"));
+        }
+        vendorUserMapper.updateEntity(vendorUserToUpdate, updateVendorRequest);
+        vendorUserRepository.save(vendorUserToUpdate);
+        return Mono.just(ResponseUtil.getSuccessfulApiResponse("Vendor user updated"));
     }
 
     @Override
+    @Transactional
     public Mono<ApiResponse<?>> deleteVendorUser(DeleteVendorRequest deleteVendorRequest, Principal connectedUser) {
-        return null;
+        Optional<VendorUser> vendorAdminUser = vendorUserRepository.findByUsername(connectedUser.getName());
+        if (vendorAdminUser.isEmpty()) {
+            return Mono.just(ResponseUtil.getFailureResponse("Invalid User"));
+        }
+        VendorUser adminUser = vendorAdminUser.get();
+        Optional<VendorUser> vendorUserToDeleteOptional = vendorUserRepository.findByEmail(deleteVendorRequest.getEmail());
+        if (vendorUserToDeleteOptional.isEmpty()) {
+            return Mono.just(ResponseUtil.getNotFoundResponse("Vendor user not found"));
+        }
+        VendorUser vendorUserToDelete = vendorUserToDeleteOptional.get();
+        if (!adminUser.getVendor().getId().equals(vendorUserToDelete.getVendor().getId())) {
+            return Mono.just(ResponseUtil.getFailureResponse("Admin user does not have permission to delete this vendor user"));
+        }
+        if ("BLOCKED".equals(vendorUserToDelete.getStatus().getName()) || "DELETED".equals(vendorUserToDelete.getStatus().getName())) {
+            return Mono.just(ResponseUtil.getNotFoundResponse("Vendor user not found"));
+        }
+        vendorUserToDelete.setStatus(statusRepository.findByName("DELETED"));
+        vendorUserRepository.save(vendorUserToDelete);
+        return Mono.just(ResponseUtil.getSuccessfulApiResponse("Vendor user deleted successfully"));
     }
 
 

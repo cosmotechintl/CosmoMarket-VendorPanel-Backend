@@ -7,6 +7,7 @@ import com.cosmo.authentication.user.model.CreateVendorUserModel;
 import com.cosmo.authentication.user.model.SearchVendorUsersResponse;
 import com.cosmo.authentication.user.model.VendorUserDetailsDto;
 import com.cosmo.authentication.vendor.repository.VendorRepository;
+import com.cosmo.authentication.user.model.requestDto.UpdateVendorRequest;
 import com.cosmo.authentication.user.repo.VendorUserRepository;
 import com.cosmo.common.constant.StatusConstant;
 import com.cosmo.common.exception.ConflictException;
@@ -38,6 +39,24 @@ public abstract class VendorUserMapper {
 
 
     public abstract VendorUserDetailsDto getVendorUserDetailDto(VendorUser vendorUser);
+
+    public void updateEntity(VendorUser vendorUserToUpdate, UpdateVendorRequest updateVendorRequest) {
+        if (updateVendorRequest.getName() != null) {
+            vendorUserToUpdate.setName(updateVendorRequest.getName());
+        }
+        if (updateVendorRequest.getMobileNumber() != null) {
+            vendorUserToUpdate.setMobileNumber(updateVendorRequest.getMobileNumber());
+        }
+        if (updateVendorRequest.getAddress() != null) {
+            vendorUserToUpdate.setAddress(updateVendorRequest.getAddress());
+        }
+        if (updateVendorRequest.getAccessGroup() != null) {
+            vendorUserToUpdate.setAccessGroup(accessGroupRepository.findByName(updateVendorRequest.getAccessGroup().getName()).orElseThrow(
+                    ()-> new ResourceNotFoundException("access group not found")));
+        }
+
+    }
+
 
     public VendorUser toEntity(CreateVendorUserModel createVendorUserModel, Long vendorId){
         if ( createVendorUserModel == null ) {

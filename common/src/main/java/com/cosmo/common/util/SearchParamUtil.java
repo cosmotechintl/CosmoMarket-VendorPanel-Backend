@@ -22,4 +22,17 @@ public class SearchParamUtil {
         }
         return null;
     }
+    public static Long getLong(SearchParam searchParam, String keyName) {
+        Object value = searchParam.getParam().get(keyName);
+        if (value instanceof Number) {
+            return ((Number) value).longValue();
+        } else if (value instanceof String) {
+            try {
+                return Long.parseLong((String) value);
+            } catch (NumberFormatException e) {
+                return null;
+            }
+        }
+        return null;
+    }
 }

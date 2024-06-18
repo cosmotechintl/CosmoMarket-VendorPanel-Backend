@@ -11,8 +11,8 @@ public interface VendorUserRepository extends JpaRepository<VendorUser, Long> {
 
     Optional<VendorUser> findByUsername(String username);
 
-    Optional<Object> findByMobileNumber(String mobileNumber);
+    Optional<VendorUser> findByMobileNumber(String mobileNumber);
 
-    Optional<Object> findByEmail(String email);
+    Optional<VendorUser> findByEmail(String email);
 
 }
