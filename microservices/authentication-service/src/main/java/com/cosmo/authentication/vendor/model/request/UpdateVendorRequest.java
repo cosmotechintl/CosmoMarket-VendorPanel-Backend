@@ -18,6 +18,7 @@ public class UpdateVendorRequest extends ModelBase {
     private String email;
     @NotBlank(message = "Name cannot be blank")
     private String name;
+    @NotBlank(message = "Category cannot be blank")
     private CategoryDto category;
     private String logo;
     @NotBlank(message = "Address cannot be blank")
