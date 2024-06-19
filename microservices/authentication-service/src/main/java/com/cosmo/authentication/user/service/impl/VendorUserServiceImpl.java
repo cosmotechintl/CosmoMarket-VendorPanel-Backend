@@ -12,6 +12,7 @@ import com.cosmo.authentication.user.model.requestDto.UpdateVendorRequest;
 import com.cosmo.authentication.user.repo.VendorUserRepository;
 import com.cosmo.authentication.user.repo.VendorUsersSearchRepository;
 import com.cosmo.authentication.user.service.VendorUserService;
+import com.cosmo.common.constant.SearchParamConstant;
 import com.cosmo.common.exception.NotFoundException;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.model.PageableResponse;
@@ -29,7 +30,6 @@ import reactor.core.publisher.Mono;
 
 import java.security.Principal;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -46,8 +46,8 @@ public class VendorUserServiceImpl implements VendorUserService {
 
     @Override
     public Mono<ApiResponse<?>> getallVendorUserDetail(SearchParam searchParam) {
-        Long vendorId = vendorUserHelper.getCurrentUserVendorId();
-        searchParam.getParam().put("vendorId", vendorId);
+        long vendorId = vendorUserHelper.getCurrentUserVendorId();
+        searchParam.getParam().put(SearchParamConstant.VENDOR_ID, vendorId);
         SearchResponseWithMapperBuilder<VendorUser, SearchVendorUsersResponse> responseBuilder =
                 SearchResponseWithMapperBuilder.<VendorUser, SearchVendorUsersResponse>builder()
                         .count(vendorUsersSearchRepository::count)
