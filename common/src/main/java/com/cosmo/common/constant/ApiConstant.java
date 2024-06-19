@@ -18,13 +18,16 @@ public class ApiConstant {
     public static final String ROLES ="roles";
     public static final String EDIT = "edit";
     public static final String ACCESS_GROUP = "accessGroup";
+    public static final String BLOCK = "block";
+    public static final String UNBLOCK = "unblock";
+    public static final String UPDATE = "update";
     public static final String ADMIN_USER = "adminUser";
     public static final String SLASH = "/";
     public static final String DETAIL = "detail";
     public static final String NAVIGATION = "navigation";
     public static final String CHANGE_PASSWORD = "changePassword";
     public static final String ALL_VENDOR_USERS = "allVendorUsers";
-
+    public static final String VENDOR = "vendor";
     public static final String VENDOR_USER = "vendorUser";
     public static final String VENDOR_DETAILS = "vendorDetails";
     public static final String BUSINESS_HOUR = "businessHour";
