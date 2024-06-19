@@ -24,7 +24,7 @@ public class AccessGroupController {
         return accessGroupService.createAccessGroup(createAccessGroupModel);
     }
 
-    @GetMapping()
+    @PostMapping()
     public Mono<ApiResponse<?>> getAllAccessGroups(@RequestBody @Valid SearchParam searchParam) {
         return accessGroupService.getAllAccessGroup(searchParam);
     }
