@@ -41,9 +41,8 @@ public class VendorUserController {
     }
 
     @GetMapping(ApiConstant.GET + ApiConstant.SLASH + ApiConstant.DETAIL)
-    public Mono<ApiResponse<?>> getVendorUserDetails(
-            @RequestHeader("Authorization") String token) {
-        return vendorUserService.getVendorUserDetail(token);
+    public Mono<ApiResponse<?>> getVendorUserDetails(Principal connectedUser) {
+        return vendorUserService.getVendorUserDetail(connectedUser);
     }
 
     @GetMapping(ApiConstant.ALL_VENDOR_USERS)

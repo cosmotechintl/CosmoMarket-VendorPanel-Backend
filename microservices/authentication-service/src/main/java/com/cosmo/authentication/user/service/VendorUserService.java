@@ -17,6 +17,6 @@ public interface VendorUserService {
     Mono<ApiResponse<?>> changePassword(PasswordChangeRequest passwordChangeRequest, Principal connectedUser);
     Mono<ApiResponse<?>> updateVendorUser(UpdateVendorRequest updateVendorRequest, Principal connectedUser);
     Mono<ApiResponse<?>> deleteVendorUser(DeleteVendorRequest deleteVendorRequest, Principal connectedUser);
-    Mono<ApiResponse<?>> getVendorUserDetail(String token);
+    Mono<ApiResponse<?>> getVendorUserDetail(Principal connectedUser);
     Mono<ApiResponse> createVendorUser(CreateVendorUserModel createVendorUserModel, Principal connectedUser);
 }

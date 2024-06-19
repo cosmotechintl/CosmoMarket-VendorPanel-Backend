@@ -141,9 +141,8 @@ public class VendorUserServiceImpl implements VendorUserService {
 }
 
     @Override
-    public Mono<ApiResponse<?>> getVendorUserDetail(
-            String token) {
-        Optional<VendorUser> vendorUser = vendorUserRepository.findByUsername(jwtService.extractUsername(token));
+    public Mono<ApiResponse<?>> getVendorUserDetail(Principal connectedUser) {
+        Optional<VendorUser> vendorUser = vendorUserRepository.findByUsername(connectedUser.getName());
         if (vendorUser.isEmpty()) {
             return Mono.just(ResponseUtil.getNotFoundResponse("Vendor user not found"));
         } else {
