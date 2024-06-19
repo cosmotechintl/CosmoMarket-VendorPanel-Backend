@@ -1,4 +1,5 @@
 package com.cosmo.authentication.vendor.model;
+
 import com.cosmo.authentication.user.model.requestDto.VendorUserDto;
 import com.cosmo.common.model.ModelBase;
 import jakarta.validation.constraints.Email;
@@ -30,12 +31,12 @@ public class CreateVendorModel extends ModelBase {
     private String email;
 
     @NotBlank(message = "Mobile number cannot be blank")
-    @Size(min = 10,max = 10,message = "The mobile number is incorrect")
-    private String mobileNumber;
+    @Size(min = 10, max = 10, message = "The mobile number is incorrect")
+    private String phoneNumber;
 
     @NotBlank(message = "Pan number cannot be blank")
     private String panNumber;
 
     @NotNull
-    private List<VendorUserDto> vendorUser;
+    private VendorUserDto vendorUser;
 }

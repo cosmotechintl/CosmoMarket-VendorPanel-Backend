@@ -8,4 +8,4 @@ VALUES
     ('FUTSAL','FUTSAL',0),
     ('RESTAURANT','RESTAURANT',0),
     ('HOTEL','HOTEL',0),
-    ('BIGMART','BIGMART',0);
+    ('MART','MART',0);
