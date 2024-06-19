@@ -13,6 +13,7 @@ import com.cosmo.authentication.user.repo.VendorUserRepository;
 import com.cosmo.authentication.user.repo.VendorUsersSearchRepository;
 import com.cosmo.authentication.user.service.VendorUserService;
 import com.cosmo.common.constant.SearchParamConstant;
+import com.cosmo.common.constant.StatusConstant;
 import com.cosmo.common.exception.NotFoundException;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.model.PageableResponse;
@@ -91,7 +92,7 @@ public class VendorUserServiceImpl implements VendorUserService {
                 return Mono.just(ResponseUtil.getFailureResponse("The mobile number is linked to another account."));
             }
         }
-        if ("BLOCKED".equals(vendorUserToUpdate.getStatus().getName()) || "DELETED".equals(vendorUserToUpdate.getStatus().getName())) {
+        if (StatusConstant.BLOCKED.getName().equals(vendorUserToUpdate.getStatus().getName()) || StatusConstant.DELETED.getName().equals(vendorUserToUpdate.getStatus().getName())) {
             return Mono.just(ResponseUtil.getNotFoundResponse("Vendor user not found"));
         }
         vendorUserMapper.updateEntity(vendorUserToUpdate, updateVendorRequest);
@@ -115,10 +116,10 @@ public class VendorUserServiceImpl implements VendorUserService {
         if (!adminUser.getVendor().getId().equals(vendorUserToDelete.getVendor().getId())) {
             return Mono.just(ResponseUtil.getFailureResponse("Admin user does not have permission to delete this vendor user"));
         }
-        if ("BLOCKED".equals(vendorUserToDelete.getStatus().getName()) || "DELETED".equals(vendorUserToDelete.getStatus().getName())) {
+        if (StatusConstant.BLOCKED.getName().equals(vendorUserToDelete.getStatus().getName()) || StatusConstant.DELETED.getName().equals(vendorUserToDelete.getStatus().getName())) {
             return Mono.just(ResponseUtil.getNotFoundResponse("Vendor user not found"));
         }
-        vendorUserToDelete.setStatus(statusRepository.findByName("DELETED"));
+        vendorUserToDelete.setStatus(statusRepository.findByName(StatusConstant.DELETED.getName()));
         vendorUserRepository.save(vendorUserToDelete);
         return Mono.just(ResponseUtil.getSuccessfulApiResponse("Vendor user deleted successfully"));
     }
