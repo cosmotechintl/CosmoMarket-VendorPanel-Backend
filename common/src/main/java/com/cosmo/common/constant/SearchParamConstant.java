@@ -9,4 +9,5 @@ public class SearchParamConstant {
         public static final String MERCHANT_CODE = "merchantCode";
         public static final String PROCESSED_ON_DATE_FROM = "processedOnDateFrom";
         public static final String PROCESSED_ON_DATE_TO = "processedOnDateTo";
+        public static final String VENDOR_ID = "vendorId";
 }
