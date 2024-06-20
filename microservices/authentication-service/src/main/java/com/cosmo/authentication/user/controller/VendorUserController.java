@@ -16,6 +16,7 @@ import reactor.core.publisher.Mono;
 import java.security.Principal;
 
 @RestController
+@CrossOrigin(origins="http://localhost:3000/")
 @RequestMapping(ApiConstant.VENDOR_USER)
 @RequiredArgsConstructor
 public class VendorUserController {
