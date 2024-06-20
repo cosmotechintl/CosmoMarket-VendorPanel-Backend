@@ -7,5 +7,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DeleteAccessGroupRequest extends ModelBase {
-    private Long id;
+    private String name;
 }
