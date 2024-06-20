@@ -2,6 +2,7 @@ package com.cosmo.vendorservice.businesshour.controller;
 
 import com.cosmo.common.constant.ApiConstant;
 import com.cosmo.common.model.ApiResponse;
+import com.cosmo.vendorservice.businesshour.model.BusinessHourBookingModel;
 import com.cosmo.vendorservice.businesshour.model.CreateBusinessHourRequestModel;
 import com.cosmo.vendorservice.businesshour.model.UpdateBusinessHourModel;
 import com.cosmo.vendorservice.businesshour.service.BusinessHourService;
@@ -34,5 +35,9 @@ public class BusinessHourController {
     @GetMapping(ApiConstant.DETAIL)
     public Mono<ApiResponse<?>> getBusinessHours(Principal connectedUser) {
         return businessHourService.getBusinessHours(connectedUser);
+    }
+    @PostMapping()
+    public Mono<ApiResponse> getBusinessHours(@RequestBody @Valid BusinessHourBookingModel businessHourBookingModel) {
+        return businessHourService.getBusinessHours(businessHourBookingModel);
     }
 }
