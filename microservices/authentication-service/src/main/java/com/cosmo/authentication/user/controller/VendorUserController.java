@@ -1,6 +1,7 @@
 package com.cosmo.authentication.user.controller;
 
 import com.cosmo.authentication.user.model.PasswordChangeRequest;
+import com.cosmo.authentication.user.model.request.VendorUserDetailRequest;
 import com.cosmo.authentication.user.model.requestDto.DeleteVendorRequest;
 import com.cosmo.authentication.user.model.requestDto.UpdateVendorRequest;
 import com.cosmo.common.constant.ApiConstant;
@@ -25,7 +26,6 @@ public class VendorUserController {
     public Mono<ApiResponse<?>> edit(@RequestBody @Valid UpdateVendorRequest updateVendorRequest, Principal connectedUser) {
         return vendorUserService.updateVendorUser(updateVendorRequest, connectedUser);
     }
-
 
     @PostMapping(ApiConstant.DELETE)
     public Mono<ApiResponse<?>> deleteVendorUser(@RequestBody @Valid DeleteVendorRequest deleteVendorRequest,
@@ -56,5 +56,11 @@ public class VendorUserController {
             Principal connectedUser) {
         return vendorUserService.changePassword(passwordChangeRequest, connectedUser);
     }
+
+    @PostMapping(ApiConstant.GET)
+    public Mono<ApiResponse<?>> getAdminUserDetails(@RequestBody @Valid VendorUserDetailRequest vendorUserDetailRequest){
+        return vendorUserService.getVendorUserDetails(vendorUserDetailRequest);
+    }
+
 
 }
