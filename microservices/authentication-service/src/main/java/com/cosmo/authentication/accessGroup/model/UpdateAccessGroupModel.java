@@ -16,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateAccessGroupModel extends ModelBase {
-    private Long id;
     @NotBlank(message = "Name is required.")
     private String name;
     @NotBlank(message = "Descriptions is required.")
