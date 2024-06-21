@@ -31,4 +31,5 @@ public class ApiConstant {
     public static final String VENDOR_USER = "vendorUser";
     public static final String VENDOR_DETAILS = "vendorDetails";
     public static final String BUSINESS_HOUR = "businessHour";
+    public static final String COURT = "court";
 }

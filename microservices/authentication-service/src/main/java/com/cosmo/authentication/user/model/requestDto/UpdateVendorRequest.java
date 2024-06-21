@@ -11,7 +11,7 @@ import lombok.Setter;
 public class UpdateVendorRequest extends ModelBase {
 
     private String email;
-    private Long id;
+
     @NotBlank(message = "Name cannot be blank")
     private String name;
     @NotBlank(message = "Mobile Number cannot be null")

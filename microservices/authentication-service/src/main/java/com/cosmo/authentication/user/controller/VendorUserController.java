@@ -46,7 +46,7 @@ public class VendorUserController {
         return vendorUserService.getVendorUserDetail(token);
     }
 
-    @GetMapping(ApiConstant.ALL_VENDOR_USERS)
+    @PostMapping(ApiConstant.ALL_VENDOR_USERS)
     public Mono<ApiResponse<?>> getAllVendorUserDetail(@RequestBody @Valid SearchParam searchParam) {
         return vendorUserService.getallVendorUserDetail(searchParam);
     }
