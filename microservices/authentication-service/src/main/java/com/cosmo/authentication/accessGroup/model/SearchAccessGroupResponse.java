@@ -15,11 +15,6 @@ import java.util.Date;
 @NoArgsConstructor
 public class SearchAccessGroupResponse extends ModelBase {
     private String name;
-    private String description;
-    private Date createdAt;
-    private Date updatedAt;
-    private StatusDto status;
-    private Boolean isAdminGroup;
-    private String remarks;
+    private TypeDto type;
 
 }

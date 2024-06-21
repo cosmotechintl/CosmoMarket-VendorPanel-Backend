@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public abstract class BusinessHoursMapper {
@@ -78,6 +79,30 @@ public abstract class BusinessHoursMapper {
         return businessHours;
     }
 
-    public abstract BusinessHourDetailModel toDetailModel(BusinessHours businessHours);
+    public BusinessHourDetailModel toDetailModel(BusinessHours businessHours){
+        if ( businessHours == null ) {
+            throw new NotFoundException("Business hour not found");
+        }
+        String day = null;
+        String startTime = null;
+        String endTime = null;
+
+        if ( businessHours.getDay() != null ) {
+            day = businessHours.getDay().name();
+        }
+        if ( businessHours.getStartTime() != null ) {
+            startTime = DateTimeFormatter.ISO_LOCAL_TIME.format( businessHours.getStartTime() );
+        }
+        if ( businessHours.getEndTime() != null ) {
+            endTime = DateTimeFormatter.ISO_LOCAL_TIME.format( businessHours.getEndTime() );
+        }
+        boolean isClosed = false;
+        Long vendorId=businessHours.getVendor().getId();
+        BusinessHourDetailModel businessHourDetailModel = new BusinessHourDetailModel( vendorId, day, startTime, endTime, isClosed );
+
+        businessHourDetailModel.setClosed( businessHours.isClosed() );
+
+        return businessHourDetailModel;
+    }
 }
 

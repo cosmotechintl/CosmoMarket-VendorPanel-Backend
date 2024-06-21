@@ -9,6 +9,7 @@ import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.util.ResponseUtil;
 import com.cosmo.vendorservice.businesshour.entity.BusinessHours;
 import com.cosmo.vendorservice.businesshour.mapper.BusinessHoursMapper;
+import com.cosmo.vendorservice.businesshour.model.BusinessHourBookingModel;
 import com.cosmo.vendorservice.businesshour.model.BusinessHourDetailModel;
 import com.cosmo.vendorservice.businesshour.model.CreateBusinessHourRequestModel;
 import com.cosmo.vendorservice.businesshour.model.UpdateBusinessHourModel;
@@ -78,6 +79,17 @@ public class BusinessHourServiceImpl implements BusinessHourService {
         log.info("Vendor Id: {}", vendorId);
 
         List<BusinessHours> businessHours = businessHoursRepository.findByVendorId(vendorId);
+        List<BusinessHourDetailModel> businessHourDetails = businessHours.stream()
+                .map(businessHoursMapper::toDetailModel)
+                .collect(Collectors.toList());
+        return Mono.just(ResponseUtil.getSuccessfulApiResponse(businessHourDetails,"Business Hours Fetched successfully"));
+    }
+
+    @Override
+    public Mono<ApiResponse> getBusinessHours(BusinessHourBookingModel businessHourBookingModel) {
+        Long vendorId = businessHourBookingModel.getVendorId();
+        List<BusinessHours> businessHours = businessHoursRepository.findByVendorId(vendorId);
+
         List<BusinessHourDetailModel> businessHourDetails = businessHours.stream()
                 .map(businessHoursMapper::toDetailModel)
                 .collect(Collectors.toList());

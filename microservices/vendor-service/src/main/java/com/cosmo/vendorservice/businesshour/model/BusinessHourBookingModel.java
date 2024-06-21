@@ -1,17 +1,17 @@
 package com.cosmo.vendorservice.businesshour.model;
 
 import com.cosmo.common.model.ModelBase;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class BusinessHourDetailModel extends ModelBase {
+@NoArgsConstructor
+public class BusinessHourBookingModel extends ModelBase {
+    @NotNull
     private Long vendorId;
-    private String day;
-    private String startTime;
-    private String endTime;
-    private boolean isClosed;
 }

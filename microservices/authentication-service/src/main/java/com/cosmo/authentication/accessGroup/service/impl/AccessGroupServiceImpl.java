@@ -45,7 +45,7 @@ public class AccessGroupServiceImpl implements AccessGroupService {
 
     @Override
     public Mono<ApiResponse> updateAccessGroup(UpdateAccessGroupModel updateAccessGroupModel) {
-        Optional<AccessGroup> oldAccessGroup = accessGroupRepository.findById(updateAccessGroupModel.getId());
+        Optional<AccessGroup> oldAccessGroup = accessGroupRepository.findByName(updateAccessGroupModel.getName());
         if (oldAccessGroup.isPresent()) {
             AccessGroup updatedAccessGroup = accessGroupMapper.updatetoEntity(oldAccessGroup.get(), updateAccessGroupModel);
             accessGroupRoleMapMapper.updateAccessGroupRoleMap(updatedAccessGroup, updateAccessGroupModel.getRoles());
@@ -57,7 +57,7 @@ public class AccessGroupServiceImpl implements AccessGroupService {
 
     @Override
     public Mono<ApiResponse> deleteAccessGroup(DeleteAccessGroupRequest deleteAccessGroupRequest) {
-        Optional<AccessGroup> accessGroup = accessGroupRepository.findById(deleteAccessGroupRequest.getId());
+        Optional<AccessGroup> accessGroup = accessGroupRepository.findByName(deleteAccessGroupRequest.getName());
 
         if (accessGroup.isPresent()) {
             AccessGroup existingAccessGroup = accessGroup.get();

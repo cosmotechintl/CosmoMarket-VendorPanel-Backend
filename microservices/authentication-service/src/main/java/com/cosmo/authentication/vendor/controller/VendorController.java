@@ -6,7 +6,7 @@ import com.cosmo.authentication.vendor.model.request.DeleteVendorRequest;
 import com.cosmo.authentication.vendor.model.CreateVendorModel;
 import com.cosmo.authentication.vendor.model.FetchVendorDetail;
 import com.cosmo.authentication.vendor.model.request.UnblockVendorRequest;
-import com.cosmo.authentication.vendor.model.request.UpdateVendorRequest;
+import com.cosmo.authentication.vendor.model.request.UpdateVendorDetailRequest;
 import com.cosmo.authentication.vendor.service.VendorService;
 import com.cosmo.common.constant.ApiConstant;
 import com.cosmo.common.model.ApiResponse;
@@ -30,11 +30,11 @@ public class VendorController {
         return vendorService.createVendor(create);
     }
     @PostMapping()
-    public Mono<ApiResponse<?>> getAllVendors(@RequestBody SearchParam searchParam){
+    public Mono<ApiResponse<?>> getAllVendors(@RequestBody @Valid SearchParam searchParam){
         return vendorService.getAllVendors(searchParam);
     }
     @PostMapping(ApiConstant.GET)
-    public Mono<ApiResponse<?>> getVendorDetails(@RequestBody FetchVendorDetail fetchVendorDetail){
+    public Mono<ApiResponse<?>> getVendorDetails(@RequestBody @Valid FetchVendorDetail fetchVendorDetail){
         return vendorService.getVendorDetails(fetchVendorDetail);
     }
     @PostMapping(ApiConstant.DELETE)
@@ -50,7 +50,7 @@ public class VendorController {
         return vendorService.unblockVendor(request);
     }
     @PostMapping(ApiConstant.UPDATE)
-    public Mono<ApiResponse<?>> updateVendor(@RequestBody @Valid UpdateVendorRequest request){
+    public Mono<ApiResponse<?>> updateVendor(@RequestBody @Valid UpdateVendorDetailRequest request){
         return vendorService.updateVendor(request);
     }
 

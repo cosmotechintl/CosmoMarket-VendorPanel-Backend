@@ -1,6 +1,7 @@
 package com.cosmo.authentication.user.service;
 
 import com.cosmo.authentication.user.model.PasswordChangeRequest;
+import com.cosmo.authentication.user.model.request.VendorUserDetailRequest;
 import com.cosmo.authentication.user.model.requestDto.DeleteVendorRequest;
 import com.cosmo.authentication.user.model.requestDto.UpdateVendorRequest;
 import com.cosmo.common.model.ApiResponse;
@@ -17,6 +18,7 @@ public interface VendorUserService {
     Mono<ApiResponse<?>> changePassword(PasswordChangeRequest passwordChangeRequest, Principal connectedUser);
     Mono<ApiResponse<?>> updateVendorUser(UpdateVendorRequest updateVendorRequest, Principal connectedUser);
     Mono<ApiResponse<?>> deleteVendorUser(DeleteVendorRequest deleteVendorRequest, Principal connectedUser);
-    Mono<ApiResponse<?>> getVendorUserDetail(String token);
+    Mono<ApiResponse<?>> getVendorUserDetail(Principal connectedUser);
     Mono<ApiResponse> createVendorUser(CreateVendorUserModel createVendorUserModel, Principal connectedUser);
+    Mono<ApiResponse<?>> getVendorUserDetails(VendorUserDetailRequest vendorUserDetailRequest);
 }

@@ -7,6 +7,7 @@ import com.cosmo.authentication.user.model.CreateVendorUserModel;
 import com.cosmo.authentication.user.model.PasswordChangeRequest;
 import com.cosmo.authentication.user.model.SearchVendorUsersResponse;
 import com.cosmo.authentication.user.model.VendorUserDetailsDto;
+import com.cosmo.authentication.user.model.request.VendorUserDetailRequest;
 import com.cosmo.authentication.user.model.requestDto.DeleteVendorRequest;
 import com.cosmo.authentication.user.model.requestDto.UpdateVendorRequest;
 import com.cosmo.authentication.user.repo.VendorUserRepository;
@@ -29,6 +30,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
+import javax.swing.text.html.Option;
 import java.security.Principal;
 import java.util.Date;
 import java.util.Optional;
@@ -128,22 +130,33 @@ public class VendorUserServiceImpl implements VendorUserService {
     @Override
     @Transactional
     public Mono<ApiResponse> createVendorUser(CreateVendorUserModel createVendorUserModel, Principal connectedUser) {
-    VendorUser vendorUser = vendorUserRepository.findByUsername(connectedUser.getName())
-            .orElseThrow(() -> new NotFoundException("Invalid User"));
-    Long vendorId = vendorUser.getVendor().getId();
-    vendorUser = vendorUserMapper.toEntity(createVendorUserModel, vendorId);
-    if (vendorUser != null) {
-        vendorUserRepository.save(vendorUser);
-        return Mono.just(ResponseUtil.getSuccessfulApiResponse("Vendor user created"));
-    } else {
-        return Mono.just(ResponseUtil.getFailureResponse("Vendor user creation failed"));
+        VendorUser vendorUser = vendorUserRepository.findByUsername(connectedUser.getName())
+                .orElseThrow(() -> new NotFoundException("Invalid User"));
+        Long vendorId = vendorUser.getVendor().getId();
+        vendorUser = vendorUserMapper.toEntity(createVendorUserModel, vendorId);
+        if (vendorUser != null) {
+            vendorUserRepository.save(vendorUser);
+            return Mono.just(ResponseUtil.getSuccessfulApiResponse("Vendor user created"));
+        } else {
+            return Mono.just(ResponseUtil.getFailureResponse("Vendor user creation failed"));
+        }
     }
-}
+
 
     @Override
-    public Mono<ApiResponse<?>> getVendorUserDetail(
-            String token) {
-        Optional<VendorUser> vendorUser = vendorUserRepository.findByUsername(jwtService.extractUsername(token));
+    public Mono<ApiResponse<?>> getVendorUserDetail(Principal connectedUser) {
+        Optional<VendorUser> vendorUser = vendorUserRepository.findByUsername(connectedUser.getName());
+        if (vendorUser.isEmpty()) {
+            return Mono.just(ResponseUtil.getNotFoundResponse("Vendor user not found"));
+        } else {
+            VendorUserDetailsDto vendorUserDetailsDto = vendorUserMapper.getVendorUserDetailDto(vendorUser.get());
+            return Mono.just(ResponseUtil.getSuccessfulApiResponse(vendorUserDetailsDto, "Vendor user fetched successfully"));
+        }
+    }
+
+    @Override
+    public Mono<ApiResponse<?>> getVendorUserDetails(VendorUserDetailRequest vendorUserDetailRequest) {
+        Optional<VendorUser> vendorUser = vendorUserRepository.findByEmail(vendorUserDetailRequest.getEmail());
         if (vendorUser.isEmpty()) {
             return Mono.just(ResponseUtil.getNotFoundResponse("Vendor user not found"));
         } else {

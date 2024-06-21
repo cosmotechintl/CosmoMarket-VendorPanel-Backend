@@ -9,7 +9,7 @@ import com.cosmo.authentication.vendor.model.FetchVendorDetail;
 import com.cosmo.authentication.vendor.model.SearchVendorResponse;
 import com.cosmo.authentication.vendor.model.VendorDetailDto;
 import com.cosmo.authentication.vendor.model.request.UnblockVendorRequest;
-import com.cosmo.authentication.vendor.model.request.UpdateVendorRequest;
+import com.cosmo.authentication.vendor.model.request.UpdateVendorDetailRequest;
 import com.cosmo.authentication.vendor.repository.VendorRepository;
 import com.cosmo.authentication.vendor.repository.VendorSearchRepository;
 import com.cosmo.authentication.vendor.service.VendorService;
@@ -39,15 +39,14 @@ public class VendorServiceImpl implements VendorService {
     @Override
     public Mono<ApiResponse> createVendor(CreateVendorModel createVendorModel) {
         Optional<Vendor> existedEmail = vendorRepository.findByEmail(createVendorModel.getEmail());
-        Optional<Vendor> existedMobileNumber = vendorRepository.findByMobileNumber(createVendorModel.getMobileNumber());
+        Optional<Vendor> existedMobileNumber = vendorRepository.findByPhoneNumber(createVendorModel.getPhoneNumber());
         if (existedEmail.isPresent()) {
             return Mono.just(ResponseUtil.getFailureResponse("This email is already taken"));
         }
         if (existedMobileNumber.isPresent()) {
-            return Mono.just(ResponseUtil.getFailureResponse("The mobile number is already in use"));
+            return Mono.just(ResponseUtil.getFailureResponse("The Phone number is already in use"));
         }
-        Vendor vendor = vendorMapper.mapToEntity(createVendorModel);
-        vendorRepository.save(vendor);
+        vendorMapper.mapToEntity(createVendorModel);
         return Mono.just((ResponseUtil.getSuccessfulApiResponse("Vendor created successfully")));
     }
 
@@ -74,34 +73,34 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public Mono<ApiResponse<?>> deleteVendor(DeleteVendorRequest deleteVendorRequest) {
-        Optional<Vendor> vendor = vendorRepository.findByEmail(deleteVendorRequest.getEmail());
-        if (vendor.isEmpty()) {
+        Optional<Vendor> checkVendor = vendorRepository.findByEmail(deleteVendorRequest.getEmail());
+        if (checkVendor.isEmpty()) {
             return Mono.just(ResponseUtil.getNotFoundResponse("Vendor not found"));
         } else {
-            Vendor vendor1 = vendor.get();
-            if (StatusConstant.BLOCKED.getName().equals(vendor1.getStatus().getName()) || StatusConstant.DELETED.getName().equals(vendor1.getStatus().getName())) {
+            Vendor vendor = checkVendor.get();
+            if (StatusConstant.BLOCKED.getName().equals(vendor.getStatus().getName()) || StatusConstant.DELETED.getName().equals(vendor.getStatus().getName())) {
                 return Mono.just(ResponseUtil.getNotFoundResponse("Vendor not found"));
             }
-            vendor1.setStatus(statusRepository.findByName(StatusConstant.DELETED.getName()));
-            vendor1.setActive(false);
-            vendorRepository.save(vendor1);
+            vendor.setStatus(statusRepository.findByName(StatusConstant.DELETED.getName()));
+            vendor.setActive(false);
+            vendorRepository.save(vendor);
             return Mono.just(ResponseUtil.getSuccessfulApiResponse("Vendor deleted successfully"));
         }
     }
 
     @Override
     public Mono<ApiResponse<?>> blockVendor(BlockVendorRequest blockVendorRequest) {
-        Optional<Vendor> vendor = vendorRepository.findByEmail(blockVendorRequest.getEmail());
-        if (vendor.isEmpty()) {
+        Optional<Vendor> checkVendor = vendorRepository.findByEmail(blockVendorRequest.getEmail());
+        if (checkVendor.isEmpty()) {
             return Mono.just(ResponseUtil.getNotFoundResponse("Vendor not found"));
         } else {
-            Vendor vendor1 = vendor.get();
-            if (StatusConstant.DELETED.getName().equals(vendor1.getStatus().getName()) || StatusConstant.BLOCKED.getName().equals(vendor1.getStatus().getName())) {
+            Vendor vendor = checkVendor.get();
+            if (StatusConstant.DELETED.getName().equals(vendor.getStatus().getName()) || StatusConstant.BLOCKED.getName().equals(vendor.getStatus().getName())) {
                 return Mono.just(ResponseUtil.getNotFoundResponse("Vendor not found"));
             } else {
-                vendor1.setStatus(statusRepository.findByName(StatusConstant.BLOCKED.getName()));
-                vendor1.setActive(false);
-                vendorRepository.save(vendor1);
+                vendor.setStatus(statusRepository.findByName(StatusConstant.BLOCKED.getName()));
+                vendor.setActive(false);
+                vendorRepository.save(vendor);
                 return Mono.just(ResponseUtil.getSuccessfulApiResponse("Vendor blocked successfully"));
             }
         }
@@ -109,33 +108,32 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public Mono<ApiResponse<?>> unblockVendor(UnblockVendorRequest unblockVendorRequest) {
-        Optional<Vendor> vendor = vendorRepository.findByEmail(unblockVendorRequest.getEmail());
-        Vendor vendor1 = vendor.get();
-        if (StatusConstant.BLOCKED.getName().equals(vendor1.getStatus().getName())) {
-            vendor1.setStatus(statusRepository.findByName(StatusConstant.ACTIVE.getName()));
-            vendor1.setActive(true);
-            vendorRepository.save(vendor1);
+        Optional<Vendor> checkVendor = vendorRepository.findByEmail(unblockVendorRequest.getEmail());
+        Vendor vendor = checkVendor.get();
+        if (StatusConstant.BLOCKED.getName().equals(vendor.getStatus().getName())) {
+            vendor.setStatus(statusRepository.findByName(StatusConstant.ACTIVE.getName()));
+            vendor.setActive(true);
+            vendorRepository.save(vendor);
             return Mono.just(ResponseUtil.getSuccessfulApiResponse("Vendor unblocked successfully"));
         }
         return Mono.just(ResponseUtil.getFailureResponse("Vendor unblock failed"));
     }
 
     @Override
-    public Mono<ApiResponse<?>> updateVendor(UpdateVendorRequest updateVendorRequest) {
-        Optional<Vendor> existedNumber= vendorRepository.findByMobileNumber(updateVendorRequest.getMobileNumber());
-        if (existedNumber.isPresent() && !existedNumber.get().getEmail().equals(updateVendorRequest.getEmail())){
-            return Mono.just(ResponseUtil.getFailureResponse("The mobile number is linked to another vendor"));
+    public Mono<ApiResponse<?>> updateVendor(UpdateVendorDetailRequest updateVendorRequest) {
+        Optional<Vendor> existedNumber = vendorRepository.findByPhoneNumber(updateVendorRequest.getPhoneNumber());
+        if (existedNumber.isPresent() && !existedNumber.get().getEmail().equals(updateVendorRequest.getEmail())) {
+            return Mono.just(ResponseUtil.getFailureResponse("The phone number is linked to another vendor"));
         }
-        Optional<Vendor> vendor= vendorRepository.findByEmail(updateVendorRequest.getEmail());
-        Vendor vendor1= vendor.get();
-        if(StatusConstant.BLOCKED.getName().equals(vendor1.getStatus().getName()) || StatusConstant.DELETED.getName().equals(vendor1.getStatus().getName())){
-            return Mono.just(ResponseUtil.getNotFoundResponse("Vendor not found"));
+        Optional<Vendor> checkVendor = vendorRepository.findByEmail(updateVendorRequest.getEmail());
+        if (checkVendor.isPresent()) {
+            Vendor vendor = checkVendor.get();
+            if (StatusConstant.BLOCKED.getName().equals(vendor.getStatus().getName()) || StatusConstant.DELETED.getName().equals(vendor.getStatus().getName())) {
+                return Mono.just(ResponseUtil.getNotFoundResponse("Vendor not found"));
+            } else {
+                 vendorMapper.updateVendor(updateVendorRequest, vendor);
+            }
         }
-        else {
-            Vendor updatedVendor = vendorMapper.updateVendor(updateVendorRequest,vendor.get());
-            vendorRepository.save(updatedVendor);
-            return Mono.just(ResponseUtil.getSuccessfulApiResponse("Vendor updated Successfully"));
-        }
+        return Mono.just(ResponseUtil.getSuccessfulApiResponse("Vendor updated Successfully"));
     }
-
 }

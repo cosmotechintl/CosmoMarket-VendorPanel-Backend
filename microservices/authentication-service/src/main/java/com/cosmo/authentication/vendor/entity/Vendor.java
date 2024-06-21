@@ -14,7 +14,7 @@ import java.util.Date;
 @Entity
 @Table(name = "vendor")
 public class Vendor extends AbstractEntity {
-    @Column(name = "vendor_name",unique = true)
+    @Column(name = "name",unique = true)
     private String name;
 
     @Column(name = "logo")
@@ -26,8 +26,8 @@ public class Vendor extends AbstractEntity {
     @Column(name = "email",unique = true,nullable = false)
     private String email;
 
-    @Column(name = "mobile_number")
-    private String mobileNumber;
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     @Column(name = "pan_number",nullable = false)
     private String panNumber;

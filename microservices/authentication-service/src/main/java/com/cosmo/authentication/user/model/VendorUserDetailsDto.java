@@ -1,6 +1,6 @@
 package com.cosmo.authentication.user.model;
 
-import com.cosmo.authentication.accessGroup.model.AccessGroupDto;
+import com.cosmo.authentication.accessGroup.model.request.FetchAccessGroupDetail;
 import com.cosmo.authentication.user.entity.VendorUser;
 import com.cosmo.common.model.ModelBase;
 import com.cosmo.common.model.StatusDto;
@@ -14,13 +14,10 @@ import lombok.Data;
 public class VendorUserDetailsDto extends ModelBase {
     private String name;
     private String username;
-    private boolean isActive;
     private String email;
     private String mobileNumber;
     private String address;
     private StatusDto status;
-    private AccessGroupDto accessGroup;
+    private FetchAccessGroupDetail accessGroup;
     private String profilePictureName;
-    private boolean twoFactorEnabled;
-    private boolean isAdmin;
 }

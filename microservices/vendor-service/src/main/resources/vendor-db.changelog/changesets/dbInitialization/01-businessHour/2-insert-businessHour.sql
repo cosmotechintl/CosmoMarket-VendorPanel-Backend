@@ -1,3 +1,5 @@
+-- liquibase formatted sql
+
 -- changeset amritkthapa:3
 -- preconditions onFail:CONTINUE onError:HALT
 INSERT INTO business_hours (vendor, day, start_time, end_time, closed,version) VALUES

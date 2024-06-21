@@ -18,10 +18,6 @@ public class AccessGroupDetailDto extends ModelBase {
 
     private String name;
     private String description;
-    private Date createdAt;
-    private Date updatedAt;
-    private StatusDto status;
-    private boolean isAdminGroup;
-    private String remarks;
+    private TypeDto type;
     private List<AccessGroupRoleMapDetailDto> accessGroupRoleMaps;
 }
