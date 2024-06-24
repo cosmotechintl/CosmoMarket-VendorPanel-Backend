@@ -8,7 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UpdateCategoryRequest extends ModelBase {
-    private Long id;
 
     @NotBlank(message = "name cannot be null")
     private String name;
