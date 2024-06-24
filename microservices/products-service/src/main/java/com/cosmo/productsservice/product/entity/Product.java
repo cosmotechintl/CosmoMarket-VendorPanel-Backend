@@ -1,4 +1,4 @@
-package com.cosmo.productsservice.product;
+package com.cosmo.productsservice.product.entity;
 
 import com.cosmo.common.abstractEntity.AbstractEntity;
 import com.cosmo.common.entity.Status;
@@ -43,7 +43,7 @@ public class Product extends AbstractEntity {
     @Column(name = "code", nullable = false)
     private String code;
 
-    @Column(name = "inStock")
+    @Column(name = "in_stock")
     private boolean inStock;
 
     @Column(name = "quantity", nullable = false)

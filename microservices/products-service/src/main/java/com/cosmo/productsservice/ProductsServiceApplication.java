@@ -11,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EntityScan(basePackages = {"com.cosmo"})
 @EnableJpaRepositories(basePackages = {"com.cosmo"})
 @ComponentScan(basePackages = {"com.cosmo"})
-@EnableWebMvc
 @SpringBootApplication(scanBasePackages = "com.cosmo")
 public class ProductsServiceApplication {
 

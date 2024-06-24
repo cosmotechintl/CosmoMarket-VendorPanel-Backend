@@ -4,6 +4,7 @@
 -- preconditions onFail:CONTINUE onError:HALT
 CREATE TABLE IF NOT EXISTS product_category (
     id             BIGINT AUTO_INCREMENT    NOT NULL,
+    version      BIGINT                     NOT NULL,
     name           VARCHAR(255)             NOT NULL,
     description    VARCHAR(255)             NOT NULL,
     code           VARCHAR(255)             NOT NULL,
