@@ -3,7 +3,7 @@ package com.cosmo.productsservice;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.cosmo")
 public class ProductsServiceApplication {
 
     public static void main(String[] args) {
