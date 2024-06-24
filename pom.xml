@@ -19,6 +19,7 @@
         <module>microservices/authentication-service</module>
         <module>microservices/vendor-service</module>
         <module>microservices/futsalBooking-service</module>
+        <module>microservices/products-service</module>
     </modules>
 
     <properties>
