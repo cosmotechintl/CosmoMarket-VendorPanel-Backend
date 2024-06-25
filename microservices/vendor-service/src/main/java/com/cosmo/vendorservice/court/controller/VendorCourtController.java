@@ -35,7 +35,7 @@ public class VendorCourtController {
         return vendorCourtService.blockCourt(blockCourtRequest);
     }
     @PostMapping()
-    public Mono<ApiResponse<?>> getAllCategory(@RequestBody @Valid SearchParam searchParam){
+    public Mono<ApiResponse<?>> getAllCourt(@RequestBody @Valid SearchParam searchParam){
         return vendorCourtService.getAllCourt(searchParam);
     }
 }
