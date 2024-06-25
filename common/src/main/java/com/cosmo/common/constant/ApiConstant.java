@@ -33,4 +33,7 @@ public class ApiConstant {
     public static final String BUSINESS_HOUR = "businessHour";
     public static final String COURT = "court";
     public static final String PRODUCT_CATEGORY = "productCategory";
+    public static final String GET_ALL_CATEGORY = "getAllCategory";
+    public static final String GET_ALL_COURT = "getAllCourt";
+
 }

@@ -12,9 +12,7 @@ import com.cosmo.common.service.SearchResponse;
 import com.cosmo.common.util.ResponseUtil;
 import com.cosmo.vendorservice.court.entity.CourtDetails;
 import com.cosmo.vendorservice.court.mapper.CourtMapper;
-import com.cosmo.vendorservice.court.model.BlockCourtRequest;
-import com.cosmo.vendorservice.court.model.CreateCourtRequestModel;
-import com.cosmo.vendorservice.court.model.UpdateCourtRequest;
+import com.cosmo.vendorservice.court.model.*;
 import com.cosmo.vendorservice.court.model.request.SearchCourtResponse;
 import com.cosmo.vendorservice.court.repo.VendorCourtCreationRepository;
 import com.cosmo.vendorservice.court.repo.VendorCourtSearchRepository;
@@ -90,6 +88,18 @@ public class VendorCourtServiceImpl implements VendorCourtService {
         PageableResponse<SearchCourtResponse> response = searchResponse.getSearchResponse(responseBuilder);
         return Mono.just(ResponseUtil.getSuccessfulApiResponse(response, "Courts fetched successfully"));
     }
+
+    @Override
+    public Mono<ApiResponse<?>> getCourtDetails(FetchCourtDetails fetchCourtDetails) {
+        Optional<CourtDetails> court = courtCreationRepository.findByName(fetchCourtDetails.getName());
+        if (court.isEmpty()) {
+            return Mono.just(ResponseUtil.getNotFoundResponse("Court not found"));
+        } else {
+            CourtDetailsDto courtDetailsDto = courtMapper.getCourtDetails(court.get());
+            return Mono.just(ResponseUtil.getSuccessfulApiResponse(courtDetailsDto, "Court details fetched successfully"));
+        }
+    }
+
 
 
 }

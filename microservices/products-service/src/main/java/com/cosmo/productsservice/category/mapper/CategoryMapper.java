@@ -2,9 +2,11 @@ package com.cosmo.productsservice.category.mapper;
 
 import com.cosmo.authentication.vendor.entity.Vendor;
 import com.cosmo.authentication.vendor.model.SearchVendorResponse;
+import com.cosmo.authentication.vendor.model.VendorDetailDto;
 import com.cosmo.common.constant.StatusConstant;
 import com.cosmo.common.repository.StatusRepository;
 import com.cosmo.productsservice.category.entity.ProductCategory;
+import com.cosmo.productsservice.category.model.CategoryDetailsDto;
 import com.cosmo.productsservice.category.model.CreateCategoryModel;
 import com.cosmo.productsservice.category.model.request.SearchCategoryResponse;
 import com.cosmo.productsservice.category.model.request.UpdateCategoryRequest;
@@ -25,6 +27,8 @@ public abstract class CategoryMapper {
 
     @Autowired
     protected ProductCategoryRepository productCategoryRepository;
+
+    public abstract CategoryDetailsDto getCategoryDetails(ProductCategory category);
 
     public abstract SearchCategoryResponse entityToRes(ProductCategory productCategory);
 

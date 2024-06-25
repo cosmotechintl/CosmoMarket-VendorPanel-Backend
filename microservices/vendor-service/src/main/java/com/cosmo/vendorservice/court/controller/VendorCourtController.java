@@ -6,6 +6,7 @@ import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.model.SearchParam;
 import com.cosmo.vendorservice.court.model.BlockCourtRequest;
 import com.cosmo.vendorservice.court.model.CreateCourtRequestModel;
+import com.cosmo.vendorservice.court.model.FetchCourtDetails;
 import com.cosmo.vendorservice.court.model.UpdateCourtRequest;
 import com.cosmo.vendorservice.court.service.VendorCourtService;
 import jakarta.validation.Valid;
@@ -34,8 +35,12 @@ public class VendorCourtController {
     public Mono<ApiResponse<?>> blockCourt(@RequestBody @Valid BlockCourtRequest blockCourtRequest){
         return vendorCourtService.blockCourt(blockCourtRequest);
     }
-    @PostMapping()
+    @PostMapping(ApiConstant.GET_ALL_COURT)
     public Mono<ApiResponse<?>> getAllCourt(@RequestBody @Valid SearchParam searchParam){
         return vendorCourtService.getAllCourt(searchParam);
+    }
+    @PostMapping(ApiConstant.GET)
+    public Mono<ApiResponse<?>> getCourtDetails(@RequestBody @Valid FetchCourtDetails fetchCourtDetails){
+        return vendorCourtService.getCourtDetails(fetchCourtDetails);
     }
 }

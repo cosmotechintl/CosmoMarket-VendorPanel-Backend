@@ -1,7 +1,10 @@
 package com.cosmo.productsservice.category.service.impl;
 
 import com.cosmo.authentication.vendor.entity.Vendor;
+import com.cosmo.authentication.vendor.model.VendorDetailDto;
 import com.cosmo.common.service.SearchResponse;
+import com.cosmo.productsservice.category.model.CategoryDetailsDto;
+import com.cosmo.productsservice.category.model.FetchCategoryDetails;
 import com.cosmo.productsservice.category.model.request.SearchCategoryResponse;
 import com.cosmo.productsservice.category.model.request.SearchCategoryResponse;
 import com.cosmo.common.constant.StatusConstant;
@@ -36,6 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
     private final StatusRepository statusRepository;
     private final ProductCategorySearchRepository productCategorySearchRepository;
     private final SearchResponse searchResponse;
+
 
     @Override
     public Mono<ApiResponse<?>> createCategory(CreateCategoryModel createCategoryModel) {
@@ -89,9 +93,20 @@ public class CategoryServiceImpl implements CategoryService {
                 .mapperFunction(this.categoryMapper::getCategoryResponses).searchParam(searchParam)
                 .build();
         PageableResponse<SearchCategoryResponse> response = searchResponse.getSearchResponse(responseBuilder);
-        return Mono.just(ResponseUtil.getSuccessfulApiResponse(response, "Courts fetched successfully"));
+        return Mono.just(ResponseUtil.getSuccessfulApiResponse(response, "Category fetched successfully"));
     }
-}
+
+    @Override
+    public Mono<ApiResponse<?>> getCategoryDetails(FetchCategoryDetails fetchCategoryDetails) {
+        Optional<ProductCategory> category = productCategoryRepository.findByName(fetchCategoryDetails.getName());
+        if (category.isEmpty()) {
+            return Mono.just(ResponseUtil.getNotFoundResponse("Category not found"));
+        } else {
+            CategoryDetailsDto categoryDetailsDto = categoryMapper.getCategoryDetails(category.get());
+            return Mono.just(ResponseUtil.getSuccessfulApiResponse(categoryDetailsDto, "Category details fetched successfully"));
+        }
+    }
+    }
 
 
     
