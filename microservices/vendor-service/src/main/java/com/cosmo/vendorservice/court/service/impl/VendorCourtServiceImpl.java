@@ -4,14 +4,20 @@ import com.cosmo.authentication.vendor.entity.Vendor;
 import com.cosmo.authentication.vendor.model.request.BlockVendorRequest;
 import com.cosmo.common.constant.StatusConstant;
 import com.cosmo.common.model.ApiResponse;
+import com.cosmo.common.model.PageableResponse;
+import com.cosmo.common.model.SearchParam;
+import com.cosmo.common.model.SearchResponseWithMapperBuilder;
 import com.cosmo.common.repository.StatusRepository;
+import com.cosmo.common.service.SearchResponse;
 import com.cosmo.common.util.ResponseUtil;
 import com.cosmo.vendorservice.court.entity.CourtDetails;
 import com.cosmo.vendorservice.court.mapper.CourtMapper;
 import com.cosmo.vendorservice.court.model.BlockCourtRequest;
 import com.cosmo.vendorservice.court.model.CreateCourtRequestModel;
 import com.cosmo.vendorservice.court.model.UpdateCourtRequest;
+import com.cosmo.vendorservice.court.model.request.SearchCourtResponse;
 import com.cosmo.vendorservice.court.repo.VendorCourtCreationRepository;
+import com.cosmo.vendorservice.court.repo.VendorCourtSearchRepository;
 import com.cosmo.vendorservice.court.service.VendorCourtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +33,8 @@ public class VendorCourtServiceImpl implements VendorCourtService {
     private final VendorCourtCreationRepository courtCreationRepository;
     private final CourtMapper courtMapper;
     private final StatusRepository statusRepository;
+    private final VendorCourtSearchRepository vendorCourtSearchRepository;
+    private final SearchResponse searchResponse;
 
     @Override
     public Mono<ApiResponse<?>> createCourt(CreateCourtRequestModel createCourtRequestModel) {
@@ -73,7 +81,15 @@ public class VendorCourtServiceImpl implements VendorCourtService {
         }
     }
 
-
+    @Override
+    public Mono<ApiResponse<?>> getAllCourt(SearchParam searchParam) {
+        SearchResponseWithMapperBuilder<CourtDetails, SearchCourtResponse> responseBuilder = SearchResponseWithMapperBuilder.<CourtDetails, SearchCourtResponse>builder()
+                .count(vendorCourtSearchRepository::count).searchData(vendorCourtSearchRepository::getAll)
+                .mapperFunction(this.courtMapper::getCourtResponses).searchParam(searchParam)
+                .build();
+        PageableResponse<SearchCourtResponse> response = searchResponse.getSearchResponse(responseBuilder);
+        return Mono.just(ResponseUtil.getSuccessfulApiResponse(response, "Courts fetched successfully"));
+    }
 
 
 }

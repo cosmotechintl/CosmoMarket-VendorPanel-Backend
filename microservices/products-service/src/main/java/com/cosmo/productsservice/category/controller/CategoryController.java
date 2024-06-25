@@ -2,6 +2,7 @@ package com.cosmo.productsservice.category.controller;
 
 import com.cosmo.common.constant.ApiConstant;
 import com.cosmo.common.model.ApiResponse;
+import com.cosmo.common.model.SearchParam;
 import com.cosmo.productsservice.category.model.CreateCategoryModel;
 import com.cosmo.productsservice.category.model.request.DeleteCategoryRequest;
 import com.cosmo.productsservice.category.model.request.UpdateCategoryRequest;
@@ -31,5 +32,9 @@ public class CategoryController {
     @PostMapping(ApiConstant.DELETE)
     public Mono<ApiResponse<?>> delete(@RequestBody @Valid DeleteCategoryRequest deleteCategoryRequest){
         return categoryService.deleteCategory(deleteCategoryRequest);
+    }
+    @PostMapping()
+    public Mono<ApiResponse<?>> getAllCategory(@RequestBody @Valid SearchParam searchParam){
+        return categoryService.getAllCategory(searchParam);
     }
 }

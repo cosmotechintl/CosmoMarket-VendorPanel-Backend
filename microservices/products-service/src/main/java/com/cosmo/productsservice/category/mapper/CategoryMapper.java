@@ -1,9 +1,12 @@
 package com.cosmo.productsservice.category.mapper;
 
+import com.cosmo.authentication.vendor.entity.Vendor;
+import com.cosmo.authentication.vendor.model.SearchVendorResponse;
 import com.cosmo.common.constant.StatusConstant;
 import com.cosmo.common.repository.StatusRepository;
 import com.cosmo.productsservice.category.entity.ProductCategory;
 import com.cosmo.productsservice.category.model.CreateCategoryModel;
+import com.cosmo.productsservice.category.model.request.SearchCategoryResponse;
 import com.cosmo.productsservice.category.model.request.UpdateCategoryRequest;
 import com.cosmo.productsservice.category.repo.ProductCategoryRepository;
 import org.mapstruct.Mapper;
@@ -11,7 +14,9 @@ import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public abstract class CategoryMapper {
@@ -20,6 +25,12 @@ public abstract class CategoryMapper {
 
     @Autowired
     protected ProductCategoryRepository productCategoryRepository;
+
+    public abstract SearchCategoryResponse entityToRes(ProductCategory productCategory);
+
+    public List<SearchCategoryResponse> getCategoryResponses(List<ProductCategory> category) {
+        return category.stream().map(this::entityToRes).collect(Collectors.toList());
+    }
 
     public ProductCategory toEntity(CreateCategoryModel model) {
         ProductCategory categoryDetails = new ProductCategory();

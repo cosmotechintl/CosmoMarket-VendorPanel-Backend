@@ -3,6 +3,7 @@ package com.cosmo.vendorservice.court.controller;
 import com.cosmo.authentication.vendor.model.request.BlockVendorRequest;
 import com.cosmo.common.constant.ApiConstant;
 import com.cosmo.common.model.ApiResponse;
+import com.cosmo.common.model.SearchParam;
 import com.cosmo.vendorservice.court.model.BlockCourtRequest;
 import com.cosmo.vendorservice.court.model.CreateCourtRequestModel;
 import com.cosmo.vendorservice.court.model.UpdateCourtRequest;
@@ -32,5 +33,9 @@ public class VendorCourtController {
     @PostMapping(ApiConstant.BLOCK)
     public Mono<ApiResponse<?>> blockCourt(@RequestBody @Valid BlockCourtRequest blockCourtRequest){
         return vendorCourtService.blockCourt(blockCourtRequest);
+    }
+    @PostMapping()
+    public Mono<ApiResponse<?>> getAllCategory(@RequestBody @Valid SearchParam searchParam){
+        return vendorCourtService.getAllCourt(searchParam);
     }
 }

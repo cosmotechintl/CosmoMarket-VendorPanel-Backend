@@ -1,7 +1,14 @@
 package com.cosmo.productsservice.category.service.impl;
 
+import com.cosmo.authentication.vendor.entity.Vendor;
+import com.cosmo.common.service.SearchResponse;
+import com.cosmo.productsservice.category.model.request.SearchCategoryResponse;
+import com.cosmo.productsservice.category.model.request.SearchCategoryResponse;
 import com.cosmo.common.constant.StatusConstant;
 import com.cosmo.common.model.ApiResponse;
+import com.cosmo.common.model.PageableResponse;
+import com.cosmo.common.model.SearchParam;
+import com.cosmo.common.model.SearchResponseWithMapperBuilder;
 import com.cosmo.common.repository.StatusRepository;
 import com.cosmo.common.util.ResponseUtil;
 import com.cosmo.productsservice.category.entity.ProductCategory;
@@ -10,6 +17,7 @@ import com.cosmo.productsservice.category.model.CreateCategoryModel;
 import com.cosmo.productsservice.category.model.request.DeleteCategoryRequest;
 import com.cosmo.productsservice.category.model.request.UpdateCategoryRequest;
 import com.cosmo.productsservice.category.repo.ProductCategoryRepository;
+import com.cosmo.productsservice.category.repo.ProductCategorySearchRepository;
 import com.cosmo.productsservice.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +34,8 @@ public class CategoryServiceImpl implements CategoryService {
     private final ProductCategoryRepository productCategoryRepository;
     private final CategoryMapper categoryMapper;
     private final StatusRepository statusRepository;
+    private final ProductCategorySearchRepository productCategorySearchRepository;
+    private final SearchResponse searchResponse;
 
     @Override
     public Mono<ApiResponse<?>> createCategory(CreateCategoryModel createCategoryModel) {
@@ -70,6 +80,16 @@ public class CategoryServiceImpl implements CategoryService {
                 return Mono.just(ResponseUtil.getSuccessfulApiResponse("category deleted successfully"));
             }
         }
+    }
+
+    @Override
+    public Mono<ApiResponse<?>> getAllCategory(SearchParam searchParam) {
+        SearchResponseWithMapperBuilder<ProductCategory, SearchCategoryResponse> responseBuilder = SearchResponseWithMapperBuilder.<ProductCategory, SearchCategoryResponse>builder()
+                .count(productCategorySearchRepository::count).searchData(productCategorySearchRepository::getAll)
+                .mapperFunction(this.categoryMapper::getCategoryResponses).searchParam(searchParam)
+                .build();
+        PageableResponse<SearchCategoryResponse> response = searchResponse.getSearchResponse(responseBuilder);
+        return Mono.just(ResponseUtil.getSuccessfulApiResponse(response, "Courts fetched successfully"));
     }
 }
 

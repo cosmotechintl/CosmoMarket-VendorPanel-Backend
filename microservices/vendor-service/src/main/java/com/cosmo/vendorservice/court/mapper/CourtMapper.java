@@ -6,16 +6,26 @@ import com.cosmo.vendorservice.court.entity.CourtDetails;
 import com.cosmo.vendorservice.court.model.CreateCourtRequestModel;
 import com.cosmo.vendorservice.court.model.UpdateCourtRequest;
 import com.cosmo.common.entity.Status;
+import com.cosmo.vendorservice.court.model.request.SearchCourtResponse;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public abstract class CourtMapper {
 
         @Autowired
         StatusRepository statusRepository;
+
+    public abstract SearchCourtResponse entityToRes(CourtDetails courtDetails);
+
+    public List<SearchCourtResponse> getCourtResponses(List<CourtDetails> court) {
+        return court.stream().map(this::entityToRes).collect(Collectors.toList());
+    }
 
      public CourtDetails toEntity(CreateCourtRequestModel model) {
         CourtDetails courtDetails = new CourtDetails();
