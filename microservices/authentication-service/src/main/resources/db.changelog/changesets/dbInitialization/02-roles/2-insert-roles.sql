@@ -12,9 +12,10 @@ VALUES ('Root', '', 'Root', 'NONE', 'ROOT', 'NONE', 0, 'NONE',0),
        ('Delete VendorUser', 'FiUsers', 'Delete User', 'delete', 'Users', 'DELETE_VENDOR_USER', 4, 'VendorUsers',0),
        ('Block VendorUser', 'FiUsers', 'Block User', 'block', 'Users', 'BLOCK_VENDOR_USER', 5, 'VendorUsers',0),
        ('UnBlock VendorUser', 'FiUsers', 'UnBlock User', 'unblock', 'Users', 'UNBLOCK_VENDOR_USER', 6, 'VendorUsers',0),
-       ('Business Hour','LiaBusinessTimeSolid', 'Business Hours', '/businessHour', 'Root', 'BUSINESS_HOUR', 2, 'NONE',0),
-       ('Create Business Hour', 'LiaBusinessTimeSolid', 'Create Business Hours', 'create', 'Business Hours', 'CREATE_BUSINESS_HOUR', 1, 'Business Hours',0),
-       ('View VendorUser', 'LiaBusinessTimeSolid', 'View Business Hours', 'view', 'Business Hours', 'VIEW_BUSINESS_HOUR', 2, 'Business Hours',0),
+       ('Products','GiShoppingCart', 'Products', '/product', 'Root', 'PRODUCT', 2, 'NONE',0),
+       ('Create Product', 'GiShoppingCart', 'Create Product', 'create', 'Products', 'CREATE_PRODUCT', 1, 'Products',0),
+       ('View Product', 'GiShoppingCart', 'View Product', 'view', 'Products', 'VIEW_PRODUCT', 2, 'Products',0),
+       ('Delete Product', 'GiShoppingCart', 'Delete Product', 'delete', 'Products', 'DELETE_PRODUCT', 3, 'Products',0),
        ('Settings','CiSettings', 'Settings', '/setting', 'Root', 'SETTINGS', 3, 'NONE',0);
 --changeset suman.gajmer:2
 UPDATE roles AS r

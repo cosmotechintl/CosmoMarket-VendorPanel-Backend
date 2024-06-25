@@ -6,6 +6,9 @@ import com.cosmo.common.repository.StatusRepository;
 import com.cosmo.productsservice.category.repo.ProductCategoryRepository;
 import com.cosmo.productsservice.product.entity.Product;
 import com.cosmo.productsservice.product.model.CreateProductModel;
+import com.cosmo.productsservice.product.model.ProductDetailDto;
+import com.cosmo.productsservice.product.model.SearchProductResponse;
+import com.cosmo.productsservice.product.model.request.UpdateProductRequest;
 import com.cosmo.productsservice.product.repository.ProductRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
@@ -13,7 +16,10 @@ import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+
+import static java.util.stream.Collectors.toList;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public abstract class ProductMapper {
@@ -45,4 +51,20 @@ public abstract class ProductMapper {
             productRepository.save(product);
             return product;
         }
+
+    public abstract ProductDetailDto getProductDetails(Product product);
+
+    public abstract SearchProductResponse entityToRes(Product product);
+    public List<SearchProductResponse> getProductResponses(List<Product> products) {
+        return products.stream().map(this::entityToRes).collect(toList());
+    }
+    public Product updateProduct(UpdateProductRequest request, Product product){
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setPrice(request.getPrice());
+        product.setImage(request.getImage());
+        product.setQuantity(request.getQuantity());
+        return product;
+    }
+
 }

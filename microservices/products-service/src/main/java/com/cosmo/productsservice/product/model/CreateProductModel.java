@@ -3,7 +3,6 @@ package com.cosmo.productsservice.product.model;
 import com.cosmo.common.model.ModelBase;
 import com.cosmo.productsservice.category.model.ProductCategoryDto;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
