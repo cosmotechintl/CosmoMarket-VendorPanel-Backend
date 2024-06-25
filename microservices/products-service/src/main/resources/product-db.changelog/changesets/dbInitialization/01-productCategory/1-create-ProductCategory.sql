@@ -10,5 +10,7 @@ CREATE TABLE IF NOT EXISTS product_category (
     code           VARCHAR(255)             NOT NULL,
     created_at     datetime                 NULL,
     updated_at     datetime                 NULL,
+    status          BIGINT                  NOT NULL,
+    FOREIGN KEY (status) REFERENCES status(id),
     PRIMARY KEY (id)
 );

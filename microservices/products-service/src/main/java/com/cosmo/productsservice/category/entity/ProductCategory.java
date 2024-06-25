@@ -1,6 +1,7 @@
 package com.cosmo.productsservice.category.entity;
 
 import com.cosmo.common.abstractEntity.AbstractEntity;
+import com.cosmo.common.entity.Status;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,4 +31,7 @@ public class ProductCategory extends AbstractEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
+    @ManyToOne
+    @JoinColumn(name = "status", referencedColumnName = "id")
+    private Status status;
 }
