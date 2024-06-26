@@ -1,7 +1,6 @@
 package com.cosmo.vendorservice.court.service.impl;
 
-import com.cosmo.authentication.vendor.entity.Vendor;
-import com.cosmo.authentication.vendor.model.request.BlockVendorRequest;
+
 import com.cosmo.common.constant.StatusConstant;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.model.PageableResponse;
@@ -40,8 +39,7 @@ public class VendorCourtServiceImpl implements VendorCourtService {
         try {
             courtCreationRepository.save(courtDetails);
             return Mono.just(ResponseUtil.getSuccessfulApiResponse("Court created successfully"));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error("Error creating court: ", e);
             return Mono.just(ResponseUtil.getFailureResponse("Court creation failed"));
         }
@@ -56,8 +54,7 @@ public class VendorCourtServiceImpl implements VendorCourtService {
             CourtMapper.updateEntity(courtDetails, updateCourtRequest);
             courtCreationRepository.save(courtDetails);
             return Mono.just(ResponseUtil.getSuccessfulApiResponse("Court updated successfully"));
-        }
-            else {
+        } else {
             return Mono.just(ResponseUtil.getFailureResponse("Court not found"));
         }
     }
@@ -67,7 +64,7 @@ public class VendorCourtServiceImpl implements VendorCourtService {
         Optional<CourtDetails> court = courtCreationRepository.findByName(blockCourtRequest.getName());
         if (court.isEmpty()) {
             return Mono.just(ResponseUtil.getFailureResponse("Court not found"));
-        }else {
+        } else {
             CourtDetails courtDetails = court.get();
             if (StatusConstant.DELETED.getName().equals(courtDetails.getStatus().getName()) || StatusConstant.BLOCKED.getName().equals(courtDetails.getStatus().getName())) {
                 return Mono.just(ResponseUtil.getNotFoundResponse("Court not found"));
@@ -77,6 +74,18 @@ public class VendorCourtServiceImpl implements VendorCourtService {
                 return Mono.just(ResponseUtil.getSuccessfulApiResponse("court blocked successfully"));
             }
         }
+    }
+
+    @Override
+    public Mono<ApiResponse<?>> unblockCourt(UnblockCourtRequest unblockCourtRequest) {
+        Optional<CourtDetails> court = courtCreationRepository.findByName(unblockCourtRequest.getName());
+        CourtDetails courtDetails = court.get();
+        if (StatusConstant.BLOCKED.getName().equals(courtDetails.getStatus().getName())) {
+            courtDetails.setStatus(statusRepository.findByName(StatusConstant.ACTIVE.getName()));
+            courtCreationRepository.save(courtDetails);
+            return Mono.just(ResponseUtil.getSuccessfulApiResponse("Court unblocked successfully"));
+        }
+        return Mono.just(ResponseUtil.getFailureResponse("Court unblock failed"));
     }
 
     @Override
@@ -99,7 +108,6 @@ public class VendorCourtServiceImpl implements VendorCourtService {
             return Mono.just(ResponseUtil.getSuccessfulApiResponse(courtDetailsDto, "Court details fetched successfully"));
         }
     }
-
 
 
 }
