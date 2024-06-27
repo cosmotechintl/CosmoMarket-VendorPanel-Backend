@@ -12,7 +12,7 @@ import java.util.Date;
 public class SearchVendorResponse extends ModelBase {
     private String name;
     private String address;
-    private String mobileNumber;
+    private String phoneNumber;
     private String email;
     private String panNumber;
     private String code;
