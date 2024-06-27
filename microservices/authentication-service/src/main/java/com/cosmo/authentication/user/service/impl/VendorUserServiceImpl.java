@@ -41,14 +41,13 @@ public class VendorUserServiceImpl implements VendorUserService {
     private final VendorUserMapper vendorUserMapper;
     private final VendorUserRepository vendorUserRepository;
     private final StatusRepository statusRepository;
-    private final JwtService jwtService;
     private final VendorUsersSearchRepository vendorUsersSearchRepository;
     private final SearchResponse searchResponse;
     private final PasswordEncoder passwordEncoder;
     private final VendorUserHelper vendorUserHelper;
 
     @Override
-    public Mono<ApiResponse<?>> getallVendorUserDetail(SearchParam searchParam) {
+    public Mono<ApiResponse<?>> getAllVendorUserDetail(SearchParam searchParam) {
         long vendorId = vendorUserHelper.getCurrentUserVendorId();
         searchParam.getParam().put(SearchParamConstant.VENDOR_ID, vendorId);
         SearchResponseWithMapperBuilder<VendorUser, SearchVendorUsersResponse> responseBuilder =

@@ -47,7 +47,7 @@ public class VendorUserController {
 
     @PostMapping(ApiConstant.ALL_VENDOR_USERS)
     public Mono<ApiResponse<?>> getAllVendorUserDetail(@RequestBody @Valid SearchParam searchParam) {
-        return vendorUserService.getallVendorUserDetail(searchParam);
+        return vendorUserService.getAllVendorUserDetail(searchParam);
     }
 
     @PostMapping(ApiConstant.CHANGE_PASSWORD)
