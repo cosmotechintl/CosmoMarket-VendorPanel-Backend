@@ -31,11 +31,11 @@ public class VendorController {
     public Mono<ApiResponse> createVendor(@RequestBody @Valid CreateVendorModel create){
         return vendorService.createVendor(create);
     }
-    @PostMapping()
+    @PostMapping(ApiConstant.GET)
     public Mono<ApiResponse<?>> getAllVendors(@RequestBody @Valid SearchParam searchParam){
         return vendorService.getAllVendors(searchParam);
     }
-    @PostMapping(ApiConstant.GET)
+    @PostMapping(ApiConstant.GET+ApiConstant.SLASH+ApiConstant.DETAIL)
     public Mono<ApiResponse<?>> getVendorDetails(@RequestBody @Valid FetchVendorDetail fetchVendorDetail){
         return vendorService.getVendorDetails(fetchVendorDetail);
     }
