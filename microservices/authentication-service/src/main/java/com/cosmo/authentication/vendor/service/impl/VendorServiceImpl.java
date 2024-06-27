@@ -1,5 +1,13 @@
 package com.cosmo.authentication.vendor.service.impl;
 
+import com.cosmo.authentication.vendor.log.entity.VendorBlockLog;
+import com.cosmo.authentication.vendor.log.entity.VendorDeleteLog;
+import com.cosmo.authentication.vendor.log.mapper.VendorBlockLogMapper;
+import com.cosmo.authentication.vendor.log.mapper.VendorDeleteLogMapper;
+import com.cosmo.authentication.vendor.log.model.VendorBlockLogModel;
+import com.cosmo.authentication.vendor.log.model.VendorDeleteLogModel;
+import com.cosmo.authentication.vendor.log.repo.VendorBlockLogRepository;
+import com.cosmo.authentication.vendor.log.repo.VendorDeleteLogRepository;
 import com.cosmo.authentication.vendor.model.request.BlockVendorRequest;
 import com.cosmo.authentication.vendor.model.request.DeleteVendorRequest;
 import com.cosmo.authentication.vendor.entity.Vendor;
@@ -35,6 +43,10 @@ public class VendorServiceImpl implements VendorService {
     private final VendorSearchRepository vendorSearchRepository;
     private final SearchResponse searchResponse;
     private final StatusRepository statusRepository;
+    private final VendorBlockLogMapper vendorBlockLogMapper;
+    private final VendorDeleteLogMapper vendorDeleteLogMapper;
+    private final VendorDeleteLogRepository vendorDeleteLogRepository;
+    private final VendorBlockLogRepository vendorBlockLogRepository;
 
     @Override
     public Mono<ApiResponse> createVendor(CreateVendorModel createVendorModel) {
@@ -72,7 +84,7 @@ public class VendorServiceImpl implements VendorService {
     }
 
     @Override
-    public Mono<ApiResponse<?>> deleteVendor(DeleteVendorRequest deleteVendorRequest) {
+    public Mono<ApiResponse<?>> deleteVendor(DeleteVendorRequest deleteVendorRequest, VendorDeleteLogModel vendorDeleteLogModel) {
         Optional<Vendor> checkVendor = vendorRepository.findByEmail(deleteVendorRequest.getEmail());
         if (checkVendor.isEmpty()) {
             return Mono.just(ResponseUtil.getNotFoundResponse("Vendor not found"));
@@ -84,12 +96,18 @@ public class VendorServiceImpl implements VendorService {
             vendor.setStatus(statusRepository.findByName(StatusConstant.DELETED.getName()));
             vendor.setActive(false);
             vendorRepository.save(vendor);
+
+            vendorDeleteLogModel.setRemarks(deleteVendorRequest.getRemarks());
+            vendorDeleteLogModel.setVendor(vendor);
+
+            VendorDeleteLog vendorDeleteLog =  vendorDeleteLogMapper.mapToEntity(vendorDeleteLogModel);
+            vendorDeleteLogRepository.save(vendorDeleteLog);
             return Mono.just(ResponseUtil.getSuccessfulApiResponse("Vendor deleted successfully"));
         }
     }
 
     @Override
-    public Mono<ApiResponse<?>> blockVendor(BlockVendorRequest blockVendorRequest) {
+    public Mono<ApiResponse<?>> blockVendor(BlockVendorRequest blockVendorRequest, VendorBlockLogModel vendorBlockLogModel) {
         Optional<Vendor> checkVendor = vendorRepository.findByEmail(blockVendorRequest.getEmail());
         if (checkVendor.isEmpty()) {
             return Mono.just(ResponseUtil.getNotFoundResponse("Vendor not found"));
@@ -101,6 +119,12 @@ public class VendorServiceImpl implements VendorService {
                 vendor.setStatus(statusRepository.findByName(StatusConstant.BLOCKED.getName()));
                 vendor.setActive(false);
                 vendorRepository.save(vendor);
+
+                vendorBlockLogModel.setRemarks(blockVendorRequest.getRemarks());
+                vendorBlockLogModel.setVendor(vendor);
+
+                VendorBlockLog vendorBlockLog = vendorBlockLogMapper.mapToEntity(vendorBlockLogModel);
+                vendorBlockLogRepository.save(vendorBlockLog);
                 return Mono.just(ResponseUtil.getSuccessfulApiResponse("Vendor blocked successfully"));
             }
         }

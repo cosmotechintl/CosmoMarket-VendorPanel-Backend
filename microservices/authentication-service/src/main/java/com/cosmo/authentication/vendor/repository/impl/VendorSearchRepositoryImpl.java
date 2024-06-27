@@ -17,7 +17,8 @@ import static com.cosmo.common.constant.SearchParamConstant.STATUS;
 
 @Repository
 @RequiredArgsConstructor
-public class VendorSearchRepositoryImpl implements VendorSearchRepository {
+public class
+VendorSearchRepositoryImpl implements VendorSearchRepository {
     @PersistenceContext
     protected EntityManager em;
 

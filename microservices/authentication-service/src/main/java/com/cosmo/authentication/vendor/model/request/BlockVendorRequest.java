@@ -11,4 +11,7 @@ import org.hibernate.validator.constraints.Length;
 public class BlockVendorRequest extends ModelBase {
     @NotBlank(message = "Email cannot be blank")
     private String email;
+
+    @NotBlank(message = "Remarks cannot be blank")
+    private String remarks;
 }

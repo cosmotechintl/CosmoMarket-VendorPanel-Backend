@@ -14,7 +14,7 @@ import java.security.Principal;
 
 public interface VendorUserService {
 
-    Mono<ApiResponse<?>> getallVendorUserDetail(SearchParam searchParam);
+    Mono<ApiResponse<?>> getAllVendorUserDetail(SearchParam searchParam);
     Mono<ApiResponse<?>> changePassword(PasswordChangeRequest passwordChangeRequest, Principal connectedUser);
     Mono<ApiResponse<?>> updateVendorUser(UpdateVendorRequest updateVendorRequest, Principal connectedUser);
     Mono<ApiResponse<?>> deleteVendorUser(DeleteVendorRequest deleteVendorRequest, Principal connectedUser);

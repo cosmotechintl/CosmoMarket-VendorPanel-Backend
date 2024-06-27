@@ -1,6 +1,8 @@
 package com.cosmo.authentication.vendor.controller;
 
 
+import com.cosmo.authentication.vendor.log.model.VendorBlockLogModel;
+import com.cosmo.authentication.vendor.log.model.VendorDeleteLogModel;
 import com.cosmo.authentication.vendor.model.request.BlockVendorRequest;
 import com.cosmo.authentication.vendor.model.request.DeleteVendorRequest;
 import com.cosmo.authentication.vendor.model.CreateVendorModel;
@@ -29,21 +31,21 @@ public class VendorController {
     public Mono<ApiResponse> createVendor(@RequestBody @Valid CreateVendorModel create){
         return vendorService.createVendor(create);
     }
-    @PostMapping()
+    @PostMapping(ApiConstant.GET)
     public Mono<ApiResponse<?>> getAllVendors(@RequestBody @Valid SearchParam searchParam){
         return vendorService.getAllVendors(searchParam);
     }
-    @PostMapping(ApiConstant.GET)
+    @PostMapping(ApiConstant.GET+ApiConstant.SLASH+ApiConstant.DETAIL)
     public Mono<ApiResponse<?>> getVendorDetails(@RequestBody @Valid FetchVendorDetail fetchVendorDetail){
         return vendorService.getVendorDetails(fetchVendorDetail);
     }
     @PostMapping(ApiConstant.DELETE)
-    public Mono<ApiResponse<?>> deleteVendor(@RequestBody @Valid DeleteVendorRequest request){
-        return vendorService.deleteVendor(request);
+    public Mono<ApiResponse<?>> deleteVendor(@RequestBody @Valid DeleteVendorRequest request, VendorDeleteLogModel logModel){
+        return vendorService.deleteVendor(request, logModel);
     }
     @PostMapping(ApiConstant.BLOCK)
-    public Mono<ApiResponse<?>> blockVendor(@RequestBody @Valid BlockVendorRequest request){
-        return vendorService.blockVendor(request);
+    public Mono<ApiResponse<?>> blockVendor(@RequestBody @Valid BlockVendorRequest request, VendorBlockLogModel logModel){
+        return vendorService.blockVendor(request, logModel);
     }
     @PostMapping(ApiConstant.UNBLOCK)
     public Mono<ApiResponse<?>> unblockVendor(@RequestBody @Valid UnblockVendorRequest request){

@@ -1,6 +1,8 @@
 package com.cosmo.authentication.vendor.service;
 
 
+import com.cosmo.authentication.vendor.log.model.VendorBlockLogModel;
+import com.cosmo.authentication.vendor.log.model.VendorDeleteLogModel;
 import com.cosmo.authentication.vendor.model.request.BlockVendorRequest;
 import com.cosmo.authentication.vendor.model.request.DeleteVendorRequest;
 import com.cosmo.authentication.vendor.model.request.UnblockVendorRequest;
@@ -15,8 +17,8 @@ public interface VendorService {
     Mono<ApiResponse> createVendor(CreateVendorModel createVendorModel);
     Mono<ApiResponse<?>> getAllVendors(SearchParam searchParam);
     Mono<ApiResponse<?>> getVendorDetails(FetchVendorDetail fetchVendorDetail);
-    Mono<ApiResponse<?>> deleteVendor(DeleteVendorRequest deleteVendorRequest);
-    Mono<ApiResponse<?>> blockVendor(BlockVendorRequest blockVendorRequest);
+    Mono<ApiResponse<?>> deleteVendor(DeleteVendorRequest deleteVendorRequest, VendorDeleteLogModel vendorDeleteLogModel);
+    Mono<ApiResponse<?>> blockVendor(BlockVendorRequest blockVendorRequest, VendorBlockLogModel vendorBlockLogModel);
     Mono<ApiResponse<?>> unblockVendor(UnblockVendorRequest unblockVendorRequest);
     Mono<ApiResponse<?>> updateVendor(UpdateVendorDetailRequest updateVendorDetailRequest);
 }
