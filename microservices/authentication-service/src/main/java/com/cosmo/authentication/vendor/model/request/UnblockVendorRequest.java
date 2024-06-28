@@ -8,6 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UnblockVendorRequest extends ModelBase {
-    @NotBlank(message = "Email cannot be blank")
-    private String email;
+    @NotBlank(message = "Code cannot be blank")
+    private String code;
 }
