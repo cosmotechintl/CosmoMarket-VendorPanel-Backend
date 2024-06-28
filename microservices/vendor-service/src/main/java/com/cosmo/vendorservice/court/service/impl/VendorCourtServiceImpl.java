@@ -1,6 +1,5 @@
 package com.cosmo.vendorservice.court.service.impl;
 
-
 import com.cosmo.common.constant.StatusConstant;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.model.PageableResponse;
@@ -10,6 +9,10 @@ import com.cosmo.common.repository.StatusRepository;
 import com.cosmo.common.service.SearchResponse;
 import com.cosmo.common.util.ResponseUtil;
 import com.cosmo.vendorservice.court.entity.CourtDetails;
+import com.cosmo.vendorservice.court.log.entity.CourtBlockLog;
+import com.cosmo.vendorservice.court.log.mapper.BlockCourtLogMapper;
+import com.cosmo.vendorservice.court.log.model.BlockCourtLogModel;
+import com.cosmo.vendorservice.court.log.repo.CourtBlockLogRepository;
 import com.cosmo.vendorservice.court.mapper.CourtMapper;
 import com.cosmo.vendorservice.court.model.*;
 import com.cosmo.vendorservice.court.model.request.SearchCourtResponse;
@@ -32,6 +35,8 @@ public class VendorCourtServiceImpl implements VendorCourtService {
     private final StatusRepository statusRepository;
     private final VendorCourtSearchRepository vendorCourtSearchRepository;
     private final SearchResponse searchResponse;
+    private final BlockCourtLogMapper blockCourtLogMapper;
+    private final CourtBlockLogRepository courtBlockLogRepository;
 
     @Override
     public Mono<ApiResponse<?>> createCourt(CreateCourtRequestModel createCourtRequestModel) {
@@ -60,7 +65,7 @@ public class VendorCourtServiceImpl implements VendorCourtService {
     }
 
     @Override
-    public Mono<ApiResponse<?>> blockCourt(BlockCourtRequest blockCourtRequest) {
+    public Mono<ApiResponse<?>> blockCourt(BlockCourtRequest blockCourtRequest, BlockCourtLogModel blockCourtLogModel) {
         Optional<CourtDetails> court = courtCreationRepository.findByName(blockCourtRequest.getName());
         if (court.isEmpty()) {
             return Mono.just(ResponseUtil.getFailureResponse("Court not found"));
@@ -71,6 +76,12 @@ public class VendorCourtServiceImpl implements VendorCourtService {
             } else {
                 courtDetails.setStatus(statusRepository.findByName(StatusConstant.BLOCKED.getName()));
                 courtCreationRepository.save(courtDetails);
+
+                blockCourtLogModel.setRemarks(blockCourtRequest.getRemarks());
+                blockCourtLogModel.setCourt(courtDetails);
+
+                CourtBlockLog courtBlockLog = blockCourtLogMapper.mapToEntity(blockCourtLogModel);
+                courtBlockLogRepository.save(courtBlockLog);
                 return Mono.just(ResponseUtil.getSuccessfulApiResponse("court blocked successfully"));
             }
         }
