@@ -6,11 +6,17 @@ import com.cosmo.common.repository.StatusRepository;
 import com.cosmo.futsalService.futsal.entity.Futsal;
 import com.cosmo.futsalService.futsal.model.CreateFutsalModel;
 import com.cosmo.futsalService.futsal.model.FutsalDto;
+import com.cosmo.futsalService.futsal.model.SearchFutsalResponse;
 import com.cosmo.futsalService.futsal.repo.FutsalRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public abstract class FutsalMapper {
@@ -30,4 +36,8 @@ public abstract class FutsalMapper {
         return futsal;
     }
     public abstract FutsalDto getFutsalDetails(Futsal Futsal);
+    public abstract SearchFutsalResponse entityToResponse(Futsal futsal);
+    public List<SearchFutsalResponse> getFutsalResponses(List<Futsal> futsalList){
+        return futsalList.stream().map(this::entityToResponse).collect(toList());
+    }
 }

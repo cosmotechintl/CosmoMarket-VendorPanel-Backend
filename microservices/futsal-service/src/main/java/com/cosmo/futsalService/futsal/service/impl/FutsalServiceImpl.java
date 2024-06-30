@@ -3,13 +3,19 @@ package com.cosmo.futsalService.futsal.service.impl;
 import com.cosmo.authentication.user.entity.VendorUser;
 import com.cosmo.authentication.user.repo.VendorUserRepository;
 import com.cosmo.common.model.ApiResponse;
+import com.cosmo.common.model.PageableResponse;
+import com.cosmo.common.model.SearchParam;
+import com.cosmo.common.model.SearchResponseWithMapperBuilder;
+import com.cosmo.common.service.SearchResponse;
 import com.cosmo.common.util.ResponseUtil;
 import com.cosmo.futsalService.futsal.entity.Futsal;
 import com.cosmo.futsalService.futsal.mapper.FutsalMapper;
 import com.cosmo.futsalService.futsal.model.CreateFutsalModel;
 import com.cosmo.futsalService.futsal.model.FutsalDto;
+import com.cosmo.futsalService.futsal.model.SearchFutsalResponse;
 import com.cosmo.futsalService.futsal.model.request.FetchFutsalDetail;
 import com.cosmo.futsalService.futsal.repo.FutsalRepository;
+import com.cosmo.futsalService.futsal.repo.FutsalSearchRepository;
 import com.cosmo.futsalService.futsal.service.FutsalService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +31,9 @@ public class FutsalServiceImpl implements FutsalService {
     private final FutsalRepository futsalRepository;
     private final VendorUserRepository vendorUserRepository;
     private final FutsalMapper futsalMapper;
+    private final FutsalSearchRepository futsalSearchRepository;
+    private final SearchResponse searchResponse;
+
     @Override
     public Mono<ApiResponse> createFutsal(CreateFutsalModel createFutsalModel, Principal connectedUser) {
         Optional<VendorUser> checkVendorUser = vendorUserRepository.findByUsername(connectedUser.getName());
@@ -45,5 +54,15 @@ public class FutsalServiceImpl implements FutsalService {
             FutsalDto futsalDto = futsalMapper.getFutsalDetails(checkFutsal.get());
             return Mono.just(ResponseUtil.getSuccessfulApiResponse(futsalDto, "Futsal details fetched successfully"));
         }
+    }
+
+    @Override
+    public Mono<ApiResponse<?>> getAllFutsal(SearchParam searchParam) {
+        SearchResponseWithMapperBuilder<Futsal, SearchFutsalResponse> responseBuilder = SearchResponseWithMapperBuilder.<Futsal, SearchFutsalResponse>builder()
+                .count(futsalSearchRepository::count).searchData(futsalSearchRepository::getAll)
+                .mapperFunction(this.futsalMapper::getFutsalResponses).searchParam(searchParam)
+                .build();
+        PageableResponse<SearchFutsalResponse> response = searchResponse.getSearchResponse(responseBuilder);
+        return Mono.just(ResponseUtil.getSuccessfulApiResponse(response,"List of futsal fetched successfully"));
     }
 }
