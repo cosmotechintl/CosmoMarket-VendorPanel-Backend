@@ -9,11 +9,11 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.cosmo</groupId>
-	<artifactId>futsalBooking-service</artifactId>
+	<artifactId>futsal-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>futsalBooking-service</name>
-	<description>Cosmo-Market-Futsal-Booking</description>
+	<name>futsal-service</name>
+	<description>Cosmo-Market-Futsal-Service</description>
 	<properties>
 		<java.version>21</java.version>
 	</properties>

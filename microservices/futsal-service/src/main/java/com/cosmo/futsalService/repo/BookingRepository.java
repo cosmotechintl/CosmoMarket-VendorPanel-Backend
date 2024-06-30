@@ -1,4 +1,4 @@
-package com.cosmo.futsalBooking.repo;
+package com.cosmo.futsalService.repo;
 
 public interface BookingRepository {
 }

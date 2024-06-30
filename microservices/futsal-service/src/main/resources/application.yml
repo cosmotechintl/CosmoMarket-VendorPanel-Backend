@@ -1,6 +1,6 @@
 spring:
   application:
-    name: futsalBooking-service
+    name: futsal-service
   #  profiles.active: develop
   servlet:
     multipart:
@@ -44,7 +44,7 @@ spring:
     minIdle: 0
   liquibase:
     enabled: true
-    change-log: classpath:booking-db.changelog/changelog-master.yml
+    change-log: classpath:futsal-db.changelog/changelog-master.yml
     # drop-first: false
 #      default-schema: public
 server:
