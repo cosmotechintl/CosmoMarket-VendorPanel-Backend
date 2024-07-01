@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
-import java.security.Principal;
 
 @RestController
 @RequestMapping(ApiConstant.FUTSAL)
@@ -23,8 +22,8 @@ public class FutsalController {
     private final FutsalService futsalService;
 
     @PostMapping(ApiConstant.CREATE)
-    public Mono<ApiResponse> createFutsal(@RequestBody @Valid CreateFutsalModel createFutsalModel, Principal connectUser){
-        return futsalService.createFutsal(createFutsalModel,connectUser);
+    public Mono<ApiResponse> createFutsal(@RequestBody @Valid CreateFutsalModel createFutsalModel){
+        return futsalService.createFutsal(createFutsalModel);
     }
     @PostMapping(ApiConstant.GET+ApiConstant.SLASH+ApiConstant.DETAIL)
     public Mono<ApiResponse<?>> getFutsalDetails(@RequestBody @Valid FetchFutsalDetail fetchFutsalDetail){

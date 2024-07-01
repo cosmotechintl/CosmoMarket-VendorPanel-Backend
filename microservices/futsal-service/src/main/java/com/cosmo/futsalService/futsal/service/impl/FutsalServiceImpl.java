@@ -1,7 +1,5 @@
 package com.cosmo.futsalService.futsal.service.impl;
 
-import com.cosmo.authentication.user.entity.VendorUser;
-import com.cosmo.authentication.user.repo.VendorUserRepository;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.model.PageableResponse;
 import com.cosmo.common.model.SearchParam;
@@ -21,7 +19,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
-import java.security.Principal;
 import java.util.Optional;
 
 @Service
@@ -29,17 +26,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class FutsalServiceImpl implements FutsalService {
     private final FutsalRepository futsalRepository;
-    private final VendorUserRepository vendorUserRepository;
     private final FutsalMapper futsalMapper;
     private final FutsalSearchRepository futsalSearchRepository;
     private final SearchResponse searchResponse;
 
     @Override
-    public Mono<ApiResponse> createFutsal(CreateFutsalModel createFutsalModel, Principal connectedUser) {
-        Optional<VendorUser> checkVendorUser = vendorUserRepository.findByUsername(connectedUser.getName());
-        VendorUser vendorUser = checkVendorUser.get();
-        String code = vendorUser.getVendor().getCode();
-       Futsal futsal = futsalMapper.mapToEntity(createFutsalModel,code);
+    public Mono<ApiResponse> createFutsal(CreateFutsalModel createFutsalModel) {
+       Futsal futsal = futsalMapper.mapToEntity(createFutsalModel);
         futsalRepository.save(futsal);
         return Mono.just(ResponseUtil.getSuccessfulApiResponse("Futsal created successfull"));
     }
