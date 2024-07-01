@@ -8,6 +8,7 @@ import com.cosmo.common.model.SearchResponseWithMapperBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 

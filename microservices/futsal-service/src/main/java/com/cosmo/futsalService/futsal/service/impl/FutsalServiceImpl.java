@@ -34,7 +34,7 @@ public class FutsalServiceImpl implements FutsalService {
     public Mono<ApiResponse> createFutsal(CreateFutsalModel createFutsalModel) {
        Futsal futsal = futsalMapper.mapToEntity(createFutsalModel);
         futsalRepository.save(futsal);
-        return Mono.just(ResponseUtil.getSuccessfulApiResponse("Futsal created successfull"));
+        return Mono.just(ResponseUtil.getSuccessfulApiResponse("Futsal created successfully"));
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.cosmo.futsalService.futsal.model;
+package com.cosmo.vendorservice.futsalService.model;
 
 import com.cosmo.common.entity.Status;
 import com.cosmo.common.model.ModelBase;
@@ -28,5 +28,4 @@ public class CreateFutsalModel extends ModelBase {
     private String vendorCode;
 
     private Status status;
-
 }

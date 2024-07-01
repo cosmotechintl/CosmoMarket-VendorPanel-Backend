@@ -19,17 +19,20 @@ import static java.util.stream.Collectors.toList;
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public abstract class FutsalMapper {
     @Autowired
-    protected StatusRepository statusRepository;
-    @Autowired
     protected FutsalRepository futsalRepository;
+
+    @Autowired
+    protected StatusRepository statusRepository;
+
     public Futsal mapToEntity(CreateFutsalModel create){
         Futsal futsal =  new Futsal();
         futsal.setName(create.getName());
         futsal.setDescription(create.getDescription());
         futsal.setPrice(create.getPrice());
         futsal.setImage(create.getImage());
-        futsal.setStatus(statusRepository.findByName(StatusConstant.ACTIVE.getName()));
         futsal.setLocation(create.getLocation());
+        futsal.setVendorCode(create.getVendorCode());
+        futsal.setStatus(create.getStatus());
         return futsal;
     }
     public abstract FutsalDto getFutsalDetails(Futsal Futsal);

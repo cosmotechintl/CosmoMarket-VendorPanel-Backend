@@ -25,7 +25,7 @@ public class FutsalSearchRepositoryImpl implements FutsalSearchRepository {
     public Long count(SearchParam searchParam) {
         return (Long) em.createQuery("select COUNT(f.id) " +
                         "from Futsal  f " +
-                        "join Status s on s.id=f.status.id " +
+                        "join FutsalStatus s on s.id=f.status.id " +
                         " where " +
                         "(:name is null or f.name like CONCAT('%', :name, '%')) and " +
                         "(:status is null or s.description=:status) ")
@@ -38,7 +38,7 @@ public class FutsalSearchRepositoryImpl implements FutsalSearchRepository {
     public List<Futsal> getAll(SearchParam searchParam) {
         return em.createQuery("select f " +
                         "from Futsal  f " +
-                        "join Status s on s.id=f.status.id " +
+                        "join FutsalStatus s on s.id=f.status.id " +
                         " where " +
                         "(:name is null or f.name like CONCAT('%', :name, '%')) and " +
                         "(:status is null or s.description=:status) ")
