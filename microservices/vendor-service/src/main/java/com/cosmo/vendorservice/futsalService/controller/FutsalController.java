@@ -4,6 +4,7 @@ import com.cosmo.common.constant.ApiConstant;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.model.SearchParam;
 import com.cosmo.vendorservice.futsalService.model.CreateFutsalModel;
+import com.cosmo.vendorservice.futsalService.model.FetchFutsalDetail;
 import com.cosmo.vendorservice.futsalService.service.FutsalService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,5 +29,9 @@ public class FutsalController {
     @PostMapping(ApiConstant.GET)
     public Mono<ApiResponse<Object>> getAllFutsal(@RequestBody @Valid SearchParam searchParam){
         return futsalService.getAllFutsal(searchParam);
+    }
+    @PostMapping(ApiConstant.GET+ApiConstant.SLASH+ApiConstant.DETAIL)
+    public Mono<ApiResponse<Object>> getFutsalDetails(@RequestBody @Valid FetchFutsalDetail fetchFutsalDetail){
+        return futsalService.getFutsalDetails(fetchFutsalDetail);
     }
 }

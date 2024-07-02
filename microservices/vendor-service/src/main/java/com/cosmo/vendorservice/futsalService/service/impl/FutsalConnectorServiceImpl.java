@@ -13,6 +13,7 @@ import com.cosmo.vendorservice.config.AbstractConnectorService;
 import com.cosmo.vendorservice.config.ConnectorService;
 import com.cosmo.vendorservice.config.PropertiesFileValue;
 import com.cosmo.vendorservice.futsalService.model.CreateFutsalModel;
+import com.cosmo.vendorservice.futsalService.model.FetchFutsalDetail;
 import com.cosmo.vendorservice.futsalService.service.FutsalService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +58,14 @@ public class FutsalConnectorServiceImpl extends AbstractConnectorService impleme
     public Mono<ApiResponse<Object>> getAllFutsal(SearchParam searchParam) {
         return connectToService(searchParam,
                 ApiConstant.FUTSAL+ApiConstant.SLASH+ApiConstant.GET,
+                new ParameterizedTypeReference<>(){
+                }
+        );
+    }
+    @Override
+    public Mono<ApiResponse<Object>> getFutsalDetails(FetchFutsalDetail fetchFutsalDetail) {
+        return connectToService(fetchFutsalDetail,
+                ApiConstant.FUTSAL+ApiConstant.SLASH+ApiConstant.GET+ApiConstant.SLASH+ApiConstant.DETAIL,
                 new ParameterizedTypeReference<>(){
                 }
         );

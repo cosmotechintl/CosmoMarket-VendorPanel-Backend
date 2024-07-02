@@ -39,7 +39,7 @@ public class FutsalServiceImpl implements FutsalService {
 
     @Override
     public Mono<ApiResponse<?>> getFutsalDetails(FetchFutsalDetail fetchFutsalDetail) {
-        Optional<Futsal> checkFutsal = futsalRepository.findByVendorCode(fetchFutsalDetail.getVendorCode());
+        Optional<Futsal> checkFutsal = futsalRepository.findByUuid(fetchFutsalDetail.getUuid());
         if(checkFutsal.isEmpty()){
             return Mono.just(ResponseUtil.getNotFoundResponse("Futsal not found"));
         }

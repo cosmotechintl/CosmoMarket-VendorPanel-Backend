@@ -13,6 +13,7 @@ import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.UUID;
 
 import static java.util.stream.Collectors.toList;
 
@@ -31,6 +32,7 @@ public abstract class FutsalMapper {
         futsal.setPrice(create.getPrice());
         futsal.setImage(create.getImage());
         futsal.setLocation(create.getLocation());
+        futsal.setUuid(UUID.randomUUID().toString());
         futsal.setVendorCode(create.getVendorCode());
         futsal.setStatus(statusRepository.findByName(StatusConstant.ACTIVE.getName()));
         return futsal;
