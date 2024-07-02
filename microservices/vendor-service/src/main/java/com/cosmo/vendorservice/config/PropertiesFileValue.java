@@ -11,4 +11,7 @@ public class PropertiesFileValue {
     @Value("${futsal_service.url}")
     private String futsalServiceUrl;
 
+    @Value("${product_service.url}")
+    private String productServiceUrl;
+
 }

@@ -1,7 +1,5 @@
 package com.cosmo.productsservice.category.service;
 
-
-import com.cosmo.authentication.vendor.model.FetchVendorDetail;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.model.SearchParam;
 import com.cosmo.productsservice.category.model.CreateCategoryModel;

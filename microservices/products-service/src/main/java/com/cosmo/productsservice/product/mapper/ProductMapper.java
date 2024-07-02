@@ -47,7 +47,8 @@ public abstract class ProductMapper {
             product.setCreatedAt(new Date());
             product.setStatus(statusRepository.findByName(StatusConstant.ACTIVE.getName()));
             product.setCode(UUID.randomUUID().toString());
-
+            product.setVendorCode(create.getVendorCode());
+            product.setInStock(true);
             productRepository.save(product);
             return product;
         }

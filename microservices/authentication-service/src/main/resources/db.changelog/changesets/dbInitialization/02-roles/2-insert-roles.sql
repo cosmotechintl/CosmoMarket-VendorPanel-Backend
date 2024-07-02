@@ -17,10 +17,10 @@ VALUES ('Root', '', 'Root', 'NONE', 'ROOT', 'NONE', 0, 'NONE',0),
        ('Modify Court','GiSoccerField', 'Modify Court', 'edit', 'Courts', 'MODIFY_COURT', 2, 'Courts',0),
        ('Delete Court','GiSoccerField', 'Delete Court', 'delete', 'Courts', 'DELETE_COURT', 3, 'Courts',0),
        ('View Court','GiSoccerField', 'View Court', 'view', 'Courts', 'VIEW_COURT', 4, 'Courts',0),
---        ('Products','GiShoppingCart', 'Products', '/product', 'Root', 'PRODUCT', 3, 'NONE',0),
---        ('Create Product', 'GiShoppingCart', 'Create Product', 'create', 'Products', 'CREATE_PRODUCT', 1, 'Products',0),
---        ('View Product', 'GiShoppingCart', 'View Product', 'view', 'Products', 'VIEW_PRODUCT', 2, 'Products',0),
---        ('Delete Product', 'GiShoppingCart', 'Delete Product', 'delete', 'Products', 'DELETE_PRODUCT', 3, 'Products',0),
+       ('Products','GiShoppingCart', 'Products', '/product', 'Root', 'PRODUCT', 3, 'NONE',0),
+       ('Create Product', 'GiShoppingCart', 'Create Product', 'create', 'Products', 'CREATE_PRODUCT', 1, 'Products',0),
+       ('View Product', 'GiShoppingCart', 'View Product', 'view', 'Products', 'VIEW_PRODUCT', 2, 'Products',0),
+       ('Delete Product', 'GiShoppingCart', 'Delete Product', 'delete', 'Products', 'DELETE_PRODUCT', 3, 'Products',0),
        ('Settings','CiSettings', 'Settings', '/setting', 'Root', 'SETTINGS', 4, 'NONE',0);
 --changeset suman.gajmer:2
 UPDATE roles AS r

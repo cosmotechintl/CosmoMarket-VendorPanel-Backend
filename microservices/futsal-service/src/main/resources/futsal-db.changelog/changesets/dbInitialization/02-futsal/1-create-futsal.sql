@@ -10,10 +10,17 @@ CREATE TABLE IF NOT EXISTS `futsal`
     image                        VARCHAR(255)          NOT NULL,
     price                        DOUBLE                NOT NULL,
     location                     VARCHAR(255)          NOT NULL,
+    uuid                         VARCHAR(255)          NOT NULL,
     status                       BIGINT                NOT NULL,
     vendor_code                  VARCHAR(255)          NOT NULL,
     CONSTRAINT pk_futsal PRIMARY KEY (id)
 )
+
+--changeset manjul.tamang:2
+--preconditions onFail:MARK_RAN
+--precondition-sql-check expectedResult:0  SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_schema = (SELECT DATABASE()) AND table_name = 'futsal' AND constraint_name = 'uc_type_uuid'
+ALTER TABLE futsal
+    ADD CONSTRAINT uc_type_uuid UNIQUE (uuid);
 
 -- --changeset manjul.tamang:2
 -- --preconditions onFail:MARK_RAN

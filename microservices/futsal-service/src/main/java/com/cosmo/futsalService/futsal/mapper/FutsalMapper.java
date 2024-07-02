@@ -6,6 +6,7 @@ import com.cosmo.futsalService.futsal.entity.Futsal;
 import com.cosmo.futsalService.futsal.model.CreateFutsalModel;
 import com.cosmo.futsalService.futsal.model.FutsalDto;
 import com.cosmo.futsalService.futsal.model.SearchFutsalResponse;
+import com.cosmo.futsalService.futsal.model.request.UpdateFutsalModel;
 import com.cosmo.futsalService.futsal.repo.FutsalRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
@@ -13,6 +14,7 @@ import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.UUID;
 
 import static java.util.stream.Collectors.toList;
 
@@ -31,13 +33,22 @@ public abstract class FutsalMapper {
         futsal.setPrice(create.getPrice());
         futsal.setImage(create.getImage());
         futsal.setLocation(create.getLocation());
+        futsal.setUuid(UUID.randomUUID().toString());
         futsal.setVendorCode(create.getVendorCode());
-        futsal.setStatus(create.getStatus());
+        futsal.setStatus(statusRepository.findByName(StatusConstant.ACTIVE.getName()));
         return futsal;
     }
     public abstract FutsalDto getFutsalDetails(Futsal Futsal);
     public abstract SearchFutsalResponse entityToResponse(Futsal futsal);
     public List<SearchFutsalResponse> getFutsalResponses(List<Futsal> futsalList){
         return futsalList.stream().map(this::entityToResponse).collect(toList());
+    }
+
+    public Futsal updatetoEntity(Futsal futsal, UpdateFutsalModel updateFutsalModel) {
+        futsal.setName(updateFutsalModel.getName());
+        futsal.setDescription(updateFutsalModel.getDescription());
+        futsal.setPrice(updateFutsalModel.getPrice());
+        futsal.setLocation(updateFutsalModel.getLocation());
+        return futsalRepository.save(futsal);
     }
 }

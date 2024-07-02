@@ -1,6 +1,5 @@
 package com.cosmo.productsservice.category.controller;
 
-import com.cosmo.authentication.vendor.model.FetchVendorDetail;
 import com.cosmo.common.constant.ApiConstant;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.model.SearchParam;

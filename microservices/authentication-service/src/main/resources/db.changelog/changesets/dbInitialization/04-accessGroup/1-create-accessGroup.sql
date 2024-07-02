@@ -29,7 +29,7 @@ ALTER TABLE access_group
 --preconditions onFail:MARK_RAN
 --precondition-sql-check expectedResult:0  SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_schema = (SELECT DATABASE()) AND table_name = 'roles' AND constraint_name = 'FK_ROLES_ON_PARENT_ROLE'
 ALTER TABLE access_group
-    ADD CONSTRAINT FK_ACCESS_GROUP_ON_STATUS FOREIGN KEY (futsalStatus) REFERENCES futsalStatus (id);
+    ADD CONSTRAINT FK_ACCESS_GROUP_ON_STATUS FOREIGN KEY (status) REFERENCES status (id);
 
 --changeset suman.gajmer:4
 --preconditions onFail:MARK_RAN

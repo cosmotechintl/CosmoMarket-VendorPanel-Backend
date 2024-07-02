@@ -27,6 +27,9 @@ public class Futsal extends AbstractEntity {
     @Column(name = "location", nullable = false)
     private String location;
 
+    @Column(name = "uuid", nullable = false)
+    private String uuid;
+
     @JoinColumn(name = "status", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Status status;

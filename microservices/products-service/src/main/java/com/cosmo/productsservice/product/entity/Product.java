@@ -43,6 +43,9 @@ public class Product extends AbstractEntity {
     @Column(name = "code", nullable = false)
     private String code;
 
+    @Column(name = "vendor_code", nullable = false)
+    private String vendorCode;
+
     @Column(name = "in_stock")
     private boolean inStock;
 

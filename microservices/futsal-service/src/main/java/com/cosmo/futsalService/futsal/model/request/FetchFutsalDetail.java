@@ -9,6 +9,6 @@ import lombok.Setter;
 @Setter
 public class FetchFutsalDetail extends ModelBase {
 
-    @NotBlank(message = "Vendor code cannot be blank")
-    private String vendorCode;
+    @NotBlank(message = "uuid cannot be blank")
+    private String uuid;
 }
