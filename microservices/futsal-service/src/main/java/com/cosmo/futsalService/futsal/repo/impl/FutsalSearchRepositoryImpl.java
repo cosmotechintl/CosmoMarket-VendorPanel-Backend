@@ -9,6 +9,8 @@ import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.function.Function;
+
 import static com.cosmo.common.constant.SearchParamConstant.*;
 
 @Repository
@@ -50,6 +52,21 @@ public class FutsalSearchRepositoryImpl implements FutsalSearchRepository {
                 .setParameter("status", SearchParamUtil.getString(searchParam, STATUS))
                 .setParameter("location",SearchParamUtil.getString(searchParam,LOCATION))
                 .setParameter("price",SearchParamUtil.getString(searchParam,PRICE))
+                .getResultList();
+    }
+
+    @Override
+    public Function<SearchParam, List<Futsal>> findByVendorCode(SearchParam searchParam, String vendorCode) {
+        return param -> em.createQuery("select cd " +
+                        "from Futsal  cd " +
+                        "join Status s on s.id=cd.status.id " +
+                        " where " +
+                        "(:name is null or cd.name like CONCAT('%', :name, '%')) and " +
+                        "(:status is null or s.description=:status) and " +
+                        "(:vendorCode is null or cd.vendorCode=:vendorCode)", Futsal.class)
+                .setParameter("name", SearchParamUtil.getString(searchParam, NAME))
+                .setParameter("status", SearchParamUtil.getString(searchParam, STATUS))
+                .setParameter("vendorCode", vendorCode)
                 .getResultList();
     }
 }

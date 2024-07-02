@@ -3,8 +3,9 @@ package com.cosmo.futsalService.futsal.controller;
 import com.cosmo.common.constant.ApiConstant;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.model.SearchParam;
+import com.cosmo.futsalService.court.model.FetchCourtByVendorCode;
 import com.cosmo.futsalService.futsal.model.CreateFutsalModel;
-import com.cosmo.futsalService.futsal.model.request.FetchFutsalDetail;
+import com.cosmo.futsalService.futsal.model.request.*;
 import com.cosmo.futsalService.futsal.service.FutsalService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +33,25 @@ public class FutsalController {
     @PostMapping(ApiConstant.GET)
     public Mono<ApiResponse<?>> getAllFutsal(@RequestBody @Valid SearchParam searchParam){
         return futsalService.getAllFutsal(searchParam);
+    }
+
+    @PostMapping(ApiConstant.UPDATE)
+    public Mono<ApiResponse> updateFutsal(@RequestBody @Valid UpdateFutsalModel updateFutsalModel){
+        return futsalService.updateFutsal(updateFutsalModel);
+    }
+
+    @PostMapping(ApiConstant.BLOCK)
+    public Mono<ApiResponse<?>> blockFutsal(@RequestBody @Valid BlockFutsalRequest blockFutsalRequest){
+        return futsalService.blockFutsal(blockFutsalRequest);
+    }
+
+    @PostMapping(ApiConstant.UNBLOCK)
+    public Mono<ApiResponse<?>> unblockFutsal(@RequestBody @Valid UnblockFutsalRequest unblockFutsalRequest){
+        return futsalService.unblockFutsal(unblockFutsalRequest);
+    }
+
+    @PostMapping(ApiConstant.GET_BY_CODE)
+    public Mono<ApiResponse<?>> getCourtDetails(@RequestBody @Valid SearchParam searchParam, FetchFutsalByVendor fetchFutsalByVendor) {
+        return futsalService.listFutsalByVendor(searchParam, fetchFutsalByVendor);
     }
 }
