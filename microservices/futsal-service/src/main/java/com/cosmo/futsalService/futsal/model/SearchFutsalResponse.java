@@ -10,6 +10,7 @@ import lombok.Setter;
 public class SearchFutsalResponse extends ModelBase {
     private String name;
     private double price;
+    private String location;
     private String uuid;
     private StatusDto status;
     private String vendorCode;
