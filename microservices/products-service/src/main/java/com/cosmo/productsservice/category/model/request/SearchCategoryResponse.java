@@ -1,6 +1,5 @@
 package com.cosmo.productsservice.category.model.request;
 
-import com.cosmo.authentication.vendor.model.CategoryDto;
 import com.cosmo.common.model.ModelBase;
 import com.cosmo.common.model.StatusDto;
 import lombok.Getter;

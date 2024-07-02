@@ -1,5 +1,3 @@
 databaseChangeLog:
   - includeAll:
-        path: db.changelog/changesets/
-  - includeAll:
       path: product-db.changelog/changesets/

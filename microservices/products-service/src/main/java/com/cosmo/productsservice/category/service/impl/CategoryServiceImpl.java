@@ -1,11 +1,8 @@
 package com.cosmo.productsservice.category.service.impl;
 
-import com.cosmo.authentication.vendor.entity.Vendor;
-import com.cosmo.authentication.vendor.model.VendorDetailDto;
 import com.cosmo.common.service.SearchResponse;
 import com.cosmo.productsservice.category.model.CategoryDetailsDto;
 import com.cosmo.productsservice.category.model.FetchCategoryDetails;
-import com.cosmo.productsservice.category.model.request.SearchCategoryResponse;
 import com.cosmo.productsservice.category.model.request.SearchCategoryResponse;
 import com.cosmo.common.constant.StatusConstant;
 import com.cosmo.common.model.ApiResponse;

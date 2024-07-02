@@ -36,4 +36,6 @@ public class CreateProductModel extends ModelBase {
 
         @NotNull
         private ProductCategoryDto category;
+
+        private String vendorCode;
 }

@@ -1,8 +1,5 @@
 package com.cosmo.productsservice.category.mapper;
 
-import com.cosmo.authentication.vendor.entity.Vendor;
-import com.cosmo.authentication.vendor.model.SearchVendorResponse;
-import com.cosmo.authentication.vendor.model.VendorDetailDto;
 import com.cosmo.common.constant.StatusConstant;
 import com.cosmo.common.repository.StatusRepository;
 import com.cosmo.productsservice.category.entity.ProductCategory;
