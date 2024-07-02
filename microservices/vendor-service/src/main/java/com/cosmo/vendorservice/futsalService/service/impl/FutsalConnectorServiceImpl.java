@@ -6,6 +6,7 @@ import com.cosmo.common.constant.ApiConstant;
 import com.cosmo.common.constant.ServiceConstant;
 import com.cosmo.common.constant.StatusConstant;
 import com.cosmo.common.model.ApiResponse;
+import com.cosmo.common.model.SearchParam;
 import com.cosmo.common.repository.StatusRepository;
 import com.cosmo.common.util.ResponseUtil;
 import com.cosmo.vendorservice.config.AbstractConnectorService;
@@ -30,7 +31,6 @@ import java.util.Optional;
 public class FutsalConnectorServiceImpl extends AbstractConnectorService implements FutsalService, ConnectorService {
     private final PropertiesFileValue propertiesFileValue;
     private final VendorUserRepository vendorUserRepository;
-    private final StatusRepository statusRepository;
 
     @Override
     protected String getBaseUrl() {
@@ -46,9 +46,17 @@ public class FutsalConnectorServiceImpl extends AbstractConnectorService impleme
         VendorUser vendorUser = checkVendorUSer.get();
         String code = vendorUser.getVendor().getCode();
         createFutsalModel.setVendorCode(code);
-        createFutsalModel.setStatus(statusRepository.findByName(StatusConstant.ACTIVE.getName()));
         return connectToService(createFutsalModel,
                 ApiConstant.FUTSAL+ApiConstant.SLASH+ApiConstant.CREATE,
+                new ParameterizedTypeReference<>(){
+                }
+        );
+    }
+
+    @Override
+    public Mono<ApiResponse<Object>> getAllFutsal(SearchParam searchParam) {
+        return connectToService(searchParam,
+                ApiConstant.FUTSAL+ApiConstant.SLASH+ApiConstant.GET,
                 new ParameterizedTypeReference<>(){
                 }
         );

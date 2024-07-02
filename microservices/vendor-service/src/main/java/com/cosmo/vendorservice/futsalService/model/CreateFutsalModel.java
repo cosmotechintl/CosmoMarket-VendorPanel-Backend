@@ -1,6 +1,5 @@
 package com.cosmo.vendorservice.futsalService.model;
 
-import com.cosmo.common.entity.Status;
 import com.cosmo.common.model.ModelBase;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,5 +26,4 @@ public class CreateFutsalModel extends ModelBase {
 
     private String vendorCode;
 
-    private Status status;
 }

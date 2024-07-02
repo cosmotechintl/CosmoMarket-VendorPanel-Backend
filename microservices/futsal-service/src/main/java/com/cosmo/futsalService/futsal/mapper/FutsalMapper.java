@@ -32,7 +32,7 @@ public abstract class FutsalMapper {
         futsal.setImage(create.getImage());
         futsal.setLocation(create.getLocation());
         futsal.setVendorCode(create.getVendorCode());
-        futsal.setStatus(create.getStatus());
+        futsal.setStatus(statusRepository.findByName(StatusConstant.ACTIVE.getName()));
         return futsal;
     }
     public abstract FutsalDto getFutsalDetails(Futsal Futsal);
