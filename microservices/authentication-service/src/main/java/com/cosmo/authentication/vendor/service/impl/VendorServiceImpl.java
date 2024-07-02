@@ -74,7 +74,7 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public Mono<ApiResponse<?>> getVendorDetails(FetchVendorDetail fetchVendorDetail) {
-        Optional<Vendor> vendor = vendorRepository.findByEmail(fetchVendorDetail.getEmail());
+        Optional<Vendor> vendor = vendorRepository.findByCode(fetchVendorDetail.getCode());
         if (vendor.isEmpty()) {
             return Mono.just(ResponseUtil.getNotFoundResponse("Vendor not found"));
         } else {
@@ -85,7 +85,7 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public Mono<ApiResponse<?>> deleteVendor(DeleteVendorRequest deleteVendorRequest, VendorDeleteLogModel vendorDeleteLogModel) {
-        Optional<Vendor> checkVendor = vendorRepository.findByEmail(deleteVendorRequest.getEmail());
+        Optional<Vendor> checkVendor = vendorRepository.findByCode(deleteVendorRequest.getCode());
         if (checkVendor.isEmpty()) {
             return Mono.just(ResponseUtil.getNotFoundResponse("Vendor not found"));
         } else {
@@ -108,7 +108,7 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public Mono<ApiResponse<?>> blockVendor(BlockVendorRequest blockVendorRequest, VendorBlockLogModel vendorBlockLogModel) {
-        Optional<Vendor> checkVendor = vendorRepository.findByEmail(blockVendorRequest.getEmail());
+        Optional<Vendor> checkVendor = vendorRepository.findByCode(blockVendorRequest.getCode());
         if (checkVendor.isEmpty()) {
             return Mono.just(ResponseUtil.getNotFoundResponse("Vendor not found"));
         } else {
@@ -132,7 +132,7 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public Mono<ApiResponse<?>> unblockVendor(UnblockVendorRequest unblockVendorRequest) {
-        Optional<Vendor> checkVendor = vendorRepository.findByEmail(unblockVendorRequest.getEmail());
+        Optional<Vendor> checkVendor = vendorRepository.findByCode(unblockVendorRequest.getCode());
         Vendor vendor = checkVendor.get();
         if (StatusConstant.BLOCKED.getName().equals(vendor.getStatus().getName())) {
             vendor.setStatus(statusRepository.findByName(StatusConstant.ACTIVE.getName()));
@@ -146,10 +146,10 @@ public class VendorServiceImpl implements VendorService {
     @Override
     public Mono<ApiResponse<?>> updateVendor(UpdateVendorDetailRequest updateVendorRequest) {
         Optional<Vendor> existedNumber = vendorRepository.findByPhoneNumber(updateVendorRequest.getPhoneNumber());
-        if (existedNumber.isPresent() && !existedNumber.get().getEmail().equals(updateVendorRequest.getEmail())) {
+        if (existedNumber.isPresent() && !existedNumber.get().getCode().equals(updateVendorRequest.getCode())) {
             return Mono.just(ResponseUtil.getFailureResponse("The phone number is linked to another vendor"));
         }
-        Optional<Vendor> checkVendor = vendorRepository.findByEmail(updateVendorRequest.getEmail());
+        Optional<Vendor> checkVendor = vendorRepository.findByCode(updateVendorRequest.getCode());
         if (checkVendor.isPresent()) {
             Vendor vendor = checkVendor.get();
             if (StatusConstant.BLOCKED.getName().equals(vendor.getStatus().getName()) || StatusConstant.DELETED.getName().equals(vendor.getStatus().getName())) {

@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `product`
     in_stock                     BIT(1)                     NULL,
     quantity                     INT                        NOT NULL,
     product_category             BIGINT                     NOT NULL,
-    status                       BIGINT                     NOT NULL,
+    futsalStatus                       BIGINT                     NOT NULL,
     created_at                   datetime                   NULL,
     updated_at                   datetime                   NULL,
     CONSTRAINT pk_product PRIMARY KEY (id)
@@ -38,4 +38,4 @@ ALTER TABLE `product`
 --preconditions onFail:MARK_RAN
 --precondition-sql-check expectedResult:0  SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_schema = (SELECT DATABASE()) AND table_name = 'product' AND constraint_name = 'FK_PRODUCT_ON_STATUS'
 ALTER TABLE `product`
-    ADD CONSTRAINT FK_PRODUCT_ON_STATUS FOREIGN KEY (status) REFERENCES status (id);
+    ADD CONSTRAINT FK_PRODUCT_ON_STATUS FOREIGN KEY (futsalStatus) REFERENCES futsalStatus (id);
