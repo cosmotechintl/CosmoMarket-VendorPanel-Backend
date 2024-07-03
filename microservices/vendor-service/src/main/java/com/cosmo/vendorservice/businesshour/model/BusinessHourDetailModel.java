@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class BusinessHourDetailModel extends ModelBase {
-    private Long vendorId;
+    private String vendorCode;
     private String day;
     private String startTime;
     private String endTime;

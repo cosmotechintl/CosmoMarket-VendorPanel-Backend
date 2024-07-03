@@ -25,15 +25,15 @@ public abstract class BusinessHoursMapper {
     @Autowired
     private BusinessHoursRepository businessHoursRepository;
 
-    public BusinessHours toEntity(BusinessHourRequest businessHourRequest, Long vendorId) {
-        if (businessHourRequest == null && vendorId == null) {
+    public BusinessHours toEntity(BusinessHourRequest businessHourRequest, String vendorCode) {
+        if (businessHourRequest == null && vendorCode == null) {
             return null;
         }
 
 
         BusinessHours businessHours = new BusinessHours();
         if (businessHourRequest != null) {
-            Vendor vendor = vendorRepository.findById(vendorId).orElseThrow(() -> new NotFoundException("Vendor not found"));
+            Vendor vendor = vendorRepository.findByCode(vendorCode).orElseThrow(() -> new NotFoundException("Vendor not found"));
             businessHours.setVendor(vendor);
             if (businessHourRequest.getDay() != null) {
                 businessHours.setDay(Enum.valueOf(DayOfWeek.class, businessHourRequest.getDay()));
@@ -61,7 +61,7 @@ public abstract class BusinessHoursMapper {
     }
 
 
-    public BusinessHours updateToEntity(UpdateBusinessHourModel updateBusinessHourModel, BusinessHours businessHours, Long vendorId) {
+    public BusinessHours updateToEntity(UpdateBusinessHourModel updateBusinessHourModel, BusinessHours businessHours, String vendorCode) {
 
         if (updateBusinessHourModel != null) {
             if (updateBusinessHourModel.getDay() != null) {
@@ -75,7 +75,7 @@ public abstract class BusinessHoursMapper {
             }
             businessHours.setClosed(updateBusinessHourModel.isClosed());
         }
-        businessHours.setVendor(vendorRepository.findById(vendorId).orElseThrow(() -> new NotFoundException("Vendor not found")));
+        businessHours.setVendor(vendorRepository.findByCode(vendorCode).orElseThrow(() -> new NotFoundException("Vendor not found")));
         return businessHours;
     }
 
@@ -97,8 +97,8 @@ public abstract class BusinessHoursMapper {
             endTime = DateTimeFormatter.ISO_LOCAL_TIME.format( businessHours.getEndTime() );
         }
         boolean isClosed = false;
-        Long vendorId=businessHours.getVendor().getId();
-        BusinessHourDetailModel businessHourDetailModel = new BusinessHourDetailModel( vendorId, day, startTime, endTime, isClosed );
+        String vendorCode = businessHours.getVendor().getCode();
+        BusinessHourDetailModel businessHourDetailModel = new BusinessHourDetailModel( vendorCode, day, startTime, endTime, isClosed );
 
         businessHourDetailModel.setClosed( businessHours.isClosed() );
 

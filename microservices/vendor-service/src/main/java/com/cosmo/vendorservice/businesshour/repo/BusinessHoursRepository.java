@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface BusinessHoursRepository extends JpaRepository<BusinessHours, Long> {
     List<BusinessHours> findByVendorId(Long vendorId);
+
+    List<BusinessHours> findByVendorCode(String vendorCode);
 }

@@ -13,5 +13,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BusinessHourBookingModel extends ModelBase {
     @NotNull
-    private Long vendorId;
+    private String vendorCode;
 }
