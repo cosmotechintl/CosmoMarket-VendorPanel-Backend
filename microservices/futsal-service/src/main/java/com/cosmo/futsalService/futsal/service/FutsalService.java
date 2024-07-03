@@ -2,7 +2,6 @@ package com.cosmo.futsalService.futsal.service;
 
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.model.SearchParam;
-import com.cosmo.futsalService.court.model.FetchCourtByVendorCode;
 import com.cosmo.futsalService.futsal.model.CreateFutsalModel;
 import com.cosmo.futsalService.futsal.model.request.*;
 import reactor.core.publisher.Mono;

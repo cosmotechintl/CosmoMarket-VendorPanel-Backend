@@ -92,7 +92,9 @@ public class BusinessHourServiceImpl implements BusinessHourService {
     public Mono<ApiResponse> getBusinessHours(BusinessHourBookingModel businessHourBookingModel) {
         List<BusinessHours> businessHours = businessHoursRepository.findByVendorCode(businessHourBookingModel.getVendorCode());
 
-
+        if (businessHours.isEmpty()) {
+            return Mono.just(ResponseUtil.getNotFoundResponse("No Business Hours Found for the given Vendor Code"));
+        }
         List<BusinessHourDetailModel> businessHourDetails = businessHours.stream()
                 .map(businessHoursMapper::toDetailModel)
                 .collect(Collectors.toList());
