@@ -1,6 +1,7 @@
 package com.cosmo.authentication.user.service;
 
 import com.cosmo.authentication.user.model.PasswordChangeRequest;
+import com.cosmo.authentication.user.model.request.SetPasswordRequest;
 import com.cosmo.authentication.user.model.request.VendorUserDetailRequest;
 import com.cosmo.authentication.user.model.requestDto.DeleteVendorRequest;
 import com.cosmo.authentication.user.model.requestDto.UpdateVendorRequest;
@@ -13,7 +14,7 @@ import reactor.core.publisher.Mono;
 import java.security.Principal;
 
 public interface VendorUserService {
-
+    Mono<ApiResponse<?>> setUserPassword(SetPasswordRequest setPasswordRequest);
     Mono<ApiResponse<?>> getAllVendorUserDetail(SearchParam searchParam);
     Mono<ApiResponse<?>> changePassword(PasswordChangeRequest passwordChangeRequest, Principal connectedUser);
     Mono<ApiResponse<?>> updateVendorUser(UpdateVendorRequest updateVendorRequest, Principal connectedUser);
