@@ -6,6 +6,7 @@ import com.cosmo.futsalService.futsal.entity.Futsal;
 import com.cosmo.futsalService.futsal.model.CreateFutsalModel;
 import com.cosmo.futsalService.futsal.model.FutsalDto;
 import com.cosmo.futsalService.futsal.model.SearchFutsalResponse;
+import com.cosmo.futsalService.futsal.model.request.UpdateFutsalModel;
 import com.cosmo.futsalService.futsal.repo.FutsalRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
@@ -41,5 +42,13 @@ public abstract class FutsalMapper {
     public abstract SearchFutsalResponse entityToResponse(Futsal futsal);
     public List<SearchFutsalResponse> getFutsalResponses(List<Futsal> futsalList){
         return futsalList.stream().map(this::entityToResponse).collect(toList());
+    }
+
+    public Futsal updatetoEntity(Futsal futsal, UpdateFutsalModel updateFutsalModel) {
+        futsal.setName(updateFutsalModel.getName());
+        futsal.setDescription(updateFutsalModel.getDescription());
+        futsal.setPrice(updateFutsalModel.getPrice());
+        futsal.setLocation(updateFutsalModel.getLocation());
+        return futsalRepository.save(futsal);
     }
 }

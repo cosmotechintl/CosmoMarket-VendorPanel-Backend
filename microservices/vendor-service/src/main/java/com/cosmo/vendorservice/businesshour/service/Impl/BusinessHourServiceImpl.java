@@ -1,6 +1,7 @@
 package com.cosmo.vendorservice.businesshour.service.Impl;
 
 import com.cosmo.authentication.user.entity.VendorUser;
+import com.cosmo.authentication.vendor.entity.Vendor;
 import com.cosmo.authentication.vendor.repository.VendorRepository;
 import com.cosmo.authentication.user.repo.VendorUserRepository;
 import com.cosmo.common.exception.BadRequestException;
@@ -23,6 +24,7 @@ import reactor.core.publisher.Mono;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,11 +42,11 @@ public class BusinessHourServiceImpl implements BusinessHourService {
 
         VendorUser vendorUser = vendorUserRepository.findByUsername(connectedUser.getName())
                 .orElseThrow(() -> new NotFoundException("Invalid User"));
-        Long vendorId = vendorUser.getVendor().getId();
-        log.info("Vendor Id: {}", vendorId);
+        String vendorCode = vendorUser.getVendor().getCode();
+        log.info("Vendor Code: {}", vendorCode);
 
         businessHourRequests.getBusinessHours().forEach(setBusinessHour -> {
-            BusinessHours businessHours = businessHoursMapper.toEntity(setBusinessHour, vendorId);
+            BusinessHours businessHours = businessHoursMapper.toEntity(setBusinessHour, vendorCode);
             log.info("Business Hour: {}", businessHours);
             businessHoursRepository.save(businessHours);
 
@@ -56,12 +58,12 @@ public class BusinessHourServiceImpl implements BusinessHourService {
     public Mono<ApiResponse<?>> updateBusinessHour(List<UpdateBusinessHourModel> updateBusinessHourModels, Principal connectedUser) {
         VendorUser vendorUser = vendorUserRepository.findByUsername(connectedUser.getName())
                 .orElseThrow(() -> new NotFoundException("Invalid User"));
-        Long vendorId = vendorUser.getVendor().getId();
-        log.info("Vendor Id: {}", vendorId);
+        String vendorCode = vendorUser.getVendor().getCode();
+        log.info("Vendor Code: {}", vendorCode);
         updateBusinessHourModels.forEach(updateBusinessHourModel -> {
             BusinessHours existingBusinessHours = businessHoursRepository.findById(Long.valueOf(updateBusinessHourModel.getId()))
                     .orElseThrow(() -> new NotFoundException("Business hour not found"));
-            existingBusinessHours = businessHoursMapper.updateToEntity(updateBusinessHourModel, existingBusinessHours, vendorId);
+            existingBusinessHours = businessHoursMapper.updateToEntity(updateBusinessHourModel, existingBusinessHours, vendorCode);
             businessHoursRepository.save(existingBusinessHours);
 
         });
@@ -75,10 +77,11 @@ public class BusinessHourServiceImpl implements BusinessHourService {
         }
         VendorUser vendorUser = vendorUserRepository.findByUsername(connectedUser.getName())
                 .orElseThrow(() -> new NotFoundException("Invalid User"));
-        Long vendorId = vendorUser.getVendor().getId();
-        log.info("Vendor Id: {}", vendorId);
 
-        List<BusinessHours> businessHours = businessHoursRepository.findByVendorId(vendorId);
+        String vendorCode = vendorUser.getVendor().getCode();
+        log.info("Vendor Code: {}", vendorCode);
+
+        List<BusinessHours> businessHours = businessHoursRepository.findByVendorCode(vendorCode);
         List<BusinessHourDetailModel> businessHourDetails = businessHours.stream()
                 .map(businessHoursMapper::toDetailModel)
                 .collect(Collectors.toList());
@@ -87,8 +90,8 @@ public class BusinessHourServiceImpl implements BusinessHourService {
 
     @Override
     public Mono<ApiResponse> getBusinessHours(BusinessHourBookingModel businessHourBookingModel) {
-        Long vendorId = businessHourBookingModel.getVendorId();
-        List<BusinessHours> businessHours = businessHoursRepository.findByVendorId(vendorId);
+        List<BusinessHours> businessHours = businessHoursRepository.findByVendorCode(businessHourBookingModel.getVendorCode());
+
 
         List<BusinessHourDetailModel> businessHourDetails = businessHours.stream()
                 .map(businessHoursMapper::toDetailModel)

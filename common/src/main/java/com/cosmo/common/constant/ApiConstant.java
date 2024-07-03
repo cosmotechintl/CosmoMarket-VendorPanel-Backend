@@ -39,4 +39,6 @@ public class ApiConstant {
     public static final String SERVICES = "services";
     public static final String GET_ALL_SERVICES = "getAllServices";
 
+    public static final String EMAIL_TEMPLATE = "emailTemplate";
+    public static final String SET_PASSWORD = "setPassword";
 }

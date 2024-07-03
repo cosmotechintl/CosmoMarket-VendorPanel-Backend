@@ -4,15 +4,21 @@ import com.cosmo.authentication.accessGroup.repo.AccessGroupRepository;
 import com.cosmo.authentication.user.entity.VendorUser;
 import com.cosmo.authentication.user.repo.VendorUserRepository;
 import com.cosmo.authentication.vendor.entity.Vendor;
+import com.cosmo.authentication.vendor.log.entity.RegistrationEmailLog;
+import com.cosmo.authentication.vendor.log.mapper.RegistrationEmailLogMapper;
+import com.cosmo.authentication.vendor.log.repo.RegistrationEmailLogRepository;
 import com.cosmo.authentication.vendor.model.CreateVendorModel;
 import com.cosmo.authentication.vendor.model.SearchVendorResponse;
 import com.cosmo.authentication.vendor.model.VendorDetailDto;
 import com.cosmo.authentication.vendor.model.request.UpdateVendorDetailRequest;
 import com.cosmo.authentication.vendor.repository.CategoryRepository;
 import com.cosmo.authentication.vendor.repository.VendorRepository;
+import com.cosmo.common.constant.EmailSubjectConstant;
 import com.cosmo.common.constant.StatusConstant;
 import com.cosmo.common.exception.ResourceNotFoundException;
+import com.cosmo.common.model.request.SendEmailRequest;
 import com.cosmo.common.repository.StatusRepository;
+import com.cosmo.common.service.MailService;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;
 import org.mapstruct.ReportingPolicy;
@@ -36,7 +42,12 @@ public abstract class VendorMapper {
     protected AccessGroupRepository accessGroupRepository;
     @Autowired
     private VendorUserRepository vendorUserRepository;
-
+    @Autowired
+    protected RegistrationEmailLogRepository registrationEmailLogRepository;
+    @Autowired
+    protected RegistrationEmailLogMapper registrationEmailLogMapper;
+    @Autowired
+    protected MailService mailService;
     public Vendor mapToEntity(CreateVendorModel createVendorModel) {
         Vendor vendor = new Vendor();
         vendor.setName(createVendorModel.getName());
@@ -65,7 +76,15 @@ public abstract class VendorMapper {
         vendorUser.setUsername(createVendorModel.getVendorUser().getEmail());
         vendorUser.setAdmin(true);
         vendorUser.setVendor(savedVendor);
-        vendorUserRepository.save(vendorUser);
+        VendorUser savedVendorUser = vendorUserRepository.save(vendorUser);
+
+        RegistrationEmailLog registrationEmailLog = registrationEmailLogMapper.mapToEntity(savedVendorUser);
+        SendEmailRequest sendEmailRequest = new SendEmailRequest();
+        sendEmailRequest.setRecipient(savedVendorUser.getEmail());
+        sendEmailRequest.setSubject(EmailSubjectConstant.USER_VERIFICATION);
+        sendEmailRequest.setMessage(registrationEmailLog.getMessage());
+        mailService.sendEmail(sendEmailRequest);
+
         return vendor;
     }
 

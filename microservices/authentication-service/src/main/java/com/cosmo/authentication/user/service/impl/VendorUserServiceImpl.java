@@ -7,12 +7,15 @@ import com.cosmo.authentication.user.model.CreateVendorUserModel;
 import com.cosmo.authentication.user.model.PasswordChangeRequest;
 import com.cosmo.authentication.user.model.SearchVendorUsersResponse;
 import com.cosmo.authentication.user.model.VendorUserDetailsDto;
+import com.cosmo.authentication.user.model.request.SetPasswordRequest;
 import com.cosmo.authentication.user.model.request.VendorUserDetailRequest;
 import com.cosmo.authentication.user.model.requestDto.DeleteVendorRequest;
 import com.cosmo.authentication.user.model.requestDto.UpdateVendorRequest;
 import com.cosmo.authentication.user.repo.VendorUserRepository;
 import com.cosmo.authentication.user.repo.VendorUsersSearchRepository;
 import com.cosmo.authentication.user.service.VendorUserService;
+import com.cosmo.authentication.vendor.log.entity.RegistrationEmailLog;
+import com.cosmo.authentication.vendor.log.repo.RegistrationEmailLogRepository;
 import com.cosmo.common.constant.SearchParamConstant;
 import com.cosmo.common.constant.StatusConstant;
 import com.cosmo.common.exception.NotFoundException;
@@ -45,6 +48,23 @@ public class VendorUserServiceImpl implements VendorUserService {
     private final SearchResponse searchResponse;
     private final PasswordEncoder passwordEncoder;
     private final VendorUserHelper vendorUserHelper;
+    private final RegistrationEmailLogRepository registrationEmailLogRepository;
+
+    @Override
+    public Mono<ApiResponse<?>> setUserPassword(SetPasswordRequest setPasswordRequest) {
+        Optional<RegistrationEmailLog> registrationEmailLog = registrationEmailLogRepository.findByUuid(setPasswordRequest.getUuid());
+        if(registrationEmailLog.isEmpty()){
+            return Mono.just(ResponseUtil.getFailureResponse("Invalid request"));
+        }
+        RegistrationEmailLog existingRegistrationEmailLog = registrationEmailLog.get();
+        if(existingRegistrationEmailLog.isExpired()){
+            return Mono.just(ResponseUtil.getFailureResponse("Link expired. Please contact your administrator"));
+        }
+        else{
+            vendorUserMapper.setPassword(setPasswordRequest, existingRegistrationEmailLog);
+        }
+        return Mono.just(ResponseUtil.getSuccessfulApiResponse("Password set successfully."));
+    }
 
     @Override
     public Mono<ApiResponse<?>> getAllVendorUserDetail(SearchParam searchParam) {

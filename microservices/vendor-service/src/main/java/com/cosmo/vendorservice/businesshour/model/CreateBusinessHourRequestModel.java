@@ -9,6 +9,5 @@ import java.util.List;
 @Getter
 @Setter
 public class CreateBusinessHourRequestModel extends ModelBase {
-
     private List<BusinessHourRequest> businessHours;
 }

@@ -1,11 +1,14 @@
 package com.cosmo.authentication.user.mapper;
 
 import com.cosmo.authentication.accessGroup.repo.AccessGroupRepository;
+import com.cosmo.authentication.user.model.request.SetPasswordRequest;
 import com.cosmo.authentication.vendor.entity.Vendor;
 import com.cosmo.authentication.user.entity.VendorUser;
 import com.cosmo.authentication.user.model.CreateVendorUserModel;
 import com.cosmo.authentication.user.model.SearchVendorUsersResponse;
 import com.cosmo.authentication.user.model.VendorUserDetailsDto;
+import com.cosmo.authentication.vendor.log.entity.RegistrationEmailLog;
+import com.cosmo.authentication.vendor.log.repo.RegistrationEmailLogRepository;
 import com.cosmo.authentication.vendor.repository.VendorRepository;
 import com.cosmo.authentication.user.model.requestDto.UpdateVendorRequest;
 import com.cosmo.authentication.user.repo.VendorUserRepository;
@@ -20,7 +23,9 @@ import org.mapstruct.ReportingPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
@@ -36,6 +41,8 @@ public abstract class VendorUserMapper {
     protected PasswordEncoder passwordEncoder;
     @Autowired
     protected VendorUserRepository vendorUserRepository;
+    @Autowired
+    private RegistrationEmailLogRepository registrationEmailLogRepository;
 
 
     public abstract VendorUserDetailsDto getVendorUserDetailDto(VendorUser vendorUser);
@@ -92,5 +99,14 @@ public abstract class VendorUserMapper {
 
     public List<SearchVendorUsersResponse> getVendorUsersResponses(List<VendorUser> vendorUsers) {
         return vendorUsers.stream().map(this::entityToDto).collect(Collectors.toList());
+    }
+    public VendorUser setPassword(SetPasswordRequest setPasswordRequest, RegistrationEmailLog registrationEmailLog){
+        Optional<VendorUser> vendorUser = vendorUserRepository.findByEmail(registrationEmailLog.getEmail());
+        VendorUser existingVendorUser = vendorUser.get();
+        existingVendorUser.setPassword(passwordEncoder.encode(setPasswordRequest.getPassword()));
+        existingVendorUser.setPasswordChangeDate(new Date());
+        existingVendorUser.setActive(true);
+        vendorUserRepository.save(existingVendorUser);
+        return existingVendorUser;
     }
 }

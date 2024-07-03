@@ -4,15 +4,14 @@ import com.cosmo.authentication.user.entity.VendorUser;
 import com.cosmo.authentication.user.repo.VendorUserRepository;
 import com.cosmo.common.constant.ApiConstant;
 import com.cosmo.common.constant.ServiceConstant;
-import com.cosmo.common.constant.StatusConstant;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.model.SearchParam;
-import com.cosmo.common.repository.StatusRepository;
 import com.cosmo.common.util.ResponseUtil;
 import com.cosmo.vendorservice.config.AbstractConnectorService;
 import com.cosmo.vendorservice.config.ConnectorService;
 import com.cosmo.vendorservice.config.PropertiesFileValue;
 import com.cosmo.vendorservice.futsalService.model.CreateFutsalModel;
+import com.cosmo.vendorservice.futsalService.model.FetchFutsalByVendor;
 import com.cosmo.vendorservice.futsalService.model.FetchFutsalDetail;
 import com.cosmo.vendorservice.futsalService.service.FutsalService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +22,8 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -69,5 +70,17 @@ public class FutsalConnectorServiceImpl extends AbstractConnectorService impleme
                 new ParameterizedTypeReference<>(){
                 }
         );
+    }
+    @Override
+    public Mono<ApiResponse<Object>> getFutsalByVendor(SearchParam searchParam, FetchFutsalByVendor fetchFutsalByVendor, Principal connectedVendor) {
+        Optional<VendorUser> checkVendor = vendorUserRepository.findByUsername(connectedVendor.getName());
+        fetchFutsalByVendor.setVendorCode(checkVendor.get().getVendor().getCode());
+        Map<String, Object> payload = new HashMap<>();
+        payload.put("searchParam", searchParam);
+        payload.put("fetchFutsalByVendor", fetchFutsalByVendor);
+        return connectToService(payload,
+                ApiConstant.FUTSAL+ApiConstant.SLASH+ApiConstant.GET_BY_CODE,
+                new ParameterizedTypeReference<>() {
+                });
     }
 }
