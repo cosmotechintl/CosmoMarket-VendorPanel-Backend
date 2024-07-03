@@ -16,7 +16,7 @@ import java.time.LocalTime;
 public class BusinessHours extends AbstractEntity {
 
     @ManyToOne
-    @JoinColumn(name = "vendor", referencedColumnName = "id")
+    @JoinColumn(name = "vendor", referencedColumnName = "code")
     private Vendor vendor;
 
     @Column(name = "day")
