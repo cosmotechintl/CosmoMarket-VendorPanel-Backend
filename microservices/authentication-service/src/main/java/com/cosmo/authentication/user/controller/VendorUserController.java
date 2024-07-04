@@ -30,9 +30,8 @@ public class VendorUserController {
     }
 
     @PostMapping(ApiConstant.DELETE)
-    public Mono<ApiResponse<?>> deleteVendorUser(@RequestBody @Valid DeleteVendorRequest deleteVendorRequest,
-                                                 Principal connectedUser) {
-        return vendorUserService.deleteVendorUser(deleteVendorRequest, connectedUser);
+    public Mono<ApiResponse<?>> deleteVendorUser(@RequestBody @Valid DeleteVendorRequest deleteVendorRequest) {
+        return vendorUserService.deleteVendorUser(deleteVendorRequest);
     }
 
 

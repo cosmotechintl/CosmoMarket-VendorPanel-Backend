@@ -123,8 +123,8 @@ public class VendorUserServiceImpl implements VendorUserService {
 
     @Override
     @Transactional
-    public Mono<ApiResponse<?>> deleteVendorUser(DeleteVendorRequest deleteVendorRequest, Principal connectedUser) {
-        Optional<VendorUser> vendorAdminUser = vendorUserRepository.findByUsername(connectedUser.getName());
+    public Mono<ApiResponse<?>> deleteVendorUser(DeleteVendorRequest deleteVendorRequest) {
+        Optional<VendorUser> vendorAdminUser = vendorUserRepository.findByEmail(deleteVendorRequest.getEmail());
         if (vendorAdminUser.isEmpty()) {
             return Mono.just(ResponseUtil.getFailureResponse("Invalid User"));
         }

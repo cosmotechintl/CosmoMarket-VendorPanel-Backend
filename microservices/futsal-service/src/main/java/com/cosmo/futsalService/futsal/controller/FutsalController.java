@@ -3,7 +3,6 @@ package com.cosmo.futsalService.futsal.controller;
 import com.cosmo.common.constant.ApiConstant;
 import com.cosmo.common.model.ApiResponse;
 import com.cosmo.common.model.SearchParam;
-import com.cosmo.futsalService.court.model.FetchCourtByVendorCode;
 import com.cosmo.futsalService.futsal.model.CreateFutsalModel;
 import com.cosmo.futsalService.futsal.model.request.*;
 import com.cosmo.futsalService.futsal.service.FutsalService;
