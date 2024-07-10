@@ -11,7 +11,7 @@ import com.cosmo.authentication.vendor.model.CreateVendorModel;
 import com.cosmo.authentication.vendor.model.SearchVendorResponse;
 import com.cosmo.authentication.vendor.model.VendorDetailDto;
 import com.cosmo.authentication.vendor.model.request.UpdateVendorDetailRequest;
-import com.cosmo.authentication.vendor.repository.CategoryRepository;
+import com.cosmo.authentication.vendor.repository.VendorCategoryRepository;
 import com.cosmo.authentication.vendor.repository.VendorRepository;
 import com.cosmo.common.constant.EmailSubjectConstant;
 import com.cosmo.common.constant.StatusConstant;
@@ -37,7 +37,7 @@ public abstract class VendorMapper {
     @Autowired
     protected VendorRepository vendorRepository;
     @Autowired
-    protected CategoryRepository categoryRepository;
+    protected VendorCategoryRepository vendorCategoryRepository;
     @Autowired
     protected AccessGroupRepository accessGroupRepository;
     @Autowired
@@ -51,7 +51,7 @@ public abstract class VendorMapper {
     public Vendor mapToEntity(CreateVendorModel createVendorModel) {
         Vendor vendor = new Vendor();
         vendor.setName(createVendorModel.getName());
-        vendor.setCategory(categoryRepository.findByName(createVendorModel.getCategory().getName()).orElseThrow(()->
+        vendor.setVendorCategory(vendorCategoryRepository.findByName(createVendorModel.getCategory().getName()).orElseThrow(()->
                 new ResourceNotFoundException("Category not found")));
         vendor.setLogo(createVendorModel.getLogo());
         vendor.setAddress(createVendorModel.getAddress());
@@ -104,7 +104,7 @@ public abstract class VendorMapper {
         vendor.setLogo(request.getLogo());
         vendor.setAddress(request.getAddress());
         vendor.setPhoneNumber(request.getPhoneNumber());
-        vendor.setCategory(categoryRepository.findByName(request.getCategory().getName()).orElseThrow(()->
+        vendor.setVendorCategory(vendorCategoryRepository.findByName(request.getCategory().getName()).orElseThrow(()->
                 new ResourceNotFoundException("Category not found")));
         vendor.setUpdatedAt(new Date());
        Vendor savedVendor =  vendorRepository.save(vendor);

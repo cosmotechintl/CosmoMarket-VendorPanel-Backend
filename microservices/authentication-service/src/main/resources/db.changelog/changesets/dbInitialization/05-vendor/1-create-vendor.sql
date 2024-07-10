@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS vendor
 --preconditions onFail:MARK_RAN
 --precondition-sql-check expectedResult:0  SELECT COUNT(*) FROM information_schema.table_constraints WHERE constraint_schema = (SELECT DATABASE()) AND table_name = 'vendor' AND constraint_name = 'FK_VENDOR_ON_CATEGORY'
 ALTER TABLE vendor
-    ADD CONSTRAINT FK_VENDOR_ON_CATEGORY FOREIGN KEY (category) REFERENCES category (id);
+    ADD CONSTRAINT FK_VENDOR_ON_CATEGORY FOREIGN KEY (category) REFERENCES vendor_category (id);
 
 --changeset manjul.tamang:3
 --preconditions onFail:MARK_RAN

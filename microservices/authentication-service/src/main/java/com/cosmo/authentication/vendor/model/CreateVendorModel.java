@@ -9,8 +9,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 public class CreateVendorModel extends ModelBase {
@@ -19,7 +17,7 @@ public class CreateVendorModel extends ModelBase {
     private String name;
 
     @NotNull(message = "Category cannot be blank")
-    private CategoryDto category;
+    private VendorCategoryDto category;
 
     private String logo;
 

@@ -40,7 +40,7 @@ public class Vendor extends AbstractEntity {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "category", referencedColumnName = "id")
-    private Category category;
+    private VendorCategory vendorCategory;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "status", referencedColumnName = "id")

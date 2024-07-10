@@ -5,8 +5,6 @@ import com.cosmo.common.model.StatusDto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Getter
 @Setter
 public class SearchVendorResponse extends ModelBase {
@@ -17,6 +15,6 @@ public class SearchVendorResponse extends ModelBase {
     private String panNumber;
     private String code;
     private String createdDate;
-    private CategoryDto category;
+    private VendorCategoryDto category;
     private StatusDto status;
 }

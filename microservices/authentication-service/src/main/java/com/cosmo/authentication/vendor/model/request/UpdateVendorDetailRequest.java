@@ -1,7 +1,7 @@
 package com.cosmo.authentication.vendor.model.request;
 
 import com.cosmo.authentication.user.model.request.VendorUserDetails;
-import com.cosmo.authentication.vendor.model.CategoryDto;
+import com.cosmo.authentication.vendor.model.VendorCategoryDto;
 import com.cosmo.common.model.ModelBase;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -16,7 +16,7 @@ public class UpdateVendorDetailRequest extends ModelBase {
     private String code;
     @NotBlank(message = "Name cannot be blank")
     private String name;
-    private CategoryDto category;
+    private VendorCategoryDto category;
     private String logo;
     @NotBlank(message = "Address cannot be blank")
     private String address;

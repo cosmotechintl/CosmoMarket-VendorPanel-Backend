@@ -7,7 +7,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CategoryDto extends ModelBase {
-    @NotBlank(message = "Name is required")
+public class VendorCategoryCreateModel extends ModelBase {
+
+    @NotBlank(message = "Name cannot be blank")
     private String name;
+
+    @NotBlank(message = "Description cannot be blank")
+    private String description;
 }

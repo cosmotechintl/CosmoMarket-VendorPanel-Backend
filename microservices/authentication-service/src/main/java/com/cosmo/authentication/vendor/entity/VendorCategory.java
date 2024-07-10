@@ -9,8 +9,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "category")
-public class Category extends AbstractEntity {
+@Table(name = "vendor_category")
+public class VendorCategory extends AbstractEntity {
     @Column(name = "name",nullable = false)
     private String name;
 

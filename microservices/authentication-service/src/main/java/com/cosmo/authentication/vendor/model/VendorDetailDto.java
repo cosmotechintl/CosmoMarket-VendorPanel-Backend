@@ -18,6 +18,6 @@ public class VendorDetailDto extends ModelBase {
     private String email;
     private String phoneNumber;
     private StatusDto status;
-    private CategoryDto category;
+    private VendorCategoryDto category;
     private List<VendorUserDetailRequest> vendorUsers;
 }
