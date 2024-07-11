@@ -15,6 +15,6 @@ public class SearchVendorResponse extends ModelBase {
     private String panNumber;
     private String code;
     private String createdDate;
-    private VendorCategoryDto category;
+    private VendorCategoryDto vendorCategory;
     private StatusDto status;
 }
