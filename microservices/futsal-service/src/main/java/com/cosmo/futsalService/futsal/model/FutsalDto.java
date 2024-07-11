@@ -14,5 +14,6 @@ public class FutsalDto extends ModelBase {
     private double price;
     private String location;
     private StatusDto status;
+    private String uuid;
     private String vendorCode;
 }
