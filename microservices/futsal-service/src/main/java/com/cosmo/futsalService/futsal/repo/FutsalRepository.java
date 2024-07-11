@@ -9,5 +9,6 @@ import java.util.Optional;
 @Repository
 public interface FutsalRepository extends JpaRepository<Futsal, Long> {
     Optional<Futsal> findByVendorCode(String code);
+    Optional<Futsal> findByName(String name);
     Optional<Futsal> findByUuid(String uuid);
 }

@@ -41,7 +41,11 @@ public class FutsalServiceImpl implements FutsalService {
 
     @Override
     public Mono<ApiResponse> createFutsal(CreateFutsalModel createFutsalModel) {
-       Futsal futsal = futsalMapper.mapToEntity(createFutsalModel);
+        Optional<Futsal>existedFutsalName = futsalRepository.findByName(createFutsalModel.getName());
+        if (existedFutsalName.isPresent()){
+            return Mono.just(ResponseUtil.getFailureResponse("This name already exists"));
+        }
+        Futsal futsal = futsalMapper.mapToEntity(createFutsalModel);
         futsalRepository.save(futsal);
         return Mono.just(ResponseUtil.getSuccessfulApiResponse("Futsal created successfully"));
     }
