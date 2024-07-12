@@ -127,6 +127,6 @@ public class FutsalServiceImpl implements FutsalService {
                 .mapperFunction(this.futsalMapper::getFutsalResponses).searchParam(searchParam)
                 .build();
         PageableResponse<SearchFutsalResponse> response = searchResponse.getSearchResponse(responseBuilder);
-        return Mono.just(ResponseUtil.getSuccessfulApiResponse(response, "Futsals fetched successfully"));
+        return Mono.just(ResponseUtil.getSuccessfulApiResponse(response, "All Futsal fetched successfully"));
     }
 }
