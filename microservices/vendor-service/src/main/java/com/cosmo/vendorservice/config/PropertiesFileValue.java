@@ -14,4 +14,10 @@ public class PropertiesFileValue {
     @Value("${product_service.url}")
     private String productServiceUrl;
 
+    @Value("${business_hour_service.url}")
+    private String businessHourServiceUrl;
+
+    @Value("${futsal_reservation_service.url}")
+    private String FutsalReservationServiceUrl;
+
 }

@@ -1,0 +1,6 @@
+-- liquibase formatted sql
+-- changeset samir.ghimire:6
+-- preconditions onFail:CONTINUE onError:HALT
+
+INSERT INTO reservation_details (vendor, version, code, date, start_time, end_time, day) VALUES
+    (1, 0, uuid(), '2024-01-20', '10:34:56', '11:34:56', 1);

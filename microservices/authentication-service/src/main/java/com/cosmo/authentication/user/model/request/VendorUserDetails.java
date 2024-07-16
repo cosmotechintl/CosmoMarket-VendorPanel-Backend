@@ -13,7 +13,7 @@ public class VendorUserDetails extends ModelBase {
     @NotBlank(message = "Name cannot be blank")
     private String name;
     @NotBlank(message = "Mobile cannot be blank")
-    @Size(min = 10, max = 19, message = "Invalid mobile number")
+    @Size(min = 10, max = 10, message = "Invalid mobile number")
     private String mobileNumber;
     @NotNull
     private AccessGroupDto accessGroup;
